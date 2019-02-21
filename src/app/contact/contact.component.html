@@ -1,0 +1,92 @@
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <section class="contact-form">
+
+
+                    <div class="contact-form-wrap">
+
+
+
+                        <div class="input-wrap">
+
+
+                            Requester*: <input required type="email" name="helpdesk_ticket[email]" PLACEHOLDER="Email">
+                        </div>
+
+
+
+                        <div class="input-wrap">
+
+
+                            Subject*: <input required type="text" name="helpdesk_ticket[subject]" PLACEHOLDER="Reason For Contacting Us">
+                        </div>
+
+
+
+                        <div class="input-wrap">
+
+
+                            PayPal Email: <input type="email" name="helpdesk_ticket[custom_field][paypal_email_455547]" PLACEHOLDER="Paypal Email (If different from above)">
+                        </div>
+
+                        <div class="input-wrap">
+
+
+                            Do you currently have a server with us?
+                            <select name="helpdesk_ticket[custom_field][cf_how_many_proxies_do_you_currently_have_or_are_considering_purchasing_455547]">
+                                <option value="">Yes</option>
+                                <option value="">No</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="input-wrap">
+
+
+                            Type of Support:
+                            <select name="helpdesk_ticket[ticket_type]">
+                                <option value="server">Server</option>
+                                <option value="proxy">Proxy</option>
+                                <option value="billing">Billing</option>
+                                <option value="sales">Sales</option>
+                                <option value="general">General</option>
+                            </select>
+                        </div>
+
+
+
+
+
+                        <div class="input-wrap">
+
+
+                            Description: <textarea  name="helpdesk_ticket[ticket_body_attributes][description_html]" PLACEHOLDER="Description of Problem or Concern
+"></textarea>
+                        </div>
+
+
+                        <div class="input-wrap ml-42">
+
+                            <input type="file" name="file" id="file" class="inputfile" data-multiple-caption="{count} files selected" multiple />
+                            <label for="file"><span>+ attach a file</span></label>
+
+                        </div>
+
+
+                        <div class="package-btn-wrap">
+                            <input type="submit" class="package-btn package-buy-btn" />
+
+                        </div>
+
+
+
+                    </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+{% extends "base.html.twig" %}
+
+{% block content_title %}
+
+{% endblock %}
+
+
+{% block content %}
+    {{ result }}
+
+    <div class="container-fluid" style="margin-left: 0;max-width: 1200px">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <h2 style="margin: -2px 0 0;
+
+    margin-left: 0px;
+
+font-size: 24px;
+
+font-family: Roboto, sans-serif;
+
+font-weight: 700;
+
+margin-left: -8px;
+
+color: #094fb1;">Contact</h2>
+
+                <form action="contactEmail" method="post">
+                    <section class="contact-form">
+
+
+                    <div class="contact-form-wrap">
+                        <div class="row">
+                            <div class="col-md-8">
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="row input-wrap">
+
+
+
+
+                            <div class="col-md-3 col-xs-12 col-sm-4">
+                                Requester*:
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-8">
+                                <input required type="email" name="email" PLACEHOLDER="Email" value="{{ USER.whmcsDetails.email is defined ?  USER.whmcsDetails.email : ""}}">
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="row input-wrap">
+
+
+                            <div class="col-md-3 col-xs-12 col-sm-4">
+                                Subject*:
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-8">
+                                <input required type="text" name="subject" PLACEHOLDER="Reason For Contacting Us">
+                            </div>
+                        </div>
+
+
+
+                        <div class="row input-wrap" style="margin-bottom: 18px">
+
+                            <div class="col-md-3 col-xs-12 col-sm-4">
+                                PayPal Email:
+                            </div>
+
+                            <div class="col-md-6 col-xs-12 col-sm-8">
+                                <input type="email" name="paypal" PLACEHOLDER="Paypal Email">
+
+                            </div>
+
+                        </div>
+
+                        {#<div class="row input-wrap" style="margin-bottom: 32px;line-height: 20px;">#}
+
+                            {#<div class="col-md-3 col-xs-12 col-sm-6">#}
+                                {#How many proxies do you currently have,<br>#}
+                                {#or are considering purchasing?#}
+                            {#</div>#}
+
+
+                            {#<div class="col-md-6 col-xs-12 col-sm-6">#}
+                                {#<select name="haveServer" class="" aria-invalid="false"><option value="">---</option><option value="5-10">5-10</option><option value="11-50">11-50</option><option value="51-100">51-100</option><option value="101-300">101-300</option><option value="301-500">301-500</option><option value="501-1000+">501-1000+</option></select>#}
+
+                            {#</div>#}
+
+
+                            {#<select name="helpdesk_ticket[custom_field][cf_how_many_proxies_do_you_currently_have_or_are_considering_purchasing_455547]">#}
+                                {#<option value="">Yes</option>#}
+                                {#<option value="">No</option>#}
+                            {#</select>#}
+                        {#</div>#}
+
+
+
+                        <div class="row input-wrap" style="margin-bottom: 22px;">
+
+
+                            <div class="col-md-3 col-xs-12 col-sm-4">
+                                Type:
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-8">
+                                <select name="ticket_type">
+                                    <option value="server">Server</option>
+                                    <option value="proxy">Proxy</option>
+                                    <option value="billing">Billing</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="row input-wrap" style="margin-bottom: 0px">
+                            <div class="col-md-3 col-xs-12 col-sm-4" style="
+    align-self:  flex-start;
+    margin-top: 10px;
+">
+
+
+                                Description:
+                            </div>
+
+                            <div class="col-md-6 col-xs-12 col-sm-8">
+
+                                <textarea  name="Description" PLACEHOLDER="Description of Problem or Concern
+"></textarea>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row input-wrap ">
+
+                            <div class="col-md-3 col-xs-12 col-sm-4">
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-8" style="display: flex;">
+
+                                {#<input type="file" name="file" id="file" class="inputfile" data-multiple-caption="{count} files selected" multiple />#}
+                                {#<label for="file"><span id="input-file-span" style="color: #094fb1;">+ attach a file</span></label>#}
+                                <div class="package-btn-wrap">
+                                    <input type="submit" class="package-btn package-buy-btn" value="Submit"/>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% include 'flash.html.twig' %}
+
+                        </div>
+                    </div>
+                </section>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

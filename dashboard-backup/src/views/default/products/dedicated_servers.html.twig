@@ -1,0 +1,194 @@
+
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    {{ title is defined ? title : "Products" }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="conteiner-fluid">
+        <div class="row" style="width: 100%;margin: 0;padding: 0;">
+            <div class="col-md-12">
+                {% include 'flash.html.twig' %}
+            </div>
+
+            <div class="product-list-flex">
+
+                    {% for product in products %}
+
+
+
+                        <div class="cart cart-dedicated">
+
+                            {% if product.isTrial == 1 %}
+                            <span class="cart-trial">
+                                Free 2 day trial
+                            </span>
+                            {% endif %}
+
+                            <h4 class="cart-header">{{ product['name'] }}</h4>
+
+
+                            <div class="cart-body">
+
+                                <div class="description">
+                                    {{ product['description'] | raw }}
+
+                                </div>
+
+                                <div class="price">
+
+                                    <div class="price-wrap">
+
+
+                                        {% if product.isTrial == 1 %}
+
+                                            After trial period
+
+                                        {% else %}
+
+                                            Starting from
+
+
+
+                                        {% endif %}
+
+                                        <br>
+
+
+                                        {#{% if product['module'] == 'EasyDCIM' and product['configoptions']['configoption'] | length >0 %}#}
+                                            {#Monthly<br>#}
+
+                                            {#<span>#}
+                                                {#${{ product['pricing']['USD']['monthly']#}
+                                                {#+ product['configoptions']['configoption'][2]['options']['option'][0]['pricing']['USD'].monthly#}
+                                                {#+ product['configoptions']['configoption'][3]['options']['option'][0]['pricing']['USD'].monthly#}
+                                                {#}} USD</span>#}
+
+
+                                        {#{% else %}#}
+
+                                            <span>
+
+
+
+                                                {% if product.isTrial == 1 %}
+
+                                                    $ {{ product['monthly']
+                                                        + product['configoptions']['configoption'][2]['options']['option'][1]['pricing']['USD'].monthly
+                                                        + product['configoptions']['configoption'][3]['options']['option'][1]['pricing']['USD'].monthly }} USD
+
+
+
+                                                  {% else %}
+
+                                                      $ {{ product['monthly']
+                                                  + product['configoptions']['configoption'][2]['options']['option'][0]['pricing']['USD'].monthly
+                                                  + product['configoptions']['configoption'][3]['options']['option'][0]['pricing']['USD'].monthly }} USD
+
+
+
+                                                {% endif %}
+                                            </span>
+                                            <br>  Monthly
+
+
+
+
+
+
+                                        <br>
+                                        {% if product.msetupfee != 0 %}
+                                            +${{ product.msetupfee }} Setup Fee
+                                        {% endif %}
+                                    </div>
+
+
+                                    <a class="tt-btn-red" href="/products/product/{{ product['id'] }}"> Order Now</a>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+                        {#<div class="col-md-12 col-lg-5 ">#}
+
+                        {#<div class="cart">#}
+                        {#<h4 class="cart-header">{{ product['name'] }}</h4>#}
+
+                        {#<div class="row">#}
+                        {#<div class="col-lg-6 col-md-6">#}
+                        {#<div class="description">#}
+                        {#{{ product['description'] | raw }}#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-lg-6 col-md-6 right text-center">#}
+
+                        {#<div class="price">#}
+                        {#Starting from <br>#}
+
+
+
+                        {#{% if product['module'] == 'EasyDCIM' and product['configoptions']['configoption'] | length >0 %}#}
+
+                        {#<span>${{ product['pricing']['USD']['monthly']#}
+                        {#+ product['configoptions']['configoption'][2]['options']['option'][0]['pricing']['USD'].monthly#}
+                        {#+ product['configoptions']['configoption'][3]['options']['option'][0]['pricing']['USD'].monthly#}
+                        {#}} USD</span>#}
+
+
+                        {#{% else %}#}
+
+                        {#<span>${{ product['pricing']['USD']['monthly'] }} USD</span>#}
+
+
+                        {#{% endif %}#}
+
+
+
+
+                        {#<br>Monthly <br>#}
+                        {#{% if product['pricing']['USD'].msetupfee != 0 %}#}
+                        {#${{ product['pricing']['USD'].msetupfee }} Setup Fee#}
+                        {#{% endif %}#}
+                        {#</div>#}
+
+                        {#<a class="tt-btn-red" href="/products/product/{{ product['pid'] }}"> Order Now</a>#}
+
+                        {#</div>#}
+                        {#</div>#}
+
+
+
+
+                        {#</div>#}
+                        {#</div>#}
+
+
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block page_scripts %}
+
+
+
+
+    <script>
+        {#var products = {{ products }}#}
+        {##}
+        {##}
+        //         console.log(products)
+
+    </script>
+{% endblock %}

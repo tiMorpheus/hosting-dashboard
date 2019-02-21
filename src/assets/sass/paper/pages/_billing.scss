@@ -1,0 +1,300 @@
+@import "../variables";
+
+.management-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  border-radius: 10px;
+
+  margin-bottom: 10px;
+  min-height: 62px;
+  border: 1px solid #eeeeee;
+
+  .i-id {
+    width: 7%;
+
+    span {
+      b {
+        font-family: Roboto, sans-serif;
+        fontY-weight: bold;
+      }
+    }
+  }
+
+  .i-date {
+    width: 10%;
+  }
+
+  .i-duedate {
+    width: 15%;
+  }
+
+  .i-total {
+    width: 15%;
+  }
+
+  .i-description {
+    width: 20%;
+  }
+
+  .i-status {
+    width: 15%;
+    text-align: center;
+  }
+
+  .text-status {
+    text-align: center;
+    border-radius: 50px;
+    padding: 5px 12px;
+    font-weight: bold;
+    background-color: #c4c4c4;
+    color: #fff;
+
+  }
+
+  .text-unpaid {
+    font-weight: bold;
+    background: #ff3b3b;
+    color: white;
+    border-radius: 50px;
+    padding: 5px 16px;
+  }
+
+  .text-cancelled {
+    border-radius: 50px;
+    padding: 5px 20px;
+    font-weight: bold;
+    background-color: #c4c4c4;
+    color: #fff;
+  }
+
+  .text-paid {
+    color: white;
+    font-weight: bold;
+    padding: 5px 31px;
+    border-radius: 13px;
+    background-color: #094fb1;
+  }
+
+  .text-pending {
+    color: white;
+    font-weight: bold;
+    padding: 5px 25px;
+    border-radius: 13px;
+    background-color: #ff3b3b;
+  }
+
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  cursor: pointer;
+
+  border-radius: 10px;
+
+  margin-bottom: 10px;
+  min-height: 62px;
+  border: 1px solid #eeeeee;
+
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+  &:hover {
+    box-shadow: 0 0 6px 0 #d8d8d8;
+  }
+
+  .getInvoice {
+    position: absolute;
+    right: 17px;
+  }
+
+  .i-id {
+    width: 7%;
+    text-align: center;
+    span {
+      b {
+        font-family: Roboto, sans-serif;
+        fontY-weight: bold;
+      }
+    }
+
+  }
+
+  .i-date {
+    width: 11%;
+  }
+
+  .i-duedate {
+    width: 11%;
+  }
+
+  .i-total {
+    width: 10%;
+  }
+
+  .i-description {
+    width: 28%;
+
+    span {
+      white-space: nowrap; /* Запрещаем перенос строк */
+      overflow: hidden; /* Обрезаем все, что не помещается в область */
+      text-overflow: ellipsis; /* Добавляем многоточие */
+      display: block;
+    }
+    &:hover {
+
+      span {
+        white-space: initial;
+        overflow: visible;
+      }
+    }
+  }
+
+  .i-status {
+    text-align: center;
+    width: 11%;
+  }
+
+  .i-link {
+    width: 9%;
+
+    .btn-info {
+      padding: 3px 20px;
+    }
+  }
+
+  .text-unpaid {
+    font-weight: bold;
+    background: #ff3b3b;
+    color: white;
+    border-radius: 50px;
+    padding: 5px 22px;
+  }
+
+  .text-status {
+    border-radius: 50px;
+    padding: 5px 14px;
+    font-weight: bold;
+    background-color: #d9d9d9;
+    color: #fff;
+
+  }
+
+
+
+  .text-payment-pending {
+
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+
+    background: #779500;;
+    padding: 5px 9px;
+  }
+
+  .text-collections {
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+
+    background: #fb6;
+    padding: 5px 9px;
+  }
+
+  .text-cancelled {
+    border-radius: 50px;
+    padding: 5px 13px;
+    font-weight: bold;
+    background-color: #c4c4c4;
+    color: #fff;
+  }
+
+  .text-paid {
+    color: white;
+    font-weight: bold;
+    padding: 5px 30px;
+    border-radius: 13px;
+    background-color: #094fb1;
+  }
+
+}
+
+.no-hover {
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+#loadmore {
+  color: white;
+  border: none;
+  border-radius: 50px;
+  background: red;
+  padding: 5px 20px;
+  line-height: 20px;
+
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+
+  &:hover {
+    background: #b92800;
+  }
+}
+
+.invoice-row-th {
+  font-size: 12px;
+  line-height: 52px;
+  color: #b7b6b6;
+  border: none;
+  position: relative;
+  top: 16px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1300px) {
+
+  .invoice-row {
+    font-size: 10px;
+
+    min-height: 45px;
+
+    .invoice-row-th {
+
+      font-size: 8px;
+
+    }
+
+    .text-paid {
+      padding: 5px 21px;
+    }
+
+    .text-unpaid {
+      font-weight: bold;
+      background: #ff3b3b;
+      color: white;
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 10px;
+    }
+
+    .i-link {
+      .btn-info {
+        padding: 1px 11px;
+        font-size: 10px;
+      }
+    }
+
+    .getInvoice {
+      right: 5px;
+    }
+  }
+}

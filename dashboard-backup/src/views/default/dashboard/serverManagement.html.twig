@@ -1,0 +1,232 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Server Management
+{% endblock %}
+
+{% block content %}
+
+    <div class="server-management-btn-wrap">
+        <a href="https://master.connectmyvps.com:4083" target="_blank" class="btn btn-lg blue">VPS</a>
+
+        or
+        <a href="http://inv.blazingseollc.com/login" target="_blank" class="btn btn-lg blue">Dedicated Servers</a>
+
+    </div>
+
+    {#{% for service in services %}#}
+
+
+        {#{{ service[0] }}#}
+
+
+
+    <div >
+        <h4 style="font-size: 16px;
+    /* line-height: 52px; */
+    color: #094fb1;
+        font-weight: bold;
+        margin: 0;">Services
+
+            <span style="color:#878787; font-family: Roboto, sans-serif; font-weight: 500; font-size: 12px;">
+            (Showing
+                <span id="serviced-showed">{{ numreturned }}</span>
+            of {{ totalNum }})</span>
+
+        </h4>
+        {#{% if services.totalresults == 0 %}#}
+            {#<p>No products to show</p>#}
+
+        {#{% endif %}#}
+    </div>
+
+
+
+    {% if totalNum > 0%}
+        <div class="management-row" style="font-size: 12px;line-height: 52px;color: #b7b6b6;border: none;position:  relative;top: 16px;font-weight: bold;">
+            <div class="i-id"><span>Order ID</span></div>
+            <div class="i-description">Description</div>
+            <div class="i-duedate"><span>Next Due Date</span></div>
+            <div class="i-date"><span>Billing Cycle</span></div>
+            <div class="i-total"><span>Recurring Amount</span></div>
+            <div class="i-status">Status</div>
+
+        </div>
+
+    {% endif %}
+
+
+
+    <div class="management-wrap">
+
+
+          {% for item in services["products"] %}
+
+           {% for i in item %}
+               <div class="management-row" data-id="{{ i["id"] }}" >
+
+                   <div class="i-id"><span><b>{{ i["orderid"]}}</b></span></div>
+                   <div class="i-description">
+                       <span>{{i["productname"] }}</span>
+
+                   </div>
+                   <div class="i-duedate"><span>{{ i["nextduedate"] }}</span></div>
+                   <div class="i-date"><span>{{ i["billingcycle"] }}</span></div>
+                   <div class="i-total"><span>${{ i["amount"] }} USD</span></div>
+                   <div class="i-status">
+                       <span>      {% if i["domainstatus"] == 'Cancelled' %}
+                               <span class="invoicestatus"><span class="text-cancelled">Cancelled</span></span>
+                {% elseif i["domainstatus"] == 'Active' %}
+                               <span class="invoicestatus"><span class="text-paid">Active</span></span>
+                {% elseif i["domainstatus"] == 'Suspended' %}
+                               <span class="invoicestatus"><span class="text-unpaid ">Suspended</span></span>
+                {% elseif i["domainstatus"] == 'Pending' %}
+                               <span class="invoicestatus"><span class="text-pending ">Pending</span></span>
+                {% else %}
+                               <span class="invoicestatus"><span class="text-status">{{ i["domainstatus"] }}</span></span>
+                           {% endif %}
+                       </span>
+                   </div>
+
+
+               </div>
+
+
+
+
+           {% endfor %}
+       {% endfor %}
+
+
+    </div>
+
+
+    <div class="invoice-row no-hover" style="cursor:default;font-size: 12px;line-height: 52px;color: #b7b6b6;border: none;position:  relative;top: 16px;font-weight: bold;">
+
+
+        <button id="loadmore" class="{% if numreturned < 10 %}hide{% endif %}">+ more</button>
+
+    </div>
+
+
+
+    {#{% endfor %}#}
+
+{% endblock %}
+
+{% block page_scripts %}
+
+    <script>
+
+
+
+        var total = {{ totalNum }};
+        var current ={{ numreturned }};
+
+        var page = 1;
+        $('#loadmore').on('click', function() {
+            $.ajax('{{ url('getMoreServices') }}', {
+                method: "POST",
+                data: {page: page++},
+                // dataType: 'json',
+                beforeSend: function(){
+                    $("#loadmore").html("Loading...")
+                },
+                success: function(data) {
+
+                    data = data.products.product;
+                    console.log(data);
+
+                    let numret = data.length;
+
+                    current += numret;
+                    if( current == total){
+                        $('#loadmore').remove();
+
+                    }
+
+
+
+
+
+                    for (let i=0; i < numret; i++){
+
+
+                        let tmpService = data[i];
+
+
+
+                        let html = "<div class='management-row ' data-id='"+ tmpService.orderid +"' >";
+                            html += "<div class='i-id'><span><b>" + tmpService.orderid + "</b></span></div>";
+                            html += "<div class='i-description'><span>" + tmpService.productname + "</span></div>";
+                            html += "<div class='i-duedate'><span>" + tmpService.nextduedate + "</span></div>";
+                            html += "<div class='i-date'><span>" + tmpService.billingcycle + "</span></div>";
+                            html += "<div class='i-total'><span>$" + tmpService.amount + " USD</span></div>";
+                            html += "<div class='i-status'>";
+
+
+                                let status = tmpService.domainstatus;
+                                if (status == "Cancelled") {
+                                    html += "<span class='invoicestatus'><span class='text-cancelled link'>Cancelled</span></span>"
+
+                                }
+
+                                if (status == "Active") {
+                                    html += "<span class='invoicestatus'><span class='text-paid link'>Active</span></span>"
+
+                                }
+                                if (status == "Suspended") {
+                                    html += "<span class='invoicestatus'><span class='text-unpaid link'>Suspended</span></span>"
+
+                                }
+
+                                if (status == "Pending") {
+                                    html += "<span class='invoicestatus'><span class='text-pending link'>Pending</span></span>"
+                                }
+                                if (status == "Terminated") {
+                                    html += "<span class='invoicestatus'><span class='text-status link'>"+status+"</span></span>"
+                                }
+                        html += "</div>";
+                        html += "</div>";
+
+
+                        $(".management-wrap").append(html);
+
+                        $("#serviced-showed").html(current);
+
+
+
+
+
+                    }
+
+
+
+
+
+                    $("#loadmore").html("+ load more");
+
+                    console.log();
+                    if(numret < 10 || numret == 0) {
+                        $('#loadmore').remove();
+                    }
+
+                    // self.append(data.list);
+                    //
+                    // if(data.list.length <= self.options.perPage) {
+                    //     $('#loadmore').remove();
+                    // }
+                    //
+                    // self.ajustRows();
+                },
+                error : function (xhr) {
+                    alert("Error request : "  )
+                    console.log(xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+
+
+    </script>
+
+{% endblock %}

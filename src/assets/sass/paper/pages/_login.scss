@@ -1,0 +1,140 @@
+@import "../variables";
+
+
+
+
+.login-form{
+
+  padding: 0 66px;
+
+  max-width: 700px;
+
+  .tt-h1-header{
+    text-align: center;
+    font-weight: bold;
+    color: #0a4fb1;
+    margin-bottom: 58px;
+    font-size: 24px;
+  }
+
+  label{
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .form-group{
+    margin-bottom: 20px;
+  }
+
+  input{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(10, 79, 177, 0.1);
+    color: #0c7ce3;
+    height: 50px;
+    font-weight: bold;
+  }
+
+  .tt-link{
+    width: 100%;
+    display: block;
+    text-align: right;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 11px;
+  }
+
+  .btn-wrap{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  .tt-btn{
+    padding: 5px 30px;
+    font-size: 14px;
+    height: auto;
+
+    font-weight: bold;
+
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+
+  }
+  .tt-btn.red{
+    background: red;
+    border: none;
+    color: white;
+
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    &:hover{
+      background: #e40000;
+    }
+
+
+  }
+  .tt-signup{
+    background: $blazing-background-color;
+    color: white;
+    border: none;
+    line-height: 22px;
+    width: 115px;
+
+        -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+
+    &:hover{
+
+      background: $blazing-background-color-hover;
+
+    }
+  }
+}
+
+
+
+.tt-btn.red{
+  background: red;
+  border: none;
+  color: white;
+
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  &:hover{
+    background: #e40000;
+    color: white;
+
+  }
+
+
+}
+
+.login-form {
+  padding: 0;
+
+  margin: 0 auto;
+
+  max-width: 450px;
+}
+
+@media screen and (max-width: 1200px) {
+
+
+
+  .login-form {
+    padding: 0;
+  }
+}

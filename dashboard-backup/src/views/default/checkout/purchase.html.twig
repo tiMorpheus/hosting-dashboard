@@ -1,0 +1,444 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Choose Your Plan
+{% endblock %}
+
+{% block content %}
+    {% include 'flash.html.twig' %}
+<div class="row">
+    <div id="proxy-builder" class="col-lg-12 ">
+        {#<button class="add btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i>  Add More Countries / Categories</button>#}
+        <h4 class="text-primary trial-products-showing-notice hidden">
+            You are only able to select trial products right now.<br>
+            <small>Click "Show All Products" to see all service options.<br>If you enter a quantity greater than 5, you will not be eligible for the free trial of this product.</small>
+        </h4>
+
+
+        <form id="proxy-form" name="proxy-form" method="POST" action="{{ url('doCheckout') }}"
+              data-toggle="validator" class="active-spinner">
+            {% if data.showTrials is defined and data.showTrials %}
+                <input type="hidden" name="details[trial]" value="1">
+            {% endif %}
+            <div class="proxy-row hide">
+                <div class="row">
+
+
+                    <div class="col-md-12 mt-xl">
+                        <div class="form-group">
+                            {#{% include 'checkout/snippet/field_country.html.twig' with { 'data': data, 'available': available } only %}#}
+
+
+                            <div class="container" style="margin: 0 15px;">
+                                <h4 class="mb-xl">Country</h4>
+                                <div class="row" style="margin: 0;">
+
+
+                                    <div class="col-md-2" style="padding-left: 0" >
+
+                                        <div class="tt-country tt-country-us">
+                                            <input type="radio" name="plan[country][]" class="tt-radio-btn country" >
+
+
+                                            <span class="tt-font-bold" style="font-weight: bold;"> USA</span>
+
+                                            <div class="flag">
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-2" style="padding-left: 0" >
+
+                                        <div class="tt-country tt-country-de">
+                                            <input type="radio" name="plan[country][]" class="tt-radio-btn country" >
+
+
+                                            <span class="tt-font-bold" style="font-weight: bold;"> Germany</span>
+
+                                            <div class="flag">
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-2" style="padding-left: 0" >
+
+                                        <div class="tt-country tt-country-br">
+                                            <input type="radio" name="plan[country][]" class="tt-radio-btn country" >
+
+
+                                            <span class="tt-font-bold" style="font-weight: bold;"> Brazil</span>
+
+                                            <div class="flag">
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-2" style="padding-left: 0" >
+
+                                        <div class="tt-country tt-country-gb">
+                                            <input type="radio" name="plan[country][]" class="tt-radio-btn country" >
+
+
+                                            <span class="tt-font-bold" style="font-weight: bold;"> UK</span>
+
+                                            <div class="flag">
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-2" style="padding-left: 0" >
+
+                                        <div class="tt-country tt-country-india">
+                                            <input type="radio" name="plan[country][]" class="tt-radio-btn country" >
+
+
+                                            <span class="tt-font-bold" style="font-weight: bold;"> India</span>
+
+                                            <div class="flag">
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 mt-lg">
+                        <div class="form-group">
+
+                            <div class="container" style="margin: 0 15px">
+                                <h4 class="mb-xl">Type</h4>
+
+                                <div class="tt-container">
+                                    {#{% include 'checkout/snippet/field_category.html.twig' with { 'data': data, 'available': available } only %}#}
+
+
+
+
+
+
+                                    <div class="tt-category-item">
+
+                                        <input type="radio" name="plan[category][]" class="category tt-radio-btn" >
+
+                                        <h4>Semi-Dedicated</h4>
+
+
+                                        <div class="tt-price-container">Starting at: <span class="tt-price">$1</span></div>
+
+
+
+                                        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+                                        {#{% if value == "dedicated" %}#}
+                                        {#<span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site#}
+
+                                        {#</span>#}
+                                        {#{% endif %}#}
+                                    </div>
+
+
+                                    <div class="tt-category-item">
+
+                                        <input type="radio" name="plan[category][]" class="category tt-radio-btn" >
+
+                                        <h4>Dedicated</h4>
+
+
+                                        <div class="tt-price-container">Starting at: <span class="tt-price">$2</span></div>
+
+
+
+                                        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+                                        {#{% if value == "dedicated" %}#}
+                                        {#<span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site#}
+
+                                        {#</span>#}
+                                        {#{% endif %}#}
+                                    </div>
+
+
+                                    <div class="tt-category-item">
+
+                                        <input type="radio" name="plan[category][]" class="category tt-radio-btn" >
+
+                                        <h4>Rotating</h4>
+
+
+                                        <div class="tt-price-container">Starting at: <span class="tt-price">$3</span></div>
+
+
+
+                                        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+                                        {#{% if value == "dedicated" %}#}
+                                        {#<span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site#}
+
+                                        {#</span>#}
+                                        {#{% endif %}#}
+                                    </div>
+
+
+                                    <div class="tt-category-item">
+
+                                        <input type="radio" name="plan[category][]" class="category tt-radio-btn" >
+
+                                        <h4>Sneaker</h4>
+
+
+                                        <div class="tt-price-container">Starting at: <span class="tt-price">$4</span></div>
+
+
+
+                                        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+                                        {#{% if value == "dedicated" %}#}
+                                        {#<span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site#}
+
+                                        {#</span>#}
+                                        {#{% endif %}#}
+                                    </div>
+
+
+                                    <div class="tt-category-item">
+
+                                        <input type="radio" name="plan[category][]" class="category tt-radio-btn" >
+
+                                        <h4>Shopify</h4>
+
+
+                                        <div class="tt-price-container">Starting at: <span class="tt-price">$5</span></div>
+
+
+
+                                        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+                                        {#{% if value == "dedicated" %}#}
+                                        {#<span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site#}
+
+                                        {#</span>#}
+                                        {#{% endif %}#}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-xl">
+
+                            {#{% include 'checkout/snippet/billing_cycles.html.twig' with { 'data': data } only %}#}
+
+
+
+                        <div class="container" style="margin: 0 15px;">
+                            <div class="form-group select-billing-cycle " >
+
+
+
+                                <h4 class="mb-xl control-label billing-cycle-label">Billing Cycle</h4>
+
+
+                                <div class="radio radio-inline tt-radio-inline">
+                                    <input  id="billing-cycle-monthly" class=" tt-radio-btn tt-billing-cycle-input"  name="plan[billingCycle]" value="Monthly">
+                                    <label for="billing-cycle-monthly">Monthly</label>
+                                </div>
+
+                                <div class="radio radio-inline tt-radio-inline">
+                                    <input  id="billing-cycle-quarterly" class=" tt-radio-btn tt-billing-cycle-input"  name="plan[billingCycle]" value="Quarterly">
+                                    <label for="billing-cycle-quarterly">Quarterly</label>
+                                </div>
+                                <div class="radio radio-inline tt-radio-inline">
+                                    <input  id="billing-cycle-semiannually" class=" tt-radio-btn tt-billing-cycle-input"  name="plan[billingCycle]" value="Semiannually">
+                                    <label for="billing-cycle-semiannually">Semiannually</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-md-12 mt-xl">
+
+                        <div class="container" style="margin: 0 15px">
+                            <div class="form-group">
+                                <h4 class="mb-xl">Number of proxy servers</h4>
+
+
+
+
+                                <div class="tt-amount-container">
+
+                                    <div class="tt-amount-left">
+                                        <span>Type how many proxies you need</span>
+                                        <input type="number" name="plan[amount][]" class="amount form-control m-b field-amount"
+                                                                                       value="{% if data.quantity is defined %}{{ data.quantity }}{% endif %}"
+                                                                                       min="1" required/>
+                                        {#<span class="help-block with-errors"></span>#}
+                                    </div>
+                                    <div class="tt-amount-right">
+
+                                        <div class="tt-amount-right-text">
+                                            <h5 class="tt-text-1" >Start a trial now</h5>
+
+                                            <div class="tt-text-2">Free 2 trial days, then $<span>x</span>/mo </div>
+
+                                        </div>
+                                        <div class="tt-amount-right-btn">
+                                            <a class="tt-btn-trial get-trial">Start</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 col-purchase-buttons">
+                        <div class="hidden" style="display: inline-block; margin-bottom: 10px;">
+                            <a class="btn btn-primary show-all-products">Show all products</a>
+                        </div>
+                    </div>
+                </div>
+                {#<div class="form-group select-billing-cycle hidden" {% if data.billingCycle is defined %}data-preselected="{{ data.billingCycle }}"{% endif %}>
+                    <label class="control-label billing-cycle-label">Billing Cycle:</label>
+                </div>#}
+            </div>
+
+
+            <div class="action-row container mt-lg" style="margin: 0 15px">
+                <div class="promocode" style="display:inline-block;">
+
+                    <div class="form-inline">
+                        <input class="form-control tt-input-promocode" type="text" name="details[promocode]" value="" placeholder="Enter Your Code" />
+                        <a href="" class="btn btn-success tt-btn">Apply Promo Code</a>
+                    </div>
+                </div>
+                <h4 style="display: inline-block; float: right; margin: 0 20px;" class="total-for-plan">Price:<span class="tt-total-price discount-total hide">$0.00</span> <span id="total" class="tt-total-price total-without-discount">$0.00</span></h4>
+                <div class="alert alert-danger disclaimer hide"></div>
+                {#{% include 'checkout/snippet/tos.html.twig' %}#}
+            </div>
+            <div class="container mt-xl" style="margin:0 15px">
+                <button id="submit" type="submit" class="btn btn-lg btn-primary tt-btn" style="float: right;" >Select Pack</button>
+            </div>
+            <input type="hidden" name="new" value="1">
+            {{ {
+                'availableProducts': available,
+                'boughtProducts': upgradableProducts
+            } | shareVars }}
+            <div id="trialPurchaseInstructions" style="display: none">
+                <p class="text-justify" style="max-width: 660px;">
+                    To receive your free trial, you will need to fill out a PayPal Billing Agreement.
+                    This allows us to verify your PayPal account to prevent fraud and abuse.
+                    Once you click "Checkout" below, a new page will open prompting you to fill out this agreement.
+                    <br><br>
+                    You cannot receive the free trial without this billing agreement.
+                </p>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-12 purchase-page-info-modal">
+
+        <div class="container mt-xl" style="margin: 0 15px">
+
+            {% if HAS_BOUGHT_PACKAGES %}
+                <div class="tt-info-card">
+                    <div class="tt-card-heading">
+                        <h4>Trying to Upgrade / Downgrade your current package?</h4>
+                    </div>
+                    <div class="">
+                        <ul class="pretty-ul">
+                            <li>
+                                If you are trying to change the quantity of your current package, please visit
+                                <a href="{{  url('checkout') }}">Upgrade / Downgrade Current Package</a>.
+                                To simplify billing, we have made our system so that all your proxies remain on the same package.
+                                You cannot buy additional packages of the same proxy type (i.e. - USA dedicated proxies is a single type).
+                            </li>
+                            <li>
+                                If for some reason you require having two separate packages of the same proxy type, you must create a new account.
+                                If you choose to do this, please use a Private Browser so that your logins do not overlap.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block page_scripts %}
+
+
+
+    <script>
+        $('input.country').change(function () {
+
+            $('.tt-country').removeClass("active");
+
+
+            $(this).parent().addClass("active");
+
+        });
+
+
+        $('input.category').change(function () {
+
+
+            $(".tt-category-item").removeClass('active');
+
+
+            $(this).parent().addClass("active");
+        })
+
+    </script>
+{% endblock %}

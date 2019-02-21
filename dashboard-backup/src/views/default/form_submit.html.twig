@@ -1,0 +1,9 @@
+<h2><center>{% if text is defined %}{{ text }}{% else %}Please wait...{% endif %}</center></h2>
+<form action="{{ url }}" id="form" method="POST">
+    {% for key, value in fields %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+    {% endfor %}
+</form>
+<script type="text/javascript">
+	document.getElementById('form').submit();
+</script>

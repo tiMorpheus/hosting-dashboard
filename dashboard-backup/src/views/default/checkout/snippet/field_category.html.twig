@@ -1,0 +1,100 @@
+{#<select name="plan[category][]" class="category form-control m-b" required>#}
+    {#{% if data.category is not defined or data.category is empty or data.category not in available | pluck('category') %}#}
+        {#<option value=""></option>#}
+    {#{% endif %}#}
+    {#{% set map = {#}
+        {#'dedicated': {#}
+            {#'notice': {#}
+                {#'us': include('main/disclaimer/us-default.notice.html.twig')#}
+            {#},#}
+            {#'disclaimer': {#}
+                {#'de': include('main/disclaimer/de-default.disclaimer.html.twig')#}
+            {#}#}
+        {#},#}
+        {#'semi-3': {#}
+            {#'notice~': {#}
+                {#'us': include('main/disclaimer/us-default.notice.html.twig')#}
+            {#},#}
+            {#'disclaimer': {#}
+                {#'de': include('main/disclaimer/de-default.disclaimer.html.twig')#}
+            {#}#}
+        {#},#}
+        {#'rotating': {#}
+            {#'notice~': {#}
+                {#'us': include('main/disclaimer/us-default.notice.html.twig')#}
+            {#},#}
+            {#'disclaimer': {#}
+                {#'us': include('main/disclaimer/us-rotating.disclaimer.html.twig'),#}
+                {#'de': include('main/disclaimer/de-default.disclaimer.html.twig')#}
+            {#}#}
+        {#},#}
+        {#'sneaker': {#}
+            {#'notice': {#}
+                {#'us': include('main/disclaimer/us-sneaker.notice.html.twig')#}
+            {#},#}
+            {#'disclaimer~': {#}
+                {#'us': include('main/disclaimer/us-sneaker.disclaimer.html.twig'),#}
+                {#'de': include('main/disclaimer/de-default.disclaimer.html.twig')#}
+            {#},#}
+            {#'checkbox': {#}
+                {#'all': '.checkbox .no-refund-page'#}
+            {#}#}
+    {#}} %}#}
+
+
+    {#{% for value in available | pluck('category') | unique %}#}
+        {#<option value="{{ value }}"{%#}
+        {#if data.category is defined and data.category == value %} selected="selected"{% endif#}
+        {#%}{%#}
+        {#for country in available | pluck('country') | unique %}{%#}
+            {#if map[value].notice[country] is defined or map[value].notice.all is defined#}
+        {#%} data-notice-{{ country }}="{{ map[value].notice[country] | escape }}"{% endif %} {% endfor#}
+        {#%}{%#}
+        {#for country in available | pluck('country') | unique %}{%#}
+            {#if map[value].disclaimer[country] is defined or map[value].disclaimer.all is defined#}
+        {#%} data-disclaimer-{{ country }}="{{ map[value].disclaimer[country] | escape }}"{% endif#}
+        {#%}{%#}
+        {#for country in available | pluck('country') | unique %}{%#}
+        {#if map[value].checkbox[country] is defined or map[value].checkbox.all is defined#}
+        {#%} data-checkbox-required-{{ country }}="{{ (map[value].checkbox[country] is defined ?#}
+                {#map[value].checkbox[country] : map[value].checkbox.all) | escape }}"{% endif %} {% endfor#}
+        {#%}{% endfor#}
+        {#%}>{{ ('proxy.category.' ~ value) | trans }}</option>#}
+    {#{% endfor %}#}
+{#</select>#}
+{#<span class="help-block with-errors"></span>#}
+
+
+
+
+{% for value in available | pluck('category') | unique %}
+
+
+
+
+    <div class="tt-category-item">
+
+        <input type="radio" name="plan[category][]" class="category tt-radio-btn" value="{{ value }}">
+
+        <h4>{{ ('proxy.category.' ~ value) | trans }} </h4>
+
+
+        <div class="tt-price-container">Starting at: <span class="tt-price">$12</span></div>
+
+
+
+        <div class="tt-circle" data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                             This does not &quot;add&quot; on top of your previous package.
+                             All current proxies will remain intact when you upgrade.">i</div>
+
+        {% if value == "dedicated" %}
+            <span class="tt-info-text"  data-toggle="tooltip" data-placement="right" title="" data-trigger="hover" data-original-title="Dedicated proxies do not work on sneaker sites, you must purchase our Sneaker Proxies if you plan to use the proxies on such sites.">* Will not work on sneakers site
+
+            </span>
+        {% endif %}
+    </div>
+
+
+
+
+{% endfor %}

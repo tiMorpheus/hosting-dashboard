@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Locations
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row" style="padding: 0 3%;">
+            <div class="col-md-12 mt-xl">
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, eaque in magni minima perferendis
+                    qui quis sunt tempora totam ut? Hic iusto repudiandae totam veritatis? Dolorem earum excepturi illo,
+                    ipsam quia recusandae saepe totam vel! Ab cupiditate dolorem enim, harum itaque labore laboriosam
+                    maxime molestiae natus quibusdam. Architecto autem cumque deleniti et, hic inventore minima obcaecati
+                    quo quod tenetur vel.
+                </p>
+
+                <div  >
+                    {#<div class="col-sm-1">#}
+                    {#<div style="font-size: 20px;" id="{{ plan.country }}_{{ plan.category }}_total" class="text-center location_category" data-category="{{ plan.category }}" data-total="{{ plan.count }}">#}
+                    {#{{ plan.count }}#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#<label class="col-sm-10 control-label" style="font-size: 20px;">Total Proxies To Be Assigned</label>#}
+
+
+
+                    <div class="tt-mixed-btn"  data-toggle="tooltip" data-placement="down" title="" data-trigger="hover" data-original-title="This is your best option for a diverse subnet, and locations. Our algorithm automatically determines what would be best for you usage. Please click to proceed. ">
+
+                                                    <span>
+                                                        Mixed (Best Option)
+                                                    </span>
+
+                        <i class="fa fa-info" aria-hidden="true"></i>
+
+                    </div>
+
+
+
+
+                </div>
+                {% if app.session.get('redirect_dashboard') %}
+                    <div class="alert alert-info">You Need to Set Locations Before You Can Access Any Other Areas of the Dashboard</div>
+                {% endif %}
+
+                <div class="alert alert-success location-settings-message hide">Successfully Updated</div>
+
+                <hr>
+                {#<div class="tt-info-card">#}
+                    {#<div class="tt-card-heading">#}
+                        {#<h4 style="color:#8d8b8b; font-size: 16px">#}
+                            {#Any changes to your location preferences will take affect the next time your proxies rotate#}
+                        {#</h4>#}
+
+
+                        {#<a CLASS="tt-link" target="_blank" href="http://support.blazingseollc.com/support/solutions/articles/19000040771-proxy-location-wrong?utm_source=Dashboard&utm_campaign=ProxyLocationWrongDashboard">Locations not showing up correctly when checked? READ HERE</a>#}
+
+                    {#</div>#}
+                {#</div>#}
+
+                <div class="tt-own-locations col-md-12 text-center">
+                    <p class="">If you prefer to set your own locations, please click on the button below</p>
+
+
+                    <button type="button" class="btn btn-outline-secondary tt-own-locations-btn">Select your own locations</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        {% for plan in plans %}
+            {% if plan.category == "dedicated" %}
+                {% if plan.country == "us"  %}
+
+                    <form class="location_form {{ plan.country }}_{{ plan.category }}">
+
+                        <div id="map-area" class="row " style="visibility: hidden;padding: 0 3%;">
+
+
+                            <div class="col-md-8 mt-xl">
+                                <span class="{{ plan.country }}_{{ plan.category }} hide less label tt-label">You have to many proxies assigned</span>
+                                <span class="{{ plan.country }}_{{ plan.category }} hide more label tt-label">You still have proxies to assign</span>
+                                <span class="{{ plan.country }}_{{ plan.category }} hide good label tt-label">All your proxies are assigned</span>
+
+                                <div id="map"></div>
+                            </div>
+
+
+                            <div class='col-md-4 mt-xl'>
+                                <div class="">
+                                    <h5 class="tt-location-plan-header" style="display: inline-block;"> {{ plan | humanizeProxyName }}</h5>
+                                    {#<input type="submit" class="location_save tt-link tt-location-save location_save disabled " value="Save Location Settings" />#}
+                                    <div class="">
+
+
+                                        <div class="row" style=" margin-top: 5px; padding: 5px 0">
+
+                                        </div>
+                                        <div class="row " style="margin-bottom: 3px; border-bottom: 1px solid ;padding: 15px 0">
+                                            <div class="col-sm-4">
+
+
+                                                <div style="font-size: 20px;" id="{{ plan.country }}_{{ plan.category }}_total" class="text-center location_category" data-category="{{ plan.category }}" data-total="{{ plan.count }}">
+                                                    {{ plan.count }}
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-8 tt-location-input-label">Total Proxies To Be Assigned</div>
+                                        </div>
+                                        <div class="tt-location-wrap">
+
+
+                                            {% for location in locations
+                                                if location.country == plan.country %}
+
+
+
+
+
+                                                <div class="row tt-location-row location-{{ location.id }}" style="margin-bottom: 3px;{% if location.id != 1 and location[plan.category] < plan.count %}display:none;{% endif %}"  >
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">
+                                                            <span class="tt-bracket-before">(</span>
+                                                            <input type="number"
+                                                                   class="form-control region tt-location-input {% if  (plan.region[location.id] is defined)%}{% if plan.region[location.id]  > 0  %}tt-blue{% endif %}{% endif %}"
+                                                                   data-country="{{ plan.country }}"
+                                                                   data-category="{{ plan.category }}"
+                                                                   min="0"
+                                                                   name="ports[{{ plan.country }}][{{ plan.category }}][{{ location.id }}]"
+                                                                   value="{{ (plan.region[location.id] is defined) ? plan.region[location.id] : 0 }}" />
+                                                               <span class="tt-bracket-after">)</span>
+                                                        </div>
+                                                        <label class="col-sm-8 control-label tt-location-input-label {% if location.id == 1 %}tt-mixed-label{% endif %} " style="font-size: 14px;">
+                                                            {{ location.region }}{% if location.state %}, {{ location.state }}{% endif %}
+
+                                                            {#{% if location.id == 1 %}#}
+                                                                {#<div class="alert alert-success" style="font-size: 12px">#}
+                                                                    {#This is your best option for a lot of subnets. Our algorithm will give you the BEST subnet diversity and not be concerned about locations.#}
+                                                                {#</div>#}
+                                                            {#{% endif %}#}
+
+                                                            {% if location.id != 1 and location[plan.category] < plan.count %}
+                                                                <div class="alert alert-info" style="font-size: 12px">
+                                                                    There {{ location[plan.category]|abs }} proxies in this location. <br /> If you choose more from this location, you will need to wait up to 48 hours to receive them.
+                                                                </div>
+                                                            {% endif %}
+                                                        </label>
+                                                        <br />
+                                                    </div>
+                                                </div>
+
+
+                                            {% endfor %}
+                                        </div>
+
+                                        <br />
+                                        <input type="submit" class="location_save btn btn-primary  tt-btn location_save disabled" value="Save Location Settings" />
+                                        {#<span class="{{ plan.country }}_{{ plan.category }} hide less label label-danger">You have to many proxies assigned</span>#}
+                                        {#<span class="{{ plan.country }}_{{ plan.category }} hide more label label-info">You still have proxies to assign</span>#}
+                                        {#<span class="{{ plan.country }}_{{ plan.category }} hide good label label-success">All your proxies are assigned</span>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <script type="text/javascript" src="/assets/js/usmap/mapdata.js"></script>
+    <script type="text/javascript" src="/assets/js/usmap/usmap.js"></script>
+
+
+
+    <script>
+
+
+        var zz1 = {{ locations_coordinates['dedicated']|json_encode()|raw }};
+        simplemaps_usmap_mapdata.locations = zz1;
+    </script>
+
+
+{% endblock %}
+

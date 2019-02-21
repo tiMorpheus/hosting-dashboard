@@ -1,0 +1,19 @@
+{% if CONFIG_VIEW.layout.prepend_head %}{{ CONFIG_VIEW.layout.prepend_head | raw }}{% endif %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="{%
+if SEO_DESCRIPTION is defined and SEO_DESCRIPTION is not empty %}{{ SEO_DESCRIPTION }}{%
+else %}{{ CONFIG_VIEW.text.company_title }} - Dashboard{%
+endif %}">
+<meta name="keywords" content="{%
+if SEO_KEYWORDS is defined and SEO_KEYWORDS is not empty %}{{ SEO_KEYWORDS }}{%
+else %}hosting, dashboard, admin{%
+endif %}">
+<title>{%
+    if SEO_TITLE is defined and SEO_TITLE is not empty %}{{ SEO_TITLE }}{%
+    else %}{{ CONFIG_VIEW.text.company_title }} - Dashboard{%
+    endif %}
+</title>
+
+<link rel="apple-touch-icon" sizes="76x76" href="{{ asset("vendor/servers/assets/img/flav/apple-icon-76x76.png") }}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ asset("vendor/servers/assets/img/flav/favicon-96x96.png") }}">

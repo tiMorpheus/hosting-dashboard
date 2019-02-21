@@ -1,0 +1,310 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    {#Sign Up#}
+{% endblock %}
+
+{% block content %}
+    {% include 'flash.html.twig' %}
+
+    <div id="proxy-builder">
+        <h2 style="margin: -2px 0 0;
+
+    margin-left: 0px;
+
+font-size: 24px;
+
+font-family: Roboto, sans-serif;
+
+font-weight: 700;
+
+margin-left: 9px;
+
+color: #094fb1;">Sign Up</h2>
+        <form id="proxy-form" name="proxy-form" method="POST" action="{{ url('do_quick_buy') }}"
+              data-toggle="validator" data-html="true" class="active-spinner container-fluid" >
+
+
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12" >
+                        <div class="form-block">
+                            <div class="" >
+                                <h4 class="form-block-title">
+                                    Personal Information
+                                </h4>
+                            </div>
+                            <div class="" >
+
+                                    <div class="form-group">
+                                        <label for="" class="tt-input-buy-label">Email Address:</label>
+                                        <input name="email" id="email" type="email" class="form-control tt-input-buy"
+                                               value="{% if data.email is defined %}{{ data.email }}{% endif %}"
+                                               required data-remote2="{{ path('quick_buy_check_email',
+                                            {
+                                                'country': data.plan.country is defined ? data.plan.country,
+                                                'category': data.plan.category is defined ? data.plan.category,
+                                            })}}" />
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+
+                                    <div class="form-group " >
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="" class="tt-input-buy-label">Password:</label>
+                                                <input id="pass" name="password" type="password" class="form-control tt-input-buy"
+                                                       value="{% if data.password is defined %}{{ data.password }}{% endif %}"
+                                                       required minlength="6" id="password" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="" class="tt-input-buy-label">Confirm Password:</label>
+                                                <input id="confirm_pass" type="password" class="form-control tt-input-buy"
+                                                       value="{% if data.password is defined %}{{ data.password }}{% endif %}"
+                                                       required data-match="#password" />
+                                            </div>
+                                        </div>
+
+                                        <div class="help-block with-errors"></div>
+                                        
+                                    </div>
+
+                                    {#<div class="form-group password-inline">#}
+
+                                    {#</div>#}
+
+
+                                    <div class="form-group">
+                                        <label for="" class="tt-input-buy-label ">First Name:</label>
+                                        <input name="firstname" type="text" class="form-control tt-input-buy"
+                                               value="{% if data.firstname is defined %}{{ data.firstname }}{% endif %}"
+                                               required minlength="2" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for=""  class="tt-input-buy-label">Last Name:</label>
+                                        <input name="lastname" type="text" class="form-control tt-input-buy"
+                                               value="{% if data.lastname is defined %}{{ data.lastname }}{% endif %}"
+                                               required minlength="2" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="tt-input-buy-label">Date of Birth</label>
+                                        <input id="birthday"  name="birthday" type="date" class="form-control  tt-input-buy"
+                                               value="{% if data.birthday is defined %}{{ data.birthday }}{% endif %}"
+                                               max="{{ "now"|date("Y-m-d")  }}" required/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="" class="tt-input-buy-label">Phone Number:</label>
+                                        <input name="phone" type="text" class="form-control tt-input-buy"
+                                               value="{% if data.phone is defined %}{{ data.phone }}{% endif %}"
+                                               placeholder="(optional)" />
+                                    </div>
+                                <div class="help-block with-errors"></div>
+
+                            </div>
+                        </div>
+
+
+                </div>
+                <div class="col-md-6 col-sm-12 sign-up-right" >
+
+                    <div class="form-block">
+                            <div class="" >
+                                <h4 class="form-block-title">
+                                    Billing Address
+                                </h4>
+                            </div>
+                                <div class="">
+
+                                            <div class="form-group">
+                                                <label for="" class="tt-input-buy-label">Company Name:</label>
+                                                <input name="company" type="text" class="form-control tt-input-buy"
+                                                       value="{% if data.company is defined %}{{ data.company }}{% endif %}"
+                                                       placeholder="(optional)" />
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <label for="" class="tt-input-buy-label">Street Address:</label>
+                                                <input name="address" type="text" class="form-control tt-input-buy"
+                                                       value="{% if data.address is defined %}{{ data.address }}{% endif %}"
+                                                       required minlength="8" />
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+
+
+                                            <div class="form-group" style="margin-bottom: 27px;">
+                                                <label for="" class="tt-input-buy-label">City:</label>
+                                                <input name="city" type="text" class="form-control tt-input-buy"
+                                                       value="{% if data.city is defined %}{{ data.city }}{% endif %}"
+                                                       required minlength="2" />
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="tt-input-buy-label">Country:</label>
+                                                <select name="country" class="form-control tt-input-buy" required>
+                                                    {% for code, country in countries %}
+                                                        <option value="{{ code }}" {%
+                                                            if data.country is defined ?
+                                                            (code == data.country) : (code == 'US')
+                                                        %}selected="selected"{% endif %}>{{ country }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="tt-input-buy-label">State/Region:</label>
+                                                <input name="state" type="text" class="form-control tt-input-buy"
+                                                       value="{% if data.state is defined %}{{ data.state }}{% endif %}"
+                                                       required minlength="2" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="" class="tt-input-buy-label">Postcode:</label>
+                                                <input name="postcode" type="text" class="form-control tt-input-buy"
+                                                       value="{% if data.postcode is defined %}{{ data.postcode }}{% endif %}"
+                                                       required minlength="3" />
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                        </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=" col-md-12 col-xs-12 text-center">
+
+                            <div class="agreements-notice">
+                                Our policies have changed in compliance with the General Data Protection Regulation (GDPR).
+                                <br>Please read all documents listed below. Check the box next to each policy to agree to it if you wish to use our services.
+                            </div>
+
+                </div>
+
+
+                <div class="  col-md-12 wrapper-flex">
+
+                        <div class="checkbox margin-auto" >
+                            <div class="registration-agreements-list">
+                                <ul>
+                                    {% if CONFIG_VIEW.link.checkout.tos %}
+                                        <li><input type="checkbox" id="checkbox-tos" required />
+                                            <label for="checkbox-tos">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/terms-of-use.html" target="_blank">Terms of Service</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {% if CONFIG_VIEW.link.checkout.aup %}
+                                        <li><input type="checkbox" id="checkbox-aup" required style="top: 28px;"/>
+                                            <label for="checkbox-aup">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/acceptable-use-policy.html" target="_blank">Acceptable Use Policy</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {% if CONFIG_VIEW.link.pp %}
+                                        <li><input type="checkbox" id="checkbox-pp" required style="top: 63px;"/>
+                                            <label for="checkbox-pp">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/privacy-policy.html" target="_blank">Privacy Policy</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {#{% if CONFIG_VIEW.link.checkout.no_refund %}#}
+                                        {#<li class="no-refund-page hide">#}
+                                            {#<input type="checkbox" id="checkbox-no-refund" />#}
+                                            {#<label for="checkbox-no-refund">#}
+                                                {#I have read and agree to the <a href="{{ CONFIG_VIEW.link.checkout.no_refund }}" target="_blank">No Refund Policy</a>#}
+                                            {#</label>#}
+                                        {#</li>#}
+                                    {#{% endif %}#}
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="  col-md-12" style="margin-top: 22px; ">
+                    {% include 'captcha.html.twig' with {  'append_newline': true } %}
+                </div>
+
+
+                <div class="  col-md-offset-3 col-md-6 col-xs-12 text-center">
+
+                    <input type="submit" value="Register" class="submit order" >
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
+{% block modals %}
+    <div class="modal fade bs-example-modal-sm" id="ageRestriction" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-header" style="border: 0; text-align: center">
+                    <i class="fa fa-times fa-3x" style="display: block"></i>
+                    <h4 class="modal-title">
+                       Age Restriction
+                    </h4>
+                </div>
+                <div class="modal-body" style="border: 0; text-align: center">
+                    You must be 18 or older to Sign Up
+                </div>
+                <div class="modal-footer" style="border: 0; text-align: center">
+                    <button type="button" data-dismiss="modal" class="tt-btn-blue">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+
+    <script>
+        var password = document.getElementById("pass")
+            , confirm_password = document.getElementById("confirm_pass");
+
+        function validatePassword(){
+            if(password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+
+
+
+        // User must be 18 or older
+        $(document).ready(function () {
+
+            $('#proxy-form').submit(function() {
+                var birthday = $("#birthday").val();
+
+                birthday = new Date(birthday);
+                var currentDay = new Date();
+                var years = (currentDay - birthday) / 1000 / 3600 / 24 / 365;
+
+                if (years < 18) {
+                    $('#ageRestriction').modal('show');
+                    $("#birthday").focus();
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+{% endblock %}
+
+
+

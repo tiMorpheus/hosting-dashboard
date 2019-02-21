@@ -1,0 +1,191 @@
+<div tabindex="-1" role="dialog" id="announcement-modal" class="modal bs-example-modal-sm">
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h4 class="text-center">Mention us on any of the platforms listed and receive 10% account credit, or $5, whichever is lesser. Credit will be automatically applied to your next invoice!</h4>
+                <table class="table remove-top-border">
+                    {% if 'bhw-post' not in submitedLinks %}
+                    <tr>
+                        <td>BHW</td>
+                        <td class="text-center">
+                            Post a review or recommendation of our service at the link listed above the submission box
+                        </td>
+                        <td class="text-center">
+                            <a target="_blank" href="{{ items.bhw[1] }}">Blazing SEO BHW Page</a>
+                            <div class="form-inline">
+                                <input id="bhw-input" class="form-control" name="bhw-post" type="text" placeholder="Post the link to your post">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if 'tw-post' not in submitedLinks %}
+                    <tr>
+                        <td>Twitter</td>
+                        <td class="text-center">
+                            Post a review or recommendation of our service with the link  - <a href="{{ items.tw[0] }}" target="_blank">{{ items.tw[0] }}</a>
+                        </td>
+                        <td class="text-center">
+                            <a target="_blank" href="{{ items.tw[1] }}">Blazing SEO Twitter Page</a>
+                            <div class="form-inline" style="width: 270px">
+                                <input id="tw-input" class="form-control" name="tw-post" type="text" placeholder="Post the link to your post">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if 'inst-post' not in submitedLinks %}
+                    <tr>
+                        <td>Instagram</td>
+                        <td class="text-center">
+                            Post a review or recommendation of our service with the link -  <a href="{{ items.inst[0] }}" target="_blank">{{ items.inst[0] }}</a>
+                        </td>
+                        <td class="text-center">
+                            <a target="_blank" href="{{ items.inst[1] }}">Blazing SEO Instagram Page</a>
+                            <div class="form-inline">
+                                <input id="inst-input" class="form-control" type="text" name="inst-post" placeholder="Post the link to your post">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if 'fb-post' not in submitedLinks %}
+                    <tr>
+                        <td>Facebook</td>
+                        <td class="text-center">
+                            Post a review or recommendation of our service with the link - <a href="{{ items.fb[0] }}" target="_blank">{{ items.fb[0] }}</a>
+                        </td>
+                        <td class="text-center">
+                            <a target="_blank" href="{{ items.fb[1] }}">Blazing SEO Facebook page</a>
+                            <div class="form-inline">
+                                <input id="fb-input" class="form-control" type="text" name="fb-post" placeholder="Post the link to your post">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
+
+                <div class="text-center" style="position: relative">
+                    <button class="btn btn-primary close-announcement">No, thanks</button>
+
+                    <div class="checkbox checkbox-primary checkbox-lg" style="position: absolute; top: 0; right: 0; margin-top: 0;">
+                        <input id="dismiss-chbox" name="dismiss-chbox" value="1" type="checkbox">
+                        <label for="dismiss-chbox">Don't show again</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#announcement-modal').modal({
+        'show': true,
+        'backdrop': 'static',
+        'keyboard': false
+    });
+
+    var lastTimeout = 0;
+    $('#announcement-modal table.table').on('click', 'button', function(e) {
+        var elem = $(e.target);
+        var input = elem.parent().find('input');
+
+        removeErrorMessage(input);
+
+        if (!input.val()) {
+            showErrorMessage(input, 'You must submit the link to your post <br>to be reviewed by our staff');
+        }
+
+        $.ajax({
+            method: "POST",
+            dataType: 'json',
+            url: $config.mainUrl + 'announcement/post',
+            data: {'type': input.attr('name'), 'link': input.val()}
+        })
+            .done(function(msg) {
+                if (msg.status == 'ok') {
+                    if(lastTimeout)
+                        clearTimeout(lastTimeout);
+                    elem.closest('tr').remove();
+                    $('#announcement-modal .fade-text').remove();
+                    $('#announcement-modal .modal-body h4.text-center').after('<h4 class="fading-confirmation pop-up-confirmation "><br> \
+                        Credit will be automatically applied to your next invoice after a review by our customer support staff!\
+                    <br><br></h4>');
+
+                    var choices = $('#announcement-modal .table tr').length;
+                    if (choices == 0) {
+                        $('.close-announcement').remove();
+                    }
+
+                    setTimeout(function(){
+                        $('#announcement-modal .fading-confirmation').removeClass('fading-confirmation').addClass('fade-text');
+                    }, 500);
+                    lastTimeout = setTimeout(function(){
+                        $('#announcement-modal .fade-text').remove();
+
+                        if(choices == 0) {
+                            $('#announcement-modal').modal('hide');
+                            closeAnnouncement();
+                        }
+                    }, 6000);
+                    /*$('#announcement-modal').modal('hide');
+
+                    bootbox.alert({
+                        message: '<br><p class="text-justify">Thanks for sharing the good news about Blazing SEO! \
+                            Your post has been sent to our staff for review. \
+                            This process can take up to 48 hours to complete. \
+                            You will be notified of approval of your post and \
+                            receive the credit to your account within that time.</p>',
+                        backdrop: true,
+                        size: 'small'
+                    });*/
+                } else {
+                    $('#announcement-modal').modal('hide');
+
+                    bootbox.alert({
+                        title: '<span class="text-danger">System Error</span>',
+                        message: '<p class="text-justify">Unfortunately, there was an error processing your submission. \
+                            Please contact our support team at support@blazingseollc.com with an \
+                            explanation of what you were trying to do and the link for your post \
+                            in order to receive your account credit.</p>',
+                        backdrop: true,
+                        size: 'small'
+                    });
+
+                    // showErrorMessage(input, ('message' in msg ? msg.message : 'System error! Please try later or contact with us.'));
+                }
+            });
+    });
+
+    $('#announcement-modal .close-announcement').on('click', closeAnnouncement);
+
+    function closeAnnouncement()
+    {
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: $config.mainUrl + 'announcement/' + ($('#dismiss-chbox').prop('checked') ? 'dismiss' : 'close')
+        })
+            .done(function() {
+                $('#announcement-modal').modal('hide');
+            });
+    }
+
+    function showErrorMessage(input, msg)
+    {
+        input.parent().addClass('has-error');
+
+        input.parent().find('button')
+            .after(
+                '<div class="text-justify error-message" style="padding: 5px;">\
+                <small class="text-danger">' + msg + '</small></div>');
+    }
+
+    function removeErrorMessage(input)
+    {
+        input.parent().removeClass('.has-error');
+        input.parent().find('.error-message').remove();
+    }
+</script>

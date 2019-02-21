@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="75fc6631-7af8-4b01-ba66-56e46e31a43a" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/dist/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="_dropdown.scss" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_dropdown.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="78" column="38" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_navbars.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_navbars.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="810">
+              <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>GetResponseTrialPaid</find>
+      <find>is_trial</find>
+      <find>is_tria</find>
+      <find>product(</find>
+      <find>]]</find>
+      <find>logt</find>
+      <find>for t</find>
+      <find>cannot find ipn associated with creation</find>
+      <find>lo</find>
+      <find>logtra</find>
+      <find>LogTran</find>
+      <find>for</find>
+      <find>hosting</find>
+      <find>PPBa</find>
+      <find>trialn</find>
+      <find>gettrialno</find>
+      <find>trial</find>
+      <find>serverma</find>
+      <find>dashboard(</find>
+      <find>serverM</find>
+      <find>buy</find>
+      <find>management</find>
+      <find>confirm</find>
+      <find>login</find>
+      <find>public function</find>
+      <find>code</find>
+      <find>oauth_code</find>
+      <find>invoice</find>
+      <find>public function lo</find>
+      <find>confir</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/pages/_login.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/main/index_sign_in.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/HomeController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/app/config/common.php" />
+        <option value="&lt;b3992b0d-92c9-48ba-96c4-3bbe56c6627b&gt;/dashboard.dev.sprious.com/config.php" />
+        <option value="&lt;b3992b0d-92c9-48ba-96c4-3bbe56c6627b&gt;/dashboard.dev.sprious.com/app/routing_common.php" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/checkout/addorder.html.twig" />
+        <option value="&lt;fa8bab7e-120d-4915-9679-dfd48e5cd6e0&gt;/home/tt.se/webroot/servers/wp-content/themes/blazing-servers/header.php" />
+        <option value="&lt;fa8bab7e-120d-4915-9679-dfd48e5cd6e0&gt;/home/tt.se/webroot/servers/wp-content/themes/blazing-servers/page-46.php" />
+        <option value="&lt;fa8bab7e-120d-4915-9679-dfd48e5cd6e0&gt;/home/tt.se/webroot/servers/wp-content/themes/blazing-servers/js/dedicated.js" />
+        <option value="&lt;fa8bab7e-120d-4915-9679-dfd48e5cd6e0&gt;/home/tt.se/webroot/servers/wp-content/themes/blazing-servers/js/vps.js" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/pages/_billing.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/BillingController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/trial_products/hooks_external.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/blazing_proxy_seller/src/Controller/APIController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/billing/index.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/trial_products/src/Util.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/trial_products/src/TrialsIntegration.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/trial_products/hooks.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Integrations/WHMCS.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Integrations/WHMCSPluginServers.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/blazing_servers/src/Controller/APIController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/CheckoutController.php" />
+        <option value="$PROJECT_DIR$/dashboard-backup/src/Proxy/Controller/AbstractController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/AbstractController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/flash.html.twig" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_alerts.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/app/bootstrap.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/app/routing_common.php" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_sidebar-and-main-panel.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/MainController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/dashboard/main.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/Proxy/Controller/DashboardController.php" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/dashboard/product.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/dashboard/serverManagement.html.twig" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_dashboard.scss" />
+        <option value="$PROJECT_DIR$/src/app/shared/navbar/navbar.component.html" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/layout.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/layout/sidebar.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/layout/meta.html.twig" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_dropdown.scss" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_variables.scss" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_responsive.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/dashboard/products.html.twig" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_cards.scss" />
+        <option value="$PROJECT_DIR$/src/assets/sass/paper/_navbars.scss" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/layout/content.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/dashboard.dev.sprious.com/src/views/default/layout/scripts.html.twig" />
+        <option value="&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/home/sftp/whmcs.dev.sprious.com/modules/addons/blazing_servers/src/Events/NavbarLoginToDashboardsLink.php" />
+        <option value="&lt;5521acb9-821c-402d-b41f-66e26bc55af8&gt;/home/timur.tolochko/wp-site/wp-content/themes/serp-grabber/coming-soon.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1084" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="paper-dashboard-angular-html-v1.0.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="paper-dashboard-angular-html-v1.0.1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="paper-dashboard-angular-html-v1.0.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="paper-dashboard-angular-html-v1.0.1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="paper-dashboard-angular-html-v1.0.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="paper-dashboard-angular-html-v1.0.1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="paper-dashboard-angular-html-v1.0.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="paper-dashboard-angular-html-v1.0.1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="sass" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="paper-dashboard-angular-html-v1.0.1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="paper-dashboard-angular-html-v1.0.1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="sass" type="462c0819:PsiDirectoryNode" />
+              <item name="paper" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="navbar-username&#9;null&#9;null&#10;server-management-btn-wrap&#9;null&#9;null&#10;trial&#9;null&#9;null&#10;wrapper-flex&#9;null&#9;null" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="$PROJECT_DIR$/node_modules/tslint" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/assets/img" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/app/home" />
+      <recent name="$PROJECT_DIR$/src/assets/img/flav" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75fc6631-7af8-4b01-ba66-56e46e31a43a" name="Default" comment="" />
+      <created>1538744690293</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538744690293</updated>
+      <workItem from="1538744691901" duration="10394000" />
+      <workItem from="1538778400890" duration="7257000" />
+      <workItem from="1538817545596" duration="599000" />
+      <workItem from="1538994602202" duration="933000" />
+      <workItem from="1538995951782" duration="7947000" />
+      <workItem from="1539022299470" duration="4600000" />
+      <workItem from="1539076943994" duration="6824000" />
+      <workItem from="1539107892028" duration="599000" />
+      <workItem from="1539121427467" duration="3392000" />
+      <workItem from="1539206085334" duration="3147000" />
+      <workItem from="1539246245913" duration="2572000" />
+      <workItem from="1539249131190" duration="9963000" />
+      <workItem from="1539259711772" duration="16767000" />
+      <workItem from="1539303018477" duration="3739000" />
+      <workItem from="1539328523153" duration="457000" />
+      <workItem from="1539358166169" duration="3092000" />
+      <workItem from="1539440346010" duration="13511000" />
+      <workItem from="1539539855175" duration="332000" />
+      <workItem from="1539592235287" duration="25537000" />
+      <workItem from="1539693042691" duration="27615000" />
+      <workItem from="1539768997023" duration="9891000" />
+      <workItem from="1539787336993" duration="30133000" />
+      <workItem from="1539951295547" duration="9939000" />
+      <workItem from="1539972833498" duration="599000" />
+      <workItem from="1540201958624" duration="15993000" />
+      <workItem from="1540226161117" duration="1656000" />
+      <workItem from="1540290109421" duration="6724000" />
+      <workItem from="1540306902035" duration="14078000" />
+      <workItem from="1540363981016" duration="85515000" />
+      <workItem from="1540500971871" duration="10652000" />
+      <workItem from="1540548033251" duration="16837000" />
+      <workItem from="1540575175074" duration="1542000" />
+      <workItem from="1540809454720" duration="23992000" />
+      <workItem from="1540847172600" duration="9147000" />
+      <workItem from="1540887501697" duration="952000" />
+      <workItem from="1540894062816" duration="14235000" />
+      <workItem from="1540914083962" duration="846000" />
+      <workItem from="1540978318719" duration="34182000" />
+      <workItem from="1541067950243" duration="11172000" />
+      <workItem from="1541091648362" duration="9568000" />
+      <workItem from="1541156354355" duration="2563000" />
+      <workItem from="1541161108104" duration="5088000" />
+      <workItem from="1541326475666" duration="11468000" />
+      <workItem from="1541419872021" duration="21846000" />
+      <workItem from="1541449337380" duration="2190000" />
+      <workItem from="1541496429928" duration="1522000" />
+      <workItem from="1541516313130" duration="12631000" />
+      <workItem from="1541585585365" duration="26547000" />
+      <workItem from="1541620410902" duration="5558000" />
+      <workItem from="1541664145752" duration="8012000" />
+      <workItem from="1541679412985" duration="16178000" />
+      <workItem from="1541700318385" duration="11058000" />
+      <workItem from="1541756431613" duration="16061000" />
+      <workItem from="1541774065850" duration="14740000" />
+      <workItem from="1541807416681" duration="862000" />
+      <workItem from="1541853217413" duration="5206000" />
+      <workItem from="1542019456529" duration="19427000" />
+      <workItem from="1542103608642" duration="25561000" />
+      <workItem from="1542190152427" duration="25481000" />
+      <workItem from="1542231541565" duration="6299000" />
+      <workItem from="1542278572394" duration="24244000" />
+      <workItem from="1542367276186" duration="17309000" />
+      <workItem from="1542455110294" duration="5397000" />
+      <workItem from="1542542932146" duration="599000" />
+      <workItem from="1542625374405" duration="1963000" />
+      <workItem from="1542707792463" duration="12186000" />
+      <workItem from="1542792524537" duration="8257000" />
+      <workItem from="1542883445258" duration="9452000" />
+      <workItem from="1542974706944" duration="655000" />
+      <workItem from="1542991229202" duration="637000" />
+      <workItem from="1543226073736" duration="21867000" />
+      <workItem from="1543309090185" duration="25384000" />
+      <workItem from="1543398458220" duration="7935000" />
+      <workItem from="1543489595466" duration="14389000" />
+      <workItem from="1543564469832" duration="597000" />
+      <workItem from="1543570897809" duration="8510000" />
+      <workItem from="1543829599411" duration="6261000" />
+      <workItem from="1543922230407" duration="1334000" />
+      <workItem from="1544004288121" duration="21723000" />
+      <workItem from="1544087586932" duration="872000" />
+      <workItem from="1544090635701" duration="915000" />
+      <workItem from="1544139018649" duration="602000" />
+      <workItem from="1544179179655" duration="2765000" />
+      <workItem from="1544211900658" duration="599000" />
+      <workItem from="1544349364781" duration="599000" />
+      <workItem from="1544526286009" duration="627000" />
+      <workItem from="1544529423194" duration="599000" />
+      <workItem from="1544611265152" duration="599000" />
+      <workItem from="1544698525537" duration="599000" />
+      <workItem from="1544781951724" duration="4849000" />
+      <workItem from="1545045431739" duration="605000" />
+      <workItem from="1545228180749" duration="901000" />
+      <workItem from="1545245374545" duration="684000" />
+      <workItem from="1545305332943" duration="599000" />
+      <workItem from="1545310682268" duration="7625000" />
+      <workItem from="1545339786489" duration="3519000" />
+      <workItem from="1545386969335" duration="790000" />
+      <workItem from="1545391567030" duration="3039000" />
+      <workItem from="1545421100647" duration="2293000" />
+      <workItem from="1545648965783" duration="681000" />
+      <workItem from="1545656271293" duration="1257000" />
+      <workItem from="1545742460659" duration="599000" />
+      <workItem from="1545828568366" duration="1203000" />
+      <workItem from="1545915712381" duration="599000" />
+      <workItem from="1545930035645" duration="609000" />
+      <workItem from="1545995483084" duration="1197000" />
+      <workItem from="1546513453951" duration="1197000" />
+      <workItem from="1546601073976" duration="599000" />
+      <workItem from="1546951400890" duration="599000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="926147000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5022307" side_tool="true" weight="0.20324324" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info id="npm" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49776927" weight="0.20108108" />
+      <window_info anchor="right" id="Remote Host" order="3" visible="true" weight="0.18076286" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.12935324" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32950923" />
+      <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="7" weight="0.32972974" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="File Transfer" order="8" sideWeight="0.49840662" weight="0.3277592" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32972974" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="Version Control" order="12" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info id="npm" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" anchor="right" id="Remote Host" order="3" visible="true" weight="0.2766093" />
+      <window_info content_ui="combo" id="Project" order="3" weight="0.22370937" />
+      <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TypeScript" order="9" weight="0.32972974" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32972974" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49840662" weight="0.68108106" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50159335" side_tool="true" weight="0.23675676" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="File Transfer" order="13" weight="0.32972974" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32950923" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/node_modules/karma/config.tpl.js" />
+      </list>
+    </option>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/app.routing.ts</url>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/proxy.dev.sprious.com/src/Proxy/Controller/Dashboard/AnnouncementsController.php</url>
+          <line>9</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/dashboard.dev.sprious.com/src/Proxy/Controller/ApiController.php</url>
+          <line>13</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/dashboard.dev.sprious.com/src/Proxy/Controller/ApiController.php</url>
+          <line>119</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/whmcs.dev.sprious.com/modules/addons/blazing_proxy_seller/src/Controller/APIController.php</url>
+          <line>24</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/whmcs.dev.sprious.com/modules/addons/blazing_proxy_seller/src/Controller/APIController.php</url>
+          <line>130</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;1eef1e77-4972-440f-b4f4-b2bf2a11f20a&gt;/whmcs.dev.sprious.com/modules/addons/blazing_proxy_seller/src/Controller/APIController.php</url>
+          <line>142</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="59" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/basic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="92" column="9" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/img/buy-vpn.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_contact-form.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="245" column="7" selection-start-line="245" selection-start-column="7" selection-end-line="245" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_buttons.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="119" column="48" selection-start-line="119" selection-start-column="48" selection-end-line="119" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_inputs.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="277" lean-forward="true" selection-start-line="277" selection-end-line="277" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/pages/_signup.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/pages/_login.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1935">
+          <caret line="129" column="19" selection-start-line="129" selection-start-column="19" selection-end-line="129" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_4.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="249" column="9" selection-start-line="249" selection-start-column="9" selection-end-line="249" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blazing_servers/src/Events/TrialPricingOverrode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blazing_servers/src/Controller/APIController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="166" column="30" selection-start-line="166" selection-start-column="30" selection-end-line="166" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/trial_products/trial_products.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="143" column="9" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="20" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_fonts.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/UserApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="915">
+          <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/polyfills.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/styles.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.routing.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/sidebar/sidebar.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/sidebar/sidebar.module.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/sidebar/sidebar.component.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blazing_servers/src/Controller/AbstractSelfDrivenController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blazing_servers/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="3" selection-end-line="33" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blazing_servers/logs/user-0-2018-11-26.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ipn.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="122" column="25" selection-start-line="122" selection-start-column="25" selection-end-line="122" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/trial_products/src/TrialsIntegration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="92" column="5" lean-forward="true" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/trial_products/src/Util.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard-backup/src/Proxy/Controller/AbstractController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="124" column="23" selection-start-line="124" selection-start-column="23" selection-end-line="124" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_typography.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="91" column="14" lean-forward="true" selection-start-line="91" selection-start-column="14" selection-end-line="91" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_alerts.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="107" column="33" selection-start-line="107" selection-start-column="33" selection-end-line="107" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_misc.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="77" column="27" lean-forward="true" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/mixins/_sidebar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_sidebar-and-main-panel.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="232" column="12" selection-start-line="232" selection-start-column="12" selection-end-line="232" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/pages/_products.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6750">
+          <caret line="450" column="3" selection-start-line="450" selection-start-column="3" selection-end-line="450" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/pages/_billing.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="266" selection-start-line="266" selection-end-line="266" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper-dashboard.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="20" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.component.spec.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.component.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/shared/navbar/navbar.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="24" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_variables.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="37" column="33" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_dashboard.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/css/paper-dashboard.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="1976" column="5" selection-start-line="1976" selection-start-column="5" selection-end-line="1976" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_responsive.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="31" selection-start-line="31" selection-end-line="60" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_cards.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_dropdown.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="78" column="38" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sass/paper/_navbars.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+Set Your Sneaker Proxy Locaton
+{% endblock %}
+
+{% block content %}
+<form method="post" class="form-horizontal">
+    {% include 'flash.html.twig' %}
+    <h4><strong>Choose the location that is nearest to your server.</strong> You will receive proxies in that location which will give you the fastest possible proxy connection for your server. We always recommend using our VPS’s because they are in the SAME datacenter as our proxies, which means there is 0 latency from the VPS to the proxy, whereas using a third party VPS means you have to network to our proxy servers which is more milliseconds added to your latency. Contact me personally if you’re interested in a discount for our VPS: <a href="mailto: admin@blazingseollc.com">admin@blazingseollc.com</a></h4>
+    {% if app.session.get('redirect_dashboard') %}
+        <div class="alert alert-info">You Need to Set Your Location Before You Can Access Any Other Areas of the Dashboard</div>
+    {% endif %}
+    <div class="radio radio-primary">
+        <input type="radio" name="location" id="location_LA" value="LA" required {% if USER.sneaker_location == 'LA' %}checked="checked"{% endif %} />
+        <label for="location_LA">
+            <strong>Los Angeles, CA</strong>
+        </label>
+    </div>
+    <div class="radio radio-primary">
+        <input type="radio" name="location" id="location_NY" disabled="disabled" value="NY" required {% if USER.sneaker_location == 'NY' %}checked="checked"{% endif %}/>
+        <label for="location_NY">
+            <strong>New York, NY</strong>
+        </label>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save Location</button>
+</form>
+{% endblock content %}

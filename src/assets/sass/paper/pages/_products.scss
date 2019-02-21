@@ -1,0 +1,480 @@
+@import "../variables";
+
+.cart{
+
+  position: relative;
+
+  overflow: hidden;
+
+  .cart-trial{
+    visibility: visible;
+    position: absolute;
+    top: 27px;
+    right: -44px;
+
+
+
+    background: #26b999;
+    color: white;
+    padding: 6px 50px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    font-size: 10px;
+
+    font-weight: bold;
+
+
+  }
+
+  min-height: 430px;
+
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 25px;
+
+  margin-bottom: 3em;
+
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+  
+  &:hover{
+
+    box-shadow: 0 0 8px 0  #9d9d9d;
+    
+  }
+
+  .cart-header{
+    color: black;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 17px;
+    width: 80%;
+
+
+  }
+  .description{
+    line-height: 25px;
+
+    ul{
+      list-style: none;
+      padding: 0;
+
+      line-height: 25px;
+    }
+  }
+
+  .right{
+
+    font-family: "Roboto", sans-serif;
+    .price{
+
+      margin-bottom: 2em;
+
+      line-height: 19px;
+      font-size: 11px;
+
+      span{
+        line-height: 1;
+        color: $blazing-background-color;
+        font-size: 30px ;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
+
+
+.product-single{
+
+  .form-control::-webkit-input-placeholder {
+    color: #999;
+  }
+  .form-control:-ms-input-placeholder{
+    color: #999;
+  } .form-control::-ms-input-placeholder{
+    color: #999;
+  }
+
+  .form-control::placeholder {
+    color: #999;
+  }
+
+
+  label{
+    font-size: 12px;
+  }
+
+  .configure-server{
+    margin-top: 4em;
+  }
+
+  h6{
+    font-family: Roboto, sans-serif;
+    color: #000;
+    font-size: 13px;
+  }
+
+
+  .description{
+    font-size: 14px;
+    margin-bottom: 2em;
+    line-height: 24px;
+
+    ul{
+      padding: 15px;
+    }
+  }
+
+
+  .price-row{
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    line-height: 28px;
+  }
+
+
+  .price-column{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .sticky-50{
+    position: sticky;
+    top: 50px;
+
+  }
+
+  .summary{
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding:0 30px 20px;
+
+
+
+    .total-price-span{
+      font-size: 28px;
+      color: $blazing-background-color;
+      font-weight: bold;
+
+    }
+
+
+  }
+
+
+  .tt-btn-red{
+    display: block;
+    margin: 3em auto 0;
+  }
+
+}
+
+.label-container{
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Hide the browser's default radio button */
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+
+  /* On mouse-over, add a grey background color */
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the radio button is checked, add a blue background */
+  & input:checked ~ .checkmark {
+    background-color: $blazing-background-color;
+  }
+
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  &:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+
+
+  /* Show the indicator (dot/circle) when checked */
+  & input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the indicator (dot/circle) */
+  & .checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+
+}
+
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #e8eef7;
+  border-radius: 50%;
+
+
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  &:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+}
+
+
+.product-nav-wrap{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: flex-start;
+
+  .product{
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    padding: 30px;
+    margin: 20px;
+
+    width: 100%;
+
+    min-height: 360px;
+
+
+    h5{
+      font-weight: bold;
+      color: $blazing-background-color;
+      font-size: 17px;
+    }
+
+
+    p{
+      margin-top: 2em;
+      color: #a5a5a5;
+      font-size: 0.9em;
+      line-height: 1.2;
+    }
+
+    img{
+      width: 100px;
+    }
+
+    a{
+
+      display: inline-block;
+      margin: 20px auto 0;
+      font-size: 13px;
+      padding: 7px 25px;
+      background-color: #185dbf;
+
+      &:hover,
+      &:focus{
+        background-color: #ff3b3b;
+      }
+    }
+
+  }
+}
+
+
+
+
+.product-list-flex{
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  .row{
+    width: 100%;
+  }
+
+  .cart{
+    width: 100%;
+    margin: 20px;
+  }
+
+  .description{
+    font-size: 14px;
+    margin-bottom: 1em;
+
+    border-bottom: 1px solid #ddd;
+  }
+
+  .price{
+    text-align: center;
+    .price-wrap{
+
+      color: black;
+      span{
+        color: $blazing-background-color;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      margin-bottom: 1em;
+    }
+
+
+
+  }
+
+
+
+}
+
+@media (min-width: 991px) and (max-width: 1200px){
+
+  .product-list-flex{
+
+    width: 100%;
+
+    .cart {
+      margin: 20px;
+      width: 44%;
+
+
+    }
+
+    .cart-vpn{
+      width: 100%;
+    }
+
+
+  }
+}
+
+
+
+
+@media screen and (min-width: 1200px){
+
+  .product-nav-wrap{
+
+    .product{
+
+      width: 275px;
+    }
+  }
+
+  .product-list-flex{
+
+    width: 100%;
+
+    max-width: 2000px;
+    margin: 0 auto;
+
+    .cart {
+      margin: 20px;
+      width: 28%;
+    }
+
+    .cart-vpn{
+      width: 50%;
+    }
+
+    .cart-dedicated{
+      width: 45%;
+    }
+  }
+}
+
+@media screen and (min-width: 1600px) {
+
+
+  .product-list-flex{
+
+
+
+    .cart {
+      margin: 20px;
+      width: 21%;
+    }
+
+    .cart-vpn{
+      width: 40%;
+    }
+
+    .cart-dedicated{
+      width: 25%;
+    }
+
+  }
+}
+
+
+.promocode-wrap {
+  display: flex;
+  flex-direction: column;
+
+  .promo-output{
+
+    padding: 15px;
+
+  }
+
+
+  .have-a-coupon{
+    margin-left: auto;
+    margin-top: 15px;
+    margin-right: 10px;
+    font-weight: 500;
+  }
+
+  label{
+
+    margin-top: 15px;
+
+    position: relative;
+    width: 100%;
+
+    .check-promocode{
+      position: absolute;
+
+      cursor: pointer;
+
+      font-size: 13px;
+      border-radius: 10px;
+      top: 0;
+      right: 0;
+      padding: 15px ;
+    }
+  }
+}

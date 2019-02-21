@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <form class="form login-form" action="{{ url('loginType') }}" method="POST" data-toggle="validator">
+
+                <h1 class="tt-h1-header" >Sign In</h1>
+                <div class="form-group mt-lg">
+                    <label for="" class="tt-font-regular">Email Address:</label>
+                    <input class="form-control tt-input" type="text" name="login" value="{{ login }}" required  />
+                </div>
+                <div class="form-group mt-xl" style="position: relative; margin-bottom: 7px;">
+                    <label for="">Password:</label>
+                    <input class="form-control tt-input" type="password" name="password" required  />
+
+
+                </div>
+
+                <a href="{{ path('forgetPassword') }}" class="tt-link">Forgot password?</a>
+
+
+
+                <div class="form-group mt-xl btn-wrap">
+                    <input type="submit" class="btn btn-danger btn-lg tt-btn red" value="Sign In" />
+                    <a href="{{ url('quick_buy_empty') }}" class="btn  btn-lg tt-btn tt-signup">Sign Up</a>
+                </div>
+               
+                {% include 'flash.html.twig' %}
+
+            </form>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3" style="padding: 0 66px">
+                {% if options %}
+                    <p class="">
+                        Unsure of what system you're on? Please contact <a href="mailto:support@blazingseollc.com">support@blazingseollc.com</a> and we'll help you immediately. <br>
+                        Most liklely you are trying to login from a different email than you signed up with and we'll help you figure out which one is correct.
+                        <br><br>
+                        But of course you can try to Sign In through the
+                        <span data-toggle="tooltip" data-placement="top" title="The new proxy dashboard with new features. If you purchased/upgraded your package after March 2017, then sign in here">
+            <a href="{{ url('login') }}" class="btn btn-info">W/ WHMCS</a>
+            <i class="fa fa-question-circle"></i>
+        </span>
+                        {% if CONFIG_VIEW.feature.amember %}
+                            or
+                            <span data-toggle="tooltip" data-placement="top" title="The old proxy dashboard">
+            <a href="{{ url_remote('loginAmember') }}" class="btn btn-warning">W/ AMember</a>
+            <i class="fa fa-question-circle"></i>
+        </span>
+                        {% endif %}
+                        buttons.<br>
+                        Hover the mouse on
+                        <i class="fa fa-question-circle" data-toggle="tooltip" title="Right, just like this one"></i>
+                        sign below to be informed on each option
+                    </p>
+                {% endif %}
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    {#<p class="lead">#}
+        {#If you do not have an account, please#}
+        {#<a href="{{ url('quick_buy_empty') }}" class="btn btn-success btn-lg">Sign Up</a>#}
+        {#<br>#}
+        {#If you do have an account with us, please input your credentials in the field below:#}
+    {#</p>#}
+
+
+{% endblock %}

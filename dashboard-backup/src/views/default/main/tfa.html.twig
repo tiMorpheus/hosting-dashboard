@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Sign In
+{% endblock %}
+
+{% block content %}
+    <p class="lead">
+        To better suit all our customers and to protect those whom use the same password on many websites,
+        we are now requiring you to authorize your account with an email verification.
+        Rest assured, your actual proxies are never affected, only your ability to use the proxy user interface.
+    </p>
+    {% include 'flash.html.twig' %}
+    <div class="row">
+        <form id="tfa" class="form col-md-3" action="{{ url('tfa', parameters) }}" method="POST">
+            <div class="form-group">
+                <label for="">Enter the verification code from your email</label>
+                <input class="form-control" type="text" name="code" value="{{ code }}" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success btn-lg" value="Validate code" />
+                <a type="submit" class="btn btn-info btn-lg" href="{{ url('tfa', parameters | merge({ 'resend': 1 })) }}">Resend code</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

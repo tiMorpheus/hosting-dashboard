@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Replace My Proxies
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container tt-panel">
+
+        <div class="row mt-xl tt-padding-box-settings">
+            {% include 'flash.html.twig' %}
+
+
+
+            <div class="tt-info-card">
+
+
+                <div class="tt-into-text">
+                    <p>
+                        Due to excessive demand, we are now offering proxy replacements. You are allowed to replace
+                        your amount of proxies once during the month on top of your 30-day rotation.
+                    </p>
+
+                </div>
+
+                <div class="tt-into-text">
+
+                    <p>
+                        The 30-day rotation will take affect on the 30 days from the start of your subscription no matter
+                        when you replace your proxies
+                    </p>
+
+                </div>
+
+
+                <div class="tt-into-text">
+
+                    <p>
+                        Use the table below to change your proxy. After pressing REPLACE,
+                        wait a couple minutes and your new IP will appear in your
+                        Dashboard for you to Export out.
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-md-12 mt-xl">
+                <p class="tt-replace-text-red" >
+                    Please type in the proxies from your account below that you would like replaced. After pressing Submit, wait a couple minutes and your new IP will appear in your Dashboard for you to Export out. You can also use the table below.
+                </p>
+            </div>
+
+
+            <div class="col-md-6 mt-lg " style="padding: 0 10px 0 0 ;">
+                <div class="tt-replacing-blue-box">
+                    <h5>Replacements Remaining This Period</h5>
+
+                        {% for replacement in replacements %}
+
+                            <h4>
+                                <span class="tt-replacement-name">{{ replacement | humanizeProxyName }}</span> -
+                                <span class="tt-replacement-count"> {{ replacement.available }}</span>
+                            </h4>
+
+                        {% endfor %}
+
+                    </table>
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="col-md-6 mt-lg" style="padding: 0;">
+
+                <form method="POST" action="{{ path('replaceMultipleIp') }}" style="position:relative;">
+                    <div class="form-group">
+                        <textarea placeholder="Type in the proxies" name="replace" class="form-control tt-text-area" rows="5">{{ app.session.getBag('vars').get('replaceMultipleIp') }}</textarea>
+                    </div>
+                    <input type="hidden" name="action" value="replace_multi_port">
+                    <input type="submit" class="btn btn-primary tt-btn" value="Submit" style="display: block; margin: 0 auto; position:absolute;top: 95%;right: 75px;">
+                </form>
+            </div>
+
+
+            <div class="col-md-12 mt-xl" style="padding: 0;">
+                <table class="table  table-hover ">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>IP</th>
+                        <th>Updated</th>
+                        <th style="text-align: center"> Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for proxy in proxies %}
+                        <tr>
+                            <td>{{ proxy | humanizeProxyName }}</td>
+                            <td>{{ proxy.ip }}</td>
+                            <td>{{ proxy.updateTime }}</td>
+                            {% if proxy.pendingReplace %}
+                                <td style="text-align: center;"><a class="btn btn-primary disabled tt-btn tt-btn-disabled" href="#">Pending Replacement</a></td>
+                            {% elseif proxy.ip %}
+                                <td style="text-align: center"><a class="btn btn-primary tt-btn" href="{{ path('replaceIp', { 'id': proxy.id }) }}">Replace</a></td>
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}

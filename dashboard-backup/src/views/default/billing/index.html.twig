@@ -1,0 +1,280 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Billing
+{% endblock %}
+
+{% block content %}
+
+    <div class="">
+        <h4 style="font-size: 16px;
+    /* line-height: 52px; */
+    color: #094fb1;
+        font-weight: bold;
+        margin: 0;">Invoices
+            <span style="color:#878787; font-family: Roboto, sans-serif; font-weight: 500; font-size: 12px;">
+
+            (Showing
+            <span id="invoices-showed">{{ numreturned }}</span>
+             of {{ total }})</span>
+            </span>
+        </h4>
+
+    </div>
+
+
+    <div class="invoice-row no-hover invoice-row-th">
+
+        <div class="i-id"><span>Invoice ID</span></div>
+        <div class="i-date"><span>Date</span></div>
+        <div class="i-duedate"><span>Due Date</span></div>
+        <div class="i-total"><span>Total</span></div>
+        <div class="i-description">Description</div>
+        <div class="i-status">Status</div>
+        <div class="i-link"></div>
+
+    </div>
+    <div class="invoices-wrap">
+        {% for invoice in invoices %}
+            {#{% set rowspan = invoice.items|length %}#}
+
+
+            <div class="invoice-row invoice" data-id="{{ invoice.id }}" style="position: relative">
+
+                <div class="i-id"><span><b>{{ invoice.id }}</b></span></div>
+                <div class="i-date"><span>{{ invoice.date }}</span></div>
+                <div class="i-duedate"><span>{{ invoice.duedate }}</span></div>
+                <div class="i-total"><span>${{ invoice.total }} USD</span></div>
+                <div class="i-description"><span>{{ invoice.description }}</span></div>
+                <div class="i-status">
+                        <span>
+                            {% if invoice.status == 'Cancelled' %}
+                                <span class="invoicestatus">
+
+                                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                       target="_blank">
+                                        <span class="text-cancelled link">
+                                            Cancelled
+
+                                        </span>
+                                    </a>
+                                </span>
+                                {% elseif invoice.status == 'Paid' %}
+                                <span class="invoicestatus">
+                                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                       target="_blank">
+                                        <span class="text-paid link">
+                                            Paid
+                                        </span>
+                                    </a>
+                                </span>
+                                {% elseif invoice.status == 'Unpaid' %}
+                                <span class="invoicestatus">
+                                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                       target="_blank">
+                                        <span class="text-unpaid link">
+                                            Unpaid
+                                        </span>
+                                    </a>
+                                </span>
+                                {% elseif invoice.status == 'Collections' %}
+                                <span class="invoicestatus">
+                                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                       target="_blank">
+                                        <span class="text-collections link">
+                                            Collections
+                                        </span>
+                                    </a>
+                                </span>
+
+                                {% elseif invoice.status == 'Payment Pending' %}
+                                <span class="invoicestatus">
+                                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                       target="_blank">
+                                        <span class="text-payment-pending link">
+                                            Payment Pending
+                                        </span>
+                                    </a>
+                                </span>
+
+                                 {% else %}
+                                <span class="invoicestatus">
+                                     <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}"
+                                        target="_blank">
+                                        <span class="text-status">
+                                            {{ invoice.status }}
+                                        </span>
+                                     </a>
+                                </span>
+                            {% endif %}
+                        </span>
+                </div>
+
+                <div class="i-link">
+                    <a href="{{ url_remote('whmcsViewInvoice', {'id': invoice.id})|raw }}" target="_blank" class="btn btn-info">
+                        Invoice
+                    </a>
+                </div>
+
+
+            </div>
+        {% endfor %}
+
+    </div>
+    <div class="invoice-row no-hover"
+         style="cursor:default;font-size: 12px;line-height: 52px;color: #b7b6b6;border: none;position:  relative;top: 16px;font-weight: bold;">
+
+
+        <button id="loadmore" class="{% if numreturned < 10 %}hide{% endif %}">+ more</button>
+
+    </div>
+
+
+{% endblock %}
+
+{% block page_scripts %}
+
+    <script>
+        var invoicepage = '{{ url_remote('whmcsViewInvoice', {'id': 0})|raw }}';
+
+        $('.invoice-row').on('click', function (e) {
+            var elem = $(e.target);
+
+            var id;
+            if (id = elem.attr('data-id')) {
+                window.open(invoicepage.replace(0, id), '_blank');
+            }
+
+
+        });
+
+        var invoices = $(".invoice");
+
+        var invoicesToShow = [];
+
+
+        // $(invoices).fadeOut( 1600, "linear");
+
+
+        for (let i = 0; i < 10; i++) {
+
+            invoicesToShow[i] = invoices[i];
+            // $(invoices[i]).css("display", "flex")
+        }
+
+
+        // $(invoicesToShow).fadeIn();
+
+        // console.log(invoicesToShow);
+        //
+        //
+        //
+        // console.log(invoices);
+        // console.log(invoices.length);
+
+
+    </script>
+
+
+    <script>
+
+
+        var total = {{ total }};
+        var current = 10;
+        var page = 2;
+        $('#loadmore').on('click', function () {
+            $.ajax('{{ url('getMoreInvoices') }}', {
+                method: "POST",
+                data: {page: page++},
+                // dataType: 'json',
+                beforeSend: function () {
+                    $("#loadmore").html("Loading...");
+                },
+                success: function (data) {
+
+                    // console.log(data)
+                    current += data.length;
+
+                    $("#invoices-showed").html(current);
+
+                    if (current == total) {
+                        $('#loadmore').remove();
+
+                    }
+
+
+                    for (let i = 0; i < data.length; i++) {
+
+
+                        let html = "<div class='invoice-row invoice invoice-row-"+data[i].id+"' data-id='" + data[i].id + "' >";
+                        html += "<div class='i-id'><span><b>" + data[i].id + "</b></span></div>";
+                        html += "<div class='i-date'><span>" + data[i].date + "</span></div>";
+                        html += "<div class='i-duedate'><span>" + data[i].duedate + "</span></div>";
+                        html += "<div class='i-total'><span>$" + data[i].total + " USD</span></div>";
+                        html += "<div class='i-description'><span>" + data[i].description + "</span></div>";
+                        html += "<div class='i-status'>";
+
+
+
+                        let status = data[i].status;
+                        if (status == "Cancelled") {
+                            html += "<span class='invoicestatus'><span class='text-cancelled link'>Cancelled</span></span>"
+
+                        }
+
+                        if (status == "Paid") {
+                            html += "<span class='invoicestatus'><span class='text-paid link'>Paid</span></span>"
+
+                        }
+                        if (status == "Unpaid") {
+                            html += "<span class='invoicestatus'><span class='text-unpaid link'>Unpaid</span></span>"
+
+                        }
+                        html += "</div>";
+
+                        html += "<div class='i-link'><span><a class='btn btn-info' target='_blank' href="+ invoicepage.replace(0, data[i].id) +">Invoice</a></span></div>";
+                        html += "</div>";
+
+                        $(".invoices-wrap").append(html);
+
+
+                        $("#loadmore").html("+ load more")
+
+
+                        if (data.length < 10) {
+                            $('#loadmore').remove();
+                        }
+
+                        $('.invoice-row-'+data[i].id).on('click', function (e) {
+                            var elem = $(e.target);
+
+                            var id;
+                            if (id = elem.attr('data-id')) {
+                                window.open(invoicepage.replace(0, id), '_blank');
+                            }
+
+
+                        });
+                    }
+
+
+                    // self.append(data.list);
+                    //
+                    // if(data.list.length <= self.options.perPage) {
+                    //     $('#loadmore').remove();
+                    // }
+                    //
+                    // self.ajustRows();
+                },
+                error: function (xhr) {
+                    console.log(xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+
+
+    </script>
+
+
+
+{% endblock %}

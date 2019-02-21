@@ -1,0 +1,157 @@
+
+
+
+.form-block{
+  .form-block-title{
+    font-size: 18px;
+    font-weight: bold;
+    color: #303030;
+    margin-bottom: 38px;
+  }
+
+  .form-group{
+    margin-bottom: 21px;
+    label{
+      font-size: 13px;
+      color: #404040;
+      font-weight: 700;
+      font-family: Roboto;
+    }
+
+    input{
+      color: #0c7ce3;
+      margin-top: 6px;
+
+    }
+
+    ::placeholder{
+      color: #0b7be5;
+    }
+  }
+
+
+}
+
+.password-inline{
+  display: inline-block;
+  width: 48%;
+}
+
+
+.agreements-notice {
+  height: 42px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #303030;
+  font-family: "Roboto", sans-serif;
+  margin-top: 38px;
+  font-weight: 500;
+  margin-bottom: 20px;
+
+}
+
+.registration-agreements-list{
+  ul{
+    list-style: none;
+    padding: 0;
+
+    li{
+
+      label{
+        font-size: 12px;
+      }
+    }
+  }
+
+
+}
+
+.order{
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+
+  width: 112px;
+  height: 33px;
+  border-radius: 16px;
+  background-color: #ff0000;
+  border: none;
+
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+
+  &:hover{
+    background-color: #c70000;
+
+  }
+
+}
+#proxy-builder{
+
+  .form-group{
+    input, select{
+      //width: 460px;
+    }
+  }
+}
+
+.sign-up-right{
+  //margin-left: 20px;
+}
+
+
+#proxy-form{
+  padding: 20px 12px;
+
+
+  .mt-tos{
+    margin-top: 38px;
+
+    padding: 0 30px;
+  }
+
+
+
+}
+
+
+.g-recaptcha {
+  div{
+    margin: 0 auto;
+  }
+}
+
+
+#ageRestriction{
+
+
+  .close{
+
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  .modal-content{
+    padding: 15px 0px;
+
+    .modal-header{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      i{
+        margin-right: 19px;
+        font-size: 49px;
+      }
+    }
+
+    .modal-body{
+      font-family: Roboto, sans-serif;
+    }
+  }
+
+}

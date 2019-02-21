@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    {#Sign In#}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row text-center">
+            <h2 class="content-heading " style="text-align: center; margin: 30px 0;">
+                Sign In
+            </h2>
+
+            <a href="{{ url('loginDetermine') }}" class="btn btn-primary btn-lg tt-btn">Sign In</a>
+            -or-
+            <a href="{{ url('quick_buy_empty') }}" class="btn btn-success btn-lg tt-btn tt-btn-disabled">Sign Up</a>
+        </div>
+    </div>
+
+{% endblock %}

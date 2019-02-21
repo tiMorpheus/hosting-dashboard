@@ -1,0 +1,100 @@
+<!-- =============== VENDOR SCRIPTS ===============-->
+{#<!-- MODERNIZR-->#}
+{#<script src="{{ asset('vendor/modernizr/dist/modernizr-build.min.js') }}"></script>#}
+{#<!-- MATCHMEDIA POLYFILL-->#}
+{#<script src="{{ asset('vendor/matchMedia/matchMedia.js') }}"></script>#}
+<!-- JQUERY-->
+<script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+<!-- BOOTSTRAP-->
+<script type="text/javascript" src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+{#<script type="text/javascript">$.fn.tooltip.Constructor.DEFAULTS.container = 'body'</script>#}
+{#<!-- JQUERY EASING-->#}
+{#<script src="{{ asset('vendor/jquery.easing/js/jquery.easing.min.js') }}"></script>#}
+{#<!-- JQUERY STORAGE-->#}
+{#<script src="{{ asset('vendor/jquery-storage-api/jquery.storageapi.min.js') }}"></script>#}
+{#<!-- ANIMO-->#}
+{#<script src="{{ asset('vendor/animo.js/animo.js') }}"></script>#}
+{#<!-- SLIMSCROLL-->#}
+{#<script src="{{ asset('vendor/slimScroll/jquery.slimscroll.min.js') }}"></script>#}
+{#<!-- SCREENFULL-->#}
+{#<script src="{{ asset('vendor/screenfull/dist/screenfull.js') }}"></script>#}
+{#<!-- LOCALIZE-->#}
+{#<script src="{{ asset('vendor/jquery-localize-i18n/dist/jquery.localize.min.js') }}"></script>#}
+{#<!-- OTHER-->#}
+{#<script type="text/javascript" src="{{ asset('vendor/bootbox.js/bootbox.js') }}"></script>#}
+{#<script type="text/javascript" src="{{ asset('vendor/spinner.js/dist/spinner.min.js') }}"></script>#}
+{#<script type="text/javascript" src="{{ asset('vendor/bootstrap-validator/dist/validator.min.js') }}"></script>#}
+{#<script type="text/javascript" src="{{ asset('vendor/easytimer.js/dist/easytimer.min.js') }}"></script>#}
+{##}
+
+
+<!-- =============== PAGE VENDOR SCRIPTS ===============-->
+<script type="text/javascript">
+    window.$config = {
+        'mainUrl': '{{ MAIN_URL }}',
+        'routing': {
+            {#'saveLocations': '{{ url('save_locations') }}',#}
+            {#'saveFormat': '{{ url('save_format', {'format': '_format_'}) }}',#}
+            {#'addIp': '{{ url('add_ip', {'ip': '_ip_'}) }}',#}
+            {#'removeIp': '{{ url('remove_ip', {'id': '_id_'}) }}',#}
+            {#'getIp': '{{ url('get_ip') }}',#}
+            {#'saveSettings': '{{ url('saveSettings') }}',#}
+            {#'setRotationTime': '{{ url('setRotationTime') }}',#}
+            {#'checkPromocode': '{{ url('checkout_promocode') }}',#}
+            {#'checkTotal': '{{ url('checkout_total') }}',#}
+            {#'whmcsPPBA': '{{ url_remote('whmcsPPBA') }}',#}
+            {#'changeBillingCycle': '{{ url('change_billing_cycle') }}'#}
+        }
+    };
+
+    function sidebarToggle() {
+
+        $("body").toggleClass("nav-open");
+
+        $(".navbar-toggle").toggleClass("toggled")
+
+
+
+
+    }
+
+    $(".inputfile").on("change", function (e) {
+
+        $("#input-file-span").html(e.target.value)
+    });
+
+
+
+
+
+    // Submenu toggle
+
+    $(".has-submenu").hover( function (e) {
+
+        if($(this).hasClass('active-hover') || $(this).hasClass('collapsing1') ){
+            return
+        }
+
+        $('.caret').addClass("caret-down").removeClass('caret');
+
+
+        $('#product-submenu').collapse('show');
+
+
+        }, function (e) {
+            if($(this).hasClass('active-hover') || $(this).hasClass('collapsing1') ){
+                return
+            }
+
+            $('.caret-down').removeClass('caret-down').addClass("caret");
+            $('#product-submenu').collapse('hide');
+
+    });
+
+
+
+
+
+
+</script>
+<!-- =============== APP SCRIPTS ===============-->

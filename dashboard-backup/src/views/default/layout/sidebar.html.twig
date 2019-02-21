@@ -1,0 +1,249 @@
+
+<div class="sidebar-wrapper">
+    <div class="logo">
+        <a href="https://blazingseollc.com/hosting" class="">
+            <img src="{{ asset('vendor/servers/assets/img/logo@2x.png') }}" alt="Blazing Logo">
+        </a>
+    </div>
+    <ul class="nav">
+
+        {% include 'layout/sidebar_submenu.html.twig' with {
+            'title': 'Home',
+            'labelId': 'yourProxiesLabel',
+            'url': '',
+            'menuId': 'submenu-yourproxies',
+            'route1': 'dashboard'
+        }
+        %}
+
+        {% include 'layout/sidebar_submenu.html.twig' with {
+            'title': 'Products',
+            'labelId': 'otherServicesLabel',
+            'menuId': 'product-submenu',
+            'route1': 'products',
+            'submenu':'#product-submenu',
+            'url' : '/products',
+            'items':{
+                'getlosangelesvps':{
+                    'label' : "Los Angeles VPS"
+                },
+
+                'getnynjvps':{
+                    'label' : "New York/New Jersey VPS",
+                },
+                'getdallasvps':{
+                    'label' : "Dallas VPS",
+                },
+                'getchicagovps':{
+                    'label' : "Chicago VPS",
+                },
+
+                'getdedicatedservers':{
+                    'label' : "Dedicated Server",
+                },
+                'getvpn':{
+                    'label' : "VPN",
+                    'url'   : 'https://billing.blazingseollc.com/hosting/cart.php?gid=20',
+                    'target': 'blank'
+                }
+
+
+
+            }
+
+
+
+
+        }
+        %}
+
+        {% include 'layout/sidebar_submenu.html.twig' with {
+            'title': 'Server Management',
+            'labelId': 'otherProxiesLabel',
+            'menuId': 'submenu-otherproxies1',
+            'url': 'management',
+            'route1': 'management',
+            'visible': (USER is not empty),
+
+
+        }
+        %}
+
+        {% include 'layout/sidebar_submenu.html.twig' with {
+            'title': 'Billing',
+            'labelId': 'otherProxiesLabel',
+            'menuId': 'submenu-otherproxies2',
+            'url': 'billing',
+            'route1': 'billing',
+            'visible': (USER is not empty),
+
+
+        }
+        %}
+
+        {% include 'layout/sidebar_submenu.html.twig' with {
+            'title': 'Contact',
+            'labelId': 'otherServicesLabel',
+            'menuId': 'submenu-services3',
+            'url': 'contact',
+            'route1': 'contact'
+
+        }
+        %}
+
+    </ul>
+</div>
+
+
+
+
+
+{#<!-- START Sidebar (left)-->#}
+{#<div class="aside-inner">#}
+    {#<nav class="sidebar">#}
+        {#<!-- START sidebar nav-->#}
+        {#<ul class="nav" id="collapseGroup">#}
+            {#<!-- Iterates over all sidebar items-->#}
+            {#<li class="nav-heading ">#}
+                {#<span>Main Navigation</span>#}
+            {#</li>#}
+
+            {#{% include 'layout/sidebar_submenu.html.twig' with {#}
+                    {#'title': 'Your Proxies',#}
+                    {#'labelId': 'yourProxiesLabel',#}
+                    {#'menuId': 'submenu-yourproxies',#}
+                    {#'items': {#}
+                        {#'dashboard': {#}
+                            {#'label': 'Dashboard',#}
+                            {#'icon': 'icon-home'#}
+                        {#},#}
+                        {#'buy_new_package': {#}
+                            {#'label': 'Buy New Proxy Package',#}
+                            {#'icon': 'fa fa-shopping-cart',#}
+                            {#'visible': (USER is not empty)#}
+                        {#},#}
+                        {#'checkout': {#}
+                            {#'label': 'Upgrade / Downgrade',#}
+                            {#'icon': 'fa fa-wrench',#}
+                            {#'visible': (HAS_BOUGHT_PACKAGES)#}
+                        {#},#}
+                        {#'replace': {#}
+                            {#'label': 'Proxy Replacements',#}
+                            {#'icon': 'fa fa-exchange',#}
+                            {#'visible': (HAS_BOUGHT_PACKAGES)#}
+                        {#},#}
+                        {#'locations': {#}
+                            {#'label': 'Location Preferences',#}
+                            {#'icon': 'fa fa-globe',#}
+                            {#'visible': (HAS_PROXIES)#}
+                        {#},#}
+                        {#'sneaker': {#}
+                            {#'label': 'Sneaker Preferences',#}
+                            {#'icon': 'fa fa-globe',#}
+                            {#'visible': (HAS_SNEAKER)#}
+                        {#},#}
+                        {#'api_export_ipv6': {#}
+                            {#'label': 'Export IPv6 list',#}
+                            {#'icon': 'fa fa-flask',#}
+                            {#'visible': (HAS_IPv6),#}
+                            {#'url': USER is not empty and HAS_IPv6 ? url('api_export_ipv6', { email: USER.email, key: USER.apiKey }) : ''#}
+                        {#},#}
+                        {#'settings': {#}
+                            {#'label': 'Settings',#}
+                            {#'icon': 'icon-settings',#}
+                            {#'visible': (USER is not empty)#}
+                        {#},#}
+                        {#'billing': {#}
+                            {#'label': 'Billing',#}
+                            {#'icon': 'fa fa-shopping-cart',#}
+                            {#'visible': (USER is not empty),#}
+                            {#'url': url('billing')#}
+                        {#},#}
+                        {#'_affiliate': {#}
+                            {#'label': 'Affiliate',#}
+                            {#'icon': 'fa fa-users',#}
+                            {#'visible': (USER is not empty),#}
+                            {#'url': url_remote('whmcsAffiliate'),#}
+                            {#'target': '_blank'#}
+                        {#},#}
+                        {#'proxyTester': {#}
+                            {#'label': 'Proxy Tester',#}
+                            {#'icon': 'fa fa-users',#}
+                            {#'visible': (USER is not empty),#}
+
+                        {#},#}
+
+                    {#}#}
+                {#}#}
+            {#%}#}
+
+            {#{% include 'layout/sidebar_submenu.html.twig' with {#}
+                    {#'title': 'Other Proxy Types',#}
+                    {#'labelId': 'otherProxiesLabel',#}
+                    {#'menuId': 'submenu-otherproxies',#}
+                    {#'items': {#}
+                        {#'search_engine_scraping': {#}
+                            {#'label': 'Search Engine Scraping <br> Proxies',#}
+                            {#'icon': 'fa fa-space-shuttle pnav-icon'#}
+                        {#},#}
+                        {#'ecommerce_scraping': {#}
+                            {#'label': 'Ecommerce Scraping <br> Proxies',#}
+                            {#'icon': 'fa fa-space-shuttle  pnav-icon'#}
+                        {#},#}
+                        {#'shopify_proxies': {#}
+                            {#'label': 'Shopify proxies',#}
+                            {#'icon': 'fa fa-shopping-bag',#}
+                            {#'url': 'https://blazingseollc.com/shopify-proxies/',#}
+                            {#'target': '_blank'#}
+                        {#}#}
+                    {#}#}
+                {#}#}
+            {#%}#}
+
+            {#{% include 'layout/sidebar_submenu.html.twig' with {#}
+                    {#'title': 'Other Services',#}
+                    {#'labelId': 'otherServicesLabel',#}
+                    {#'menuId': 'submenu-services',#}
+                    {#'items': {#}
+                        {#'_dedicated': {#}
+                            {#'label': 'Dedicated Server',#}
+                            {#'url': 'https://blazingseollc.com/dedicated-servers/',#}
+                            {#'target': '_blank'#}
+                        {#},#}
+                        {#'_private': {#}
+                            {#'label': 'Virtual Private Server',#}
+                            {#'url': 'https://blazingseollc.com/windows-vps/',#}
+                            {#'target': '_blank'#}
+                        {#},#}
+                        {#'_vpn': {#}
+                            {#'label': 'VPN',#}
+                            {#'url': 'https://blazingseollc.com/vpn/',#}
+                            {#'target': '_blank'#}
+                        {#},#}
+                    {#}#}
+                {#}#}
+            {#%}#}
+
+
+
+
+            {#{% if CONFIG_VIEW.sidebar.admin and USER is defined and USER.admin is defined and USER.admin %} #}
+                {#<li>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="{{ path('admin_add') }}" title="Admin">#}
+                        {#<em class="icon-magic-wand"></em>#}
+                        {#<span>Add Proxies</span>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li >#}
+                    {#<a href="{{ path('admin_stats') }}" title="Stats">#}
+                        {#<em class="icon-briefcase"></em>#}
+                        {#<span>Stats</span>#}
+                    {#</a>#}
+                {#</li>#}
+            {#{% endif %}#}
+        {#</ul>#}
+        {#<!-- END sidebar nav-->#}
+    {#</nav>#}
+{#</div>#}

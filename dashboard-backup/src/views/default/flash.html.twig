@@ -1,0 +1,6 @@
+{% for message in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger">{{ message | raw }}</div>
+{% endfor %}
+{% for message in app.session.flashbag.get('success') %}
+    <div class="alert alert-success"><h4>{{ message | raw }}</h4></div>
+{% endfor %}

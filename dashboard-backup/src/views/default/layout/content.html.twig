@@ -1,0 +1,133 @@
+<div class="main-panel">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" onclick="sidebarToggle()">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                {#<a class="navbar-brand brand-text-color" style="cursor: default" href="javascript:void('');">{{getTitle()}}</a>#}
+
+                <a class="navbar-brand brand-text-color" style="cursor: default" href="javascript:void('');" >
+                    {%
+                        if SEO_TITLE is defined and SEO_TITLE is not empty %}{{ SEO_TITLE }}{%
+                        else %}{% if content_title is not empty %}{{ content_title | raw }}{% endif %}
+                    {%
+                        endif %}
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+
+                    <!-- START Contacts button-->
+                    {% if USER is not empty %}
+                        <li>
+                            <a href="">
+                                <span class="navbar-username">{{ USER.whmcsDetails.fullname is defined ?  USER.whmcsDetails.fullname : ""}}</span>
+                                <img src="{{ asset("vendor/servers/assets/img/logo-small.png") }}" alt="small logo" >
+                            </a>
+                        </li>
+                        {#<li><a  href="https://blazingseollc.com/jobs/" target="_blank">Careers</a></li>#}
+                        {#<li><a href="http://support.blazingseollc.com/support/solutions" target="_blank"> FAQ/Tutorials</a></li>#}
+                        {#<li><a href="https://blazingseollc.com/proxy/dashboard/contact/">Contact US</a></li>#}
+                        {#<li class="navbar-left-menu-userpanel">#}
+                            {#<a href="" class="navbar-username">Tymur Tolochko</a>#}
+                            {#<a href="{{ url('logout') }}" data-toggle-state="offsidebar-open" data-no-persist="true" class="navbar-logout">#}
+                                {#<em class="icon-logout"></em>#}
+                            {#</a>#}
+                        {#</li>#}
+                        <li>
+                            <a href="{{ url('logout') }}" class="btn btn-info tt-btn navbar-logout">
+                            Log Out
+                            </a>
+                        </li>
+
+
+                        {% else %}
+
+                            <li><a href="{{ url('loginType') }}" class="btn btn-nav-signIn">Sign In</a></li>
+                            <li><a href="{{  url('quick_buy_empty') }}" class="btn btn-info">Sign Up</a></li>
+                    {% endif %}
+
+                    <!--<li>-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--<i class="ti-panel"></i>-->
+                    <!--<p>Stats</p>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                    <!--<i class="ti-bell"></i>-->
+                    <!--<p class="notification">5</p>-->
+                    <!--<p>Notifications</p>-->
+                    <!--<b class="caret"></b>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--<li><a href="#">Notification 1</a></li>-->
+                    <!--<li><a href="#">Notification 2</a></li>-->
+                    <!--<li><a href="#">Notification 3</a></li>-->
+                    <!--<li><a href="#">Notification 4</a></li>-->
+                    <!--<li><a href="#">Another notification</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a href="#">-->
+                    <!--<i class="ti-settings"></i>-->
+                    <!--<p>Settings</p>-->
+                    <!--</a>-->
+                    <!--</li>-->
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="content">
+
+        {%
+            if SEO_PAGE_DESCRIPTION is defined and SEO_PAGE_DESCRIPTION is not empty %}
+            <p class="lead">{{ SEO_PAGE_DESCRIPTION | raw }}</p>
+        {% endif %}
+        {% if content is empty %}
+            <div class="row"></div>
+        {% else %}
+            {{ content | raw }}
+        {% endif %}
+    </div>
+
+
+    {% include 'layout/footer.html.twig' %}
+
+</div>
+
+
+
+
+
+{#<!-- Page content-->#}
+{#<div class="content-wrapper page-{{ CURRENT_ROUTE }}">#}
+    {#<h1 class="content-heading">#}
+        {#{%#}
+        {#if SEO_TITLE is defined and SEO_TITLE is not empty %}{{ SEO_TITLE }}{%#}
+        {#else %}{% if content_title is not empty %}{{ content_title | raw }}{% endif %}#}
+        {#{%#}
+        {#endif %}#}
+    {#</h1>#}
+    {#{%#}
+    {#if SEO_PAGE_DESCRIPTION is defined and SEO_PAGE_DESCRIPTION is not empty %}#}
+        {#<p class="lead">{{ SEO_PAGE_DESCRIPTION | raw }}</p>#}
+    {#{% endif %}#}
+    {#{% if content is empty %}#}
+        {#<div class="row"></div>#}
+    {#{% else %}#}
+        {#{{ content | raw }}#}
+    {#{% endif %}#}
+{#</div>#}

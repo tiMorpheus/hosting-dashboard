@@ -1,0 +1,24 @@
+{#{%#}
+    {#if CONFIG_VIEW.captcha.enabled and#}
+    {#(#}
+        {#(CURRENT_ROUTE in ['quick_buy', 'do_quick_buy'] and CONFIG_VIEW.captcha.page.signup) or#}
+        {#('logintype' == CURRENT_ROUTE and CONFIG_VIEW.captcha.page.signin) or#}
+        {#('forgetpassword' == CURRENT_ROUTE and CONFIG_VIEW.captcha.page['forgot-password'])#}
+    {#)#}
+{#%}#}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <div class="g-recaptcha{% if align is defined and 'center' == align %} text-center{% endif %}"
+         data-sitekey="6LdyZnUUAAAAABgAsmFQva4z0_FBz2SlQ5TspDIH"></div>
+
+    {% if align is defined and 'center' == align %}
+    <style type="text/css">
+        .g-recaptcha > * {
+            display: inline-block;
+        }
+    </style>
+    {% endif %}
+
+    {% if append_newline is defined and append_newline is not empty %}<br>{% endif %}
+
+
+{#{% endif %}#}

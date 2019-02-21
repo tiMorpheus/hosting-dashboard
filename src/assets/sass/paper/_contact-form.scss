@@ -1,0 +1,273 @@
+
+
+
+.contact-form{
+
+
+
+    form{
+      position: relative;
+
+    }
+
+    .contact-form-wrap{
+
+
+
+      position: relative;
+
+      margin-top: 45px;
+      padding: 0px 26px;
+      .input-wrap{
+        font-family: Roboto, sans-serif;
+        font-size: 13px;
+        font-weight: bold;
+        display: flex;
+
+        align-items: baseline;
+
+        color: #404040;
+        span{
+          color: #404040;
+          
+        }
+
+        margin-bottom: 17px;
+
+
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: #5881bb;
+          opacity: 1;
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+          color: #5881bb;
+          opacity: 1;
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+          color: #5881bb;
+          opacity: 1;
+        }
+        :-moz-placeholder { /* Firefox 18- */
+          color: #5881bb;
+          opacity: 1;
+        }
+
+        input, textarea, select{
+
+          font-family: Roboto, sans-serif;
+          font-weight: bold;
+          font-size: 13px;
+          color: #5881bb;
+
+          height: 40px;
+          outline: none;
+          border: 1px;
+          padding: 0 2em;
+          border-radius: 10px;
+          background-color: rgba(233, 239, 247, 0.94);
+          width: 168px;
+
+        }
+
+        select{
+          width: 100%;
+          height: 50px;
+        }
+
+        textarea{
+          padding: 1em 2em;
+          height: 100px;
+
+          resize: none;
+        }
+
+
+        .inputfile{
+
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;
+          overflow: hidden;
+          position: absolute;
+          z-index: -1;
+        }
+
+
+        label {
+          display: inline-block;
+          color: $blazing-background-color;
+
+          font-size: 13px;
+          font-family: Roboto, sans-serif;
+          font-weight: bold;
+
+          position: relative;
+          left: 16px;
+          top: 2px;
+        }
+
+
+        label:hover {
+          color: #a80000;
+        }
+
+        label {
+          cursor: pointer; /* "hand" cursor */
+        }
+      }
+
+      .package-btn-wrap{
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+
+        .package-btn{
+          font-family: Roboto, sans-serif;
+          font-weight: bold;
+          background-color: #f5f5f5;
+          color: #8e8e8e;
+          padding: 0.7em 2.5em;
+          margin: 0 10px;
+          font-size: 14px;
+          border-radius: 30px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .package-buy-btn{
+
+          background-color: red;
+          color: white;
+        }
+
+
+      }
+    }
+
+
+}
+
+@media screen and (min-width: 1024px){
+
+
+  .contact-form{
+
+
+
+      .contact-form-wrap{
+
+
+        .input-wrap{
+
+
+
+          input{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 498px;            margin-top: 0;
+            height: 48px;
+
+          }
+
+          textarea{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 498px;
+            height: 110px;
+          }
+
+          select{
+            width: 500px;
+            height: 48px;
+          }
+
+        }
+        .ml-42{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          label{
+            margin-left: auto;
+          }
+
+        }
+        .package-btn-wrap{
+          margin-left: 360px;
+
+          .package-btn{
+            margin: 0;
+
+            margin: 11px 0 0 34px;
+
+            display: block;
+            height: auto;
+            width: auto;
+            padding: 5px 27px;
+            -webkit-transition: all 0.7s;
+            -moz-transition: all 0.7s;
+            -ms-transition: all 0.7s;
+            -o-transition: all 0.7s;
+            transition: all 0.7s;
+          }
+        }
+      }
+  }
+}
+
+@media (max-width: 991px) {
+
+
+  .contact-form{
+
+    .contact-form-wrap{
+      padding: 0;
+
+      .input-wrap{
+        
+        input,textarea,select{
+
+          width: 100%;
+        }
+      }
+
+
+      .package-btn-wrap{
+        margin-left: auto;
+
+        input{
+          padding: 8px 27px;
+          margin: 12px 10px;
+          font-size: 13px;
+        }
+      }
+
+    }
+
+  }
+
+}
+
+@media (max-width: 768px) {
+
+
+  .contact-form{
+
+    .contact-form-wrap{
+
+      .input-wrap{
+
+        display: block;
+        margin-bottom: 1em;
+
+      }
+
+
+    }
+
+  }
+
+}

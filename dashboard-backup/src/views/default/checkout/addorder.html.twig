@@ -1,0 +1,736 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Order confirmation
+{% endblock %}
+
+{% block content %}
+    {% include 'flash.html.twig' %}
+
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <form action="confirmOrder" method="post" id="confirmForm">
+                <input type="hidden" name="custtype" id="inputCustType" value="{{ custType is defined ? custType : 'new' }}">
+
+
+                {% if  userin is defined and userin != '' %}
+
+
+                    <div class="col-md-offset-3 col-md-6 " style="border: 1px solid #ddd;border-radius: 15px;
+padding: 30px 30px;">
+                        <input type="text" name="pid" class="hidden"
+                               value="{{ order.pid is defined ? order.pid : "" }}">
+                        <input type="text" name="clientid" class="hidden" value="{{ userid }}">
+                        <input type="text" name="hostname" class="hidden"
+                               value="{{ order.hostname is defined ? order.hostname : "" }}">
+                        <input type="text" name="rootpw" class="hidden"
+                               value="{{ order.rootpw is defined ? order.rootpw : "" }}">
+                        <input type="text" name="billingcycle" class="hidden"
+                               value="{{ order.billingcycle is defined ? order.billingcycle : "" }}">
+
+                        <input type="text" name="promocode" class="hidden"
+                               value="{{ order.promocode is defined ? order.promocode : "" }}">
+
+
+
+                        <input type="text" name="trial" class="hidden"
+                               value="{{ order.trial is defined ? order.trial : "" }}">
+
+
+                        <input type="text" name="lifetime" class="hidden"
+                               value="{{ order.lifetime is defined ? order.lifetime : "" }}">
+
+
+
+
+
+                        {#config options#}
+                        <input type="text" name="location" class="hidden"
+                               value="{{ order.location is defined ? order.location :  data.location is defined ? data.location : '' }}">
+                        <input type="text" name="os" class="hidden" value="{{ order.os is defined ? order.os : data.os is defined ? data.os : '' }}">
+                        <input type="text" name="ssd" class="hidden"
+                               value="{{ order.ssd is defined ? order.ssd : data.ssd is defined ? data.ssd : '' }}">
+                        <input type="text" name="ram" class="hidden"
+                               value="{{ order.ram is defined ? order.ram : data.ram is defined ? data.ram : '' }}">
+
+
+
+                        {#total price#}
+                        <input type="text" name="totalOrderPrice" class="hidden"
+                               value="{{ totalOrderPrice is defined ? (totalOrderPrice)|number_format(2,'.','') : "" }}">
+
+
+                        <div class="product row">
+
+                            <div class="col-md-6"><h4 style="color:#000;margin-top: 0;">{{ product.name }}</h4></div>
+                            <div class="col-md-6" style="text-align: right">
+
+
+
+
+                                <p style="line-height: 30px;margin: 0;font-size: 30px;font-weight: bold; color: #0a4fb1">
+                                    ${{ (totalOrderPrice is defined ? totalOrderPrice : "") - product['pricing']['USD'].msetupfee }} USD</p>
+
+
+                                {% if order.trial is defined and order.trial  %}
+                                    <p style="font-size: 12px;margin: 0px;">
+                                        for 2 days trial <br>
+                                        ${{ order.totalPriceThereafterTotal is defined ? order.totalPriceThereafterTotal : "" }} thereafter
+                                        <br>
+
+                                        {% if order.lifetime is defined and order.lifetime != '' %}
+
+                                            for {{  order.lifetime is defined ? order.lifetime : "" }}
+                                        {% endif %}
+                                    </p>
+
+                                {% else %}
+                                    <p style="font-size: 12px;margin: 0px;text-transform: capitalize;">
+                                        {{ order.billingcycle is defined ? order.billingcycle : "" }}
+                                        {% if order.lifetime is defined and order.lifetime != '' %}
+
+                                            for {{  order.lifetime is defined ? order.lifetime : "" }}
+                                        {% endif %}
+                                    </p>
+                                {% endif %}
+
+
+
+
+                                {% if  product['pricing']['USD'].msetupfee != 0 %}
+                                    <p style="margin: 0;font-size: 10px;">
+                                        +${{ product['pricing']['USD'].msetupfee }} Setup Fees
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+                        <div class="form-block">
+                            <h5 class="form-block-title">
+                                Payment Details
+                            </h5>
+                            <p style="font-size: 11px; text-align: center">
+                                Please choose your preferred method of payment.
+
+                            </p>
+
+                        </div>
+
+                        <div class="form-group" style="text-align: center">
+
+                            <label class="label-container" style="margin-right: 50px">PayPal
+                                <input type="radio" value="paypal" checked="checked" name="paymentmethod" id="paypal"
+                                       class="">
+                                <span class="checkmark"></span>
+                            </label>
+
+                            <label class="label-container">PayPal Billing Agreement
+                                <input type="radio" value="paypalbilling" checked="checked" name="paymentmethod"
+                                       id="paypalbilling" class="">
+                                <span class="checkmark"></span>
+                            </label>
+
+                            {#<input type="radio" id="paypal" class="" style="position: relative;top: 2px;"#}
+                            {#name="paymentmethod" value="paypal">#}
+                            {#<label for="paypal" style="margin-right: 50px">PayPal</label>#}
+
+                            {#<input type="radio" id="paypalbilling" class=""#}
+                            {#name="paymentmethod" value="paypalbilling">#}
+                            {#<label for="paypalbilling"> PayPal Billing Agreement</label>#}
+
+                        </div>
+                        <hr>
+                        <p style="font-size: 12px;">
+
+                            Our policies have changed in compliance with the General Data Protection Regulation (GDPR).
+                            If you do not agree with any of the agreements below, do not access or use our Services or
+                            interact with any other aspect of our business.
+                            Please read each one carefully and check the box next to each only if you agree with their
+                            contents.
+                        </p>
+
+                        <div class="checkbox ">
+                            <div class="registration-agreements-list">
+                                <ul>
+                                    {% if CONFIG_VIEW.link.checkout.tos %}
+                                        <li><input type="checkbox" id="checkbox-tos" required/>
+                                            <label for="checkbox-tos">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/terms-of-use.html" target="_blank">Terms of
+                                                    Service</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {% if CONFIG_VIEW.link.checkout.aup %}
+                                        <li><input type="checkbox" id="checkbox-aup" required style="top: 28px;"/>
+                                            <label for="checkbox-aup">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/acceptable-use-policy.html" target="_blank">Acceptable
+                                                    Use Policy</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {% if CONFIG_VIEW.link.pp %}
+                                        <li><input type="checkbox" id="checkbox-pp" required style="top: 63px;"/>
+                                            <label for="checkbox-pp">
+                                                I have read and agree to the
+                                                <a href="https://www.blazingseollc.com/privacy-policy.html" target="_blank">Privacy Policy</a>
+                                            </label></li>
+                                    {% endif %}
+
+                                    {#{% if CONFIG_VIEW.link.checkout.no_refund %}#}
+                                        {#<li class="no-refund-page hide">#}
+                                            {#<input type="checkbox" id="checkbox-no-refund"/>#}
+                                            {#<label for="checkbox-no-refund">#}
+                                                {#I have read and agree to the <a#}
+                                                        {#href="{{ CONFIG_VIEW.link.checkout.no_refund }}"#}
+                                                        {#target="_blank">No Refund Policy</a>#}
+                                            {#</label>#}
+                                        {#</li>#}
+                                    {#{% endif %}#}
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="submit" value="Complete order" class="submit tt-btn-red" style="margin: 25px auto 10px;
+    display: block;">
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                {% else %}
+
+                    {#<input type="text" name="pid" class="hidden" value="{{ order.pid is defined ? order.pid : "" }}">#}
+                    {#<input type="text" name="hostname" class="hidden"#}
+                           {#value="{{ order.hostname is defined ? order.hostname : "" }}">#}
+                    {#<input type="text" name="rootpw" class="hidden"#}
+                           {#value="{{ order.rootpw is defined ? order.rootpw : "" }}">#}
+                    {#<input type="text" name="billingcycle" class="hidden"#}
+                           {#value="{{ order.billingcycle is defined ? order.billingcycle : "" }}">#}
+                    {#<input type="text" name="location" class="hidden"#}
+                           {#value="{{ order.location is defined ? order.location : "" }}">#}
+                    {#<input type="text" name="os" class="hidden" value="{{ order.os is defined ? order.os : "" }}">#}
+                    {#<input type="text" name="ssd" class="hidden" value="{{ order.ssd is defined ? order.ssd : "" }}">#}
+                    {#<input type="text" name="ram" class="hidden" value="{{ order.ram is defined ? order.ram : "" }}">#}
+
+                    <div class="row">
+
+                        <div class="col-md-12 col-lg-offset-2 col-lg-8">
+
+                            <h5 class="wrapper-flex-justified-centered" style="font-size: 14px;">Please enter your personal details and billing information to checkout.
+                                <button type="button" class="btn btn-info" id="btnAlreadyRegistered" style="display:inline-block;">
+                                    Already Registered?
+                                </button>
+                                <button type="button" class="btn btn-warning" id="btnNewUserSignup" style="display: none;">
+                                    Create a New Account
+                                </button>
+
+                            </h5>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div id="containerExistingUserSignin" class="" style="display: none; margin-top: 5em">
+
+
+                                <div class="row">
+                                    <div class="col-sm-6  col-md-6 col-lg-offset-2 col-lg-4">
+
+                                        <div class="form-group mt-lg">
+                                            <label for="" class="tt-font-regular">Email Address:</label>
+                                            <input class="form-control tt-input required" type="text" name="login" value="{% if login is defined %}{{login}}{% endif %}" >
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6  col-md-6 col-lg-4">
+                                        <div class="form-group mt-xl" style="position: relative; margin-bottom: 7px;">
+                                            <label for="">Password:</label>
+                                            <input class="form-control tt-input required" type="password" name="loginpassword" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div id="containerNewUserSignup">
+                            <div class="col-md-6 col-sm-12 col-lg-offset-2 col-lg-4">
+                                <div class="form-block">
+                                    <div class="">
+                                        <h4 class="form-block-title">
+                                            Personal Information
+                                        </h4>
+                                    </div>
+                                    <div class="">
+
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Email Address:</label>
+                                            <input name="email" id="email" type="email" class="form-control tt-input-buy required"
+                                                   required value="{% if data.email is defined %}{{ data.email }}{% endif %}"
+                                                    data-remote2="{{ path('quick_buy_check_email',
+                                                {
+                                                    'country': data.plan.country is defined ? data.plan.country,
+                                                    'category': data.plan.category is defined ? data.plan.category,
+                                                }) }}"/>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+                                        <div class="form-group " >
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label for="pass" class="tt-input-buy-label">Password:</label>
+                                                    <input id="pass" name="password" type="password" class="form-control tt-input-buy required"
+                                                           value="{% if data.password is defined %}{{ data.password }}{% endif %}"
+                                                           required minlength="6" novalidate/>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="confirm_pass" class="tt-input-buy-label">Confirm Password:</label>
+                                                    <input id="confirm_pass" type="password" class="form-control tt-input-buy required"
+                                                           value="{% if data.password is defined %}{{ data.password }}{% endif %}"
+                                                           required data-match="#pass" />
+                                                </div>
+                                            </div>
+
+                                            <div class="help-block with-errors"></div>
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label ">First Name:</label>
+                                            <input name="firstname" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.firstname is defined %}{{ data.firstname }}{% endif %}"
+                                                   required minlength="2"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Last Name:</label>
+                                            <input name="lastname" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.lastname is defined %}{{ data.lastname }}{% endif %}"
+                                                   required minlength="2"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Date of Birth</label>
+                                            <input id="birthday"  name="birthday" type="date" class="form-control  tt-input-buy required"
+                                                   value="{% if data.birthday is defined %}{{ data.birthday }}{% endif %}"
+                                                   max="{{ "now"|date("Y-m-d")  }}" required novalidate/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Phone Number:</label>
+                                            <input name="phone" type="tel" class="form-control tt-input-buy"
+                                                   value="{% if data.phone is defined %}{{ data.phone }}{% endif %}"
+                                                   placeholder="(optional)"/>
+                                        </div>
+                                        <div class="help-block with-errors"></div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-lg-4 sign-up-right">
+
+                                <div class="form-block">
+                                    <div class="">
+                                        <h4 class="form-block-title">
+                                            Billing Address
+                                        </h4>
+                                    </div>
+                                    <div class="">
+
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Company Name:</label>
+                                            <input name="company" type="text" class="form-control tt-input-buy"
+                                                   value="{% if data.company is defined %}{{ data.company }}{% endif %}"
+                                                   placeholder="(optional)"/>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Street Address:</label>
+                                            <input name="address" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.address is defined %}{{ data.address }}{% endif %}"
+                                                   required minlength="8"/>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+
+                                        <div class="form-group" style="margin-bottom: 27px;">
+                                            <label for="" class="tt-input-buy-label">City:</label>
+                                            <input name="city" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.city is defined %}{{ data.city }}{% endif %}"
+                                                   required minlength="2"/>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Country:</label>
+                                            <select name="country" class="form-control tt-input-buy required" required>
+                                                {% for code, country in countries %}
+                                                    <option value="{{ code }}" {% if data.country is defined ?
+                                                        (code == data.country) : (code == 'US') %}selected="selected"{% endif %}>{{ country }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">State/Region:</label>
+                                            <input name="state" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.state is defined %}{{ data.state }}{% endif %}"
+                                                   required minlength="2"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="tt-input-buy-label">Postcode:</label>
+                                            <input name="postcode" type="text" class="form-control tt-input-buy required"
+                                                   value="{% if data.postcode is defined %}{{ data.postcode }}{% endif %}"
+                                                   required minlength="3"/>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="help-block with-errors"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" style="margin-top: 3em;">
+
+
+                        <div class="col-lg-offset-2 col-lg-8 col-md-12 " style="border: 1px solid #ddd;border-radius: 15px;
+padding: 30px 30px;">
+                            <input type="text" name="pid" class="hidden"
+                                   value="{{ order.pid is defined ? order.pid : pid }}">
+                            <input type="text" name="clientid" class="hidden" value="{{ userid is defined ? userid : false }}">
+                            <input type="text" name="hostname" class="hidden"
+                                   value="{{ order.hostname is defined ? order.hostname : hostname }}">
+                            <input type="text" name="rootpw" class="hidden"
+                                   value="{{ order.rootpw is defined ? order.rootpw : rootpw }}">
+                            <input type="text" name="billingcycle" class="hidden"
+                                   value="{{ order.billingcycle is defined ? order.billingcycle : billingcycle }}">
+
+
+                            <input type="text" name="promocode" class="hidden"
+                                   value="{{ order.promocode is defined ? order.promocode : "" }}">
+
+
+
+                            <input type="text" name="trial" class="hidden"
+                                   value="{{ order.trial is defined ? order.trial : "" }}">
+
+
+
+
+
+                            <input type="text" name="location" class="hidden"
+                                   value="{{ order.location is defined ? order.location : data.location is defined ? data.location : '' }}">
+                            <input type="text" name="os" class="hidden" value="{{ order.os is defined ? order.os : data.os is defined ? data.os : '' }}">
+                            <input type="text" name="ssd" class="hidden"
+                                   value="{{ order.ssd is defined ? order.ssd : data.ssd is defined ? data.ssd : '' }}">
+                            <input type="text" name="ram" class="hidden"
+                                   value="{{ order.ram is defined ? order.ram : data.ram is defined ? data.ram : '' }}">
+
+                            <input type="text" name="totalOrderPrice" class="hidden"
+                                   value="{{ totalOrderPrice is defined ? totalOrderPrice : "" }}">
+
+                            <input type="text" name="lifetime" class="hidden"
+                                   value="{{ order.lifetime is defined ? order.lifetime : data.lifetime is defined ? data.lifetime : ''}}">
+
+                            <div class="product row">
+
+                                <div class="col-md-6"><h4 style="color:#000;margin-top: 0;">{{ product.name }}</h4></div>
+                                <div class="col-md-6" style="text-align: right">
+
+
+
+
+                                    <p style="line-height: 30px;margin: 0;font-size: 30px;font-weight: bold; color: #0a4fb1">
+                                        ${{ ((totalOrderPrice is defined ? totalOrderPrice: "") - product['pricing']['USD'].msetupfee)|number_format(2,'.','')  }} USD</p>
+
+                                    {% if order.trial is defined and order.trial  %}
+                                        <p style="font-size: 12px;margin: 0px;">
+                                            for 2 days trial <br>
+                                            ${{ order.totalPriceThereafterTotal is defined ? order.totalPriceThereafterTotal : "" }} thereafter
+                                            <br>
+
+                                            {% if order.lifetime is defined and order.lifetime != '' %}
+
+                                                for {{  order.lifetime is defined ? order.lifetime : "" }}
+                                            {% endif %}
+                                        </p>
+
+                                    {% else %}
+                                            <p style="font-size: 12px;margin: 0px;text-transform: capitalize;">
+                                                {{ order.billingcycle is defined ? order.billingcycle : "" }}
+                                            </p>
+                                            {% if order.lifetime is defined and order.lifetime != '' %}
+
+                                                for {{  order.lifetime is defined ? order.lifetime : "" }}
+                                            {% endif %}
+                                    {% endif %}
+
+
+
+                                    {% if  product['pricing']['USD'].msetupfee != 0 %}
+                                         <p style="margin: 0;font-size: 10px;">
+                                             +${{ product['pricing']['USD'].msetupfee }} Setup Fees
+                                         </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+                            <div class="form-block">
+                                <h5 class="form-block-title">
+                                    Payment Details
+                                </h5>
+                                <p style="font-size: 11px; text-align: center">
+                                    Please choose your preferred method of payment.
+
+                                </p>
+
+                            </div>
+
+                            <div class="form-group" style="text-align: center">
+
+                                <label class="label-container" style="margin-right: 50px">PayPal
+                                    <input type="radio" value="paypal" checked="checked" name="paymentmethod" id="paypal"
+                                           class="">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="label-container">PayPal Billing Agreement
+                                    <input type="radio" value="paypalbilling" checked="checked" name="paymentmethod"
+                                           id="paypalbilling" class="">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                {#<input type="radio" id="paypal" class="" style="position: relative;top: 2px;"#}
+                                {#name="paymentmethod" value="paypal">#}
+                                {#<label for="paypal" style="margin-right: 50px">PayPal</label>#}
+
+                                {#<input type="radio" id="paypalbilling" class=""#}
+                                {#name="paymentmethod" value="paypalbilling">#}
+                                {#<label for="paypalbilling"> PayPal Billing Agreement</label>#}
+
+                            </div>
+                            <hr>
+                            <p style="font-size: 12px;">
+
+                                Our policies have changed in compliance with the General Data Protection Regulation (GDPR).
+                                If you do not agree with any of the agreements below, do not access or use our Services or
+                                interact with any other aspect of our business.
+                                Please read each one carefully and check the box next to each only if you agree with their
+                                contents.
+                            </p>
+
+
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-lg-12">
+                                    <div class="checkbox ">
+                                        <div class="registration-agreements-list">
+                                            <ul>
+                                                {% if CONFIG_VIEW.link.checkout.tos %}
+                                                    <li><input type="checkbox" id="checkbox-tos" required/>
+                                                        <label for="checkbox-tos">
+                                                            I have read and agree to the
+                                                            <a href="https://www.blazingseollc.com/terms-of-use.html" target="_blank">Terms of
+                                                                Service</a>
+                                                        </label></li>
+                                                {% endif %}
+
+                                                {% if CONFIG_VIEW.link.checkout.aup %}
+                                                    <li><input type="checkbox" id="checkbox-aup" required style="top: 28px;"/>
+                                                        <label for="checkbox-aup">
+                                                            I have read and agree to the
+                                                            <a href="https://www.blazingseollc.com/acceptable-use-policy.html" target="_blank">Acceptable
+                                                                Use Policy</a>
+                                                        </label></li>
+                                                {% endif %}
+
+                                                {% if CONFIG_VIEW.link.pp %}
+                                                    <li><input type="checkbox" id="checkbox-pp" required style="top: 63px;"/>
+                                                        <label for="checkbox-pp">
+                                                            I have read and agree to the
+                                                            <a href="https://www.blazingseollc.com/privacy-policy.html" target="_blank">Privacy Policy</a>
+                                                        </label></li>
+                                                {% endif %}
+
+                                                {% if CONFIG_VIEW.link.checkout.no_refund %}
+                                                    <li class="no-refund-page hide">
+                                                        <input type="checkbox" id="checkbox-no-refund"/>
+                                                        <label for="checkbox-no-refund">
+                                                            I have read and agree to the <a
+                                                                    href="{{ CONFIG_VIEW.link.checkout.no_refund }}"
+                                                                    target="_blank">No Refund Policy</a>
+                                                        </label>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 col-lg-12">
+                                    {% include 'captcha.html.twig' with {  'append_newline': true } %}
+
+                                </div>
+                            </div>
+
+                            <input type="submit" value="Complete order" class="submit tt-btn-red" style="margin: 25px auto 10px;
+    display: block;">
+
+
+                        </div>
+
+
+
+
+                    </div>
+                {% endif %}
+
+
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade bs-example-modal-sm" id="ageRestriction" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-header" style="border: 0; text-align: center">
+                    <i class="fa fa-times fa-3x" style="display: block"></i>
+                    <h4 class="modal-title">
+                        Age Restriction
+                    </h4>
+                </div>
+                <div class="modal-body" style="border: 0; text-align: center">
+                    You must be 18 or older to Sign Up
+                </div>
+                <div class="modal-footer" style="border: 0; text-align: center">
+                    <button type="button" data-dismiss="modal" class="tt-btn-blue">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block page_scripts %}
+
+    <script>
+
+
+        var password = document.getElementById("pass")
+            , confirm_password = document.getElementById("confirm_pass");
+
+        function validatePassword(){
+            if(password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+
+
+
+
+
+
+    {% if userin == false %}
+
+
+        <script>
+            jQuery("#btnAlreadyRegistered").click(function() {
+
+
+                jQuery("#containerNewUserSignup input.required").removeAttr('required');
+                jQuery("#containerExistingUserSignin input.required").prop('required', true);
+
+                jQuery("#containerNewUserSignup").slideUp("", function() {
+                    jQuery("#containerExistingUserSignin").hide().removeClass("hidden").slideDown("", function() {
+                        jQuery("#inputCustType").val("existing"),
+                            jQuery("#btnAlreadyRegistered").fadeOut("", function() {
+                                jQuery("#btnNewUserSignup").removeClass("hidden").fadeIn()
+                            })
+                    })
+                }),
+                    jQuery("#containerNewUserSecurity").hide(),
+                jQuery("#stateselect").attr("required") && jQuery("#stateselect").removeAttr("required").addClass("requiredAttributeRemoved"),
+                    jQuery(".marketing-email-optin").slideUp()
+            });
+
+            jQuery("#btnNewUserSignup").click(function() {
+
+                $("#containerNewUserSignup input.required").prop('required',true);
+                jQuery("#containerExistingUserSignin input.required").prop('required', false);
+
+
+                jQuery("#containerExistingUserSignin").slideUp("", function() {
+                    jQuery("#containerNewUserSignup").hide().removeClass("hidden").slideDown("", function() {
+                        jQuery("#inputCustType").val("new"),
+                            jQuery("#btnNewUserSignup").fadeOut("", function() {
+                                jQuery("#btnAlreadyRegistered").removeClass("hidden").fadeIn()
+                            })
+                    })
+                })
+            })
+
+
+
+            // User must be 18 or older
+            $(document).ready(function () {
+
+                $('#confirmForm').submit(function() {
+                    var birthday = $("#birthday").val();
+
+                    birthday = new Date(birthday);
+                    var currentDay = new Date();
+                    var years = (currentDay - birthday) / 1000 / 3600 / 24 / 365;
+
+                    if (years < 18) {
+                        $('#ageRestriction').modal('show');
+                        // $("#birthday").focus();
+                        return false;
+                    }
+                    return true;
+                });
+            });
+        </script>
+
+
+
+
+        {% if custType is defined and custType == 'existing'  %}
+
+
+            <script>
+                $('#btnAlreadyRegistered').click();
+            </script>
+            {% endif %}
+    {% endif %}
+{% endblock %}
+
+
+

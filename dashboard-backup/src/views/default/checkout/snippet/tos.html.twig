@@ -1,0 +1,52 @@
+{% if noSpaceBefore is not defined and
+    (CONFIG_VIEW.link.checkout.tos or CONFIG_VIEW.link.checkout.no_refund ) %}
+    <br>
+{% endif %}
+{% if CONFIG_VIEW.link.checkout.tos %}
+<div class="agreements-notice">
+    Our policies have changed in compliance with the General Data Protection Regulation (GDPR).
+    <br>Please read all documents listed below. Check the box next to each policy to agree to it if you wish to use our services.
+</div>
+<div class="checkbox ">
+    <div class="registration-agreements-list">
+        <ul>
+            {% if CONFIG_VIEW.link.checkout.tos %}
+                <li><input type="checkbox" id="checkbox-tos" required />
+                <label for="checkbox-tos">
+                    I have read and agree to the
+                    <a href="{{ CONFIG_VIEW.link.checkout.tos }}" target="_blank">Terms of Service</a>
+                </label></li>
+            {% endif %}
+
+            {% if CONFIG_VIEW.link.checkout.aup %}
+                <li><input type="checkbox" id="checkbox-aup" required style="top: 28px;"/>
+                    <label for="checkbox-aup">
+                        I have read and agree to the
+                        <a href="{{ CONFIG_VIEW.link.checkout.aup }}" target="_blank">Acceptable Use Policy</a>
+                    </label></li>
+            {% endif %}
+
+            {% if CONFIG_VIEW.link.pp %}
+                <li><input type="checkbox" id="checkbox-pp" required style="top: 63px;"/>
+                    <label for="checkbox-pp">
+                        I have read and agree to the
+                        <a href="https://www.blazingseollc.com/privacy-policy.html" target="_blank">Privacy Policy1</a>
+                    </label></li>
+            {% endif %}
+
+            {% if CONFIG_VIEW.link.checkout.no_refund %}
+                <li class="no-refund-page hide">
+                    <input type="checkbox" id="checkbox-no-refund" />
+                    <label for="checkbox-no-refund">
+                        I have read and agree to the <a href="{{ CONFIG_VIEW.link.checkout.no_refund }}" target="_blank">No Refund Policy</a>
+                    </label>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% if noSpaceAfter is not defined and
+(CONFIG_VIEW.link.checkout.tos or CONFIG_VIEW.link.checkout.no_refund) %}
+    <br>
+{% endif %}

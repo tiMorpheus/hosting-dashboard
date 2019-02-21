@@ -1,0 +1,427 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Configure
+{% endblock %}
+
+{% block content %}
+
+    <form action="addorder" method="post" id="frmConfigureProduct">
+        <input type="text" name="id" class="hidden" value="{{ product[0].id }}">
+
+        {% if product[0].isTrial == 1 %}
+            <input type="text" name="trial" class="hidden" value="1">
+
+        {% endif %}
+        <div class="container-fluid product-single" style="max-width: 1500px">
+            <div class="row">
+                <div class="col-xl-6 col-lg-7 col-md-12">
+                    <h3 style="color: black;font-weight: bold;">{{ product[0].name }}</h3>
+
+
+                    <div class="description">
+                        {{ product[0].description | raw }}
+                    </div>
+
+
+                    <div class="billing-cycle form-group">
+                        <label for="inputBillingcycle">Choose Billing Cycle</label>
+
+                        <select name="billingcycle" id="inputBillingcycle" class="form-control">
+
+
+
+                                {% if product[0].annually is defined and (product[0].annually != -1)%}
+                                    <option class="Annually" value="annually">${{  product[0].annually }} USD Annually</option>
+                                {% endif %}
+
+
+                        </select>
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-xl-4  col-lg-5 col-md-12 sticky-50">
+
+                    <div class="summary" >
+
+                        <h4>
+                            Order Summary
+                        </h4>
+
+
+                        <div class="summary-body">
+                            {#<h5 class="product-name">{{ product[0].name }}</h5>#}
+                            {##}
+                            {#<p class="product-group">#}
+                            {#$mock of product group#}
+                            {#</p>#}
+
+
+                            <div class="price-list">
+
+                                <div class="price-row">
+                                    <span>{{ product[0].name }}</span>
+                                    <span>$<span class="billing-price">{{ product[0].monthly }}</span> USD</span>
+                                </div>
+
+                                {% if product[0]['configoptions'].configoption |length >0 %}
+
+                                    <div class="price-row">
+                                        <span>» Location: <span class="total-country" style="font-weight: bold;"></span></span>
+                                        <span>$0 USD</span>
+                                    </div>
+
+                                    <div class="price-row">
+                                        <span>» OS: <span class="total-os" style="font-weight: bold;"></span></span>
+                                        <span>$0 USD</span>
+                                    </div>
+
+                                    <div class="price-row">
+                                        <span>» SSD Size: <span class="total-ssd" style="font-weight: bold;"></span></span>
+                                        <span>$<span class="total-ssd-price"></span> USD</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span>» RAM Size: <span class="total-ram" style="font-weight: bold;"></span></span>
+                                        <span>$<span class="total-ram-price"></span> USD</span>
+                                    </div>
+                                {% endif %}
+
+                                <hr>
+                                <div class="price-row">
+                                    <span class="">Setup Fees</span>
+                                    <span>$<span class="">{{ product[0].msetupfee }}</span> USD</span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="total-billing-cycle-label">Monthly</span>
+                                    <span>$<span class="billing-price monthly-price">{{ product[0].monthly }}</span> USD</span>
+                                </div>
+
+                                <hr>
+
+                                <div class="price-column">
+                                    <input type="text" class="hidden priceInput" id='priceInput' value="" name="totalPrice" >
+
+                                    <div class="promo-output-success">
+
+                                    </div>
+                                    <span class="total-price-span">$<span class="price">100</span> USD</span>
+                                    <span class="non-trial-text">Total due today</span>
+
+                                    <span class="trial-text">
+
+                                        {% if product[0].isTrial == 1 %}
+                                            <input type="text" class="hidden priceTrialThereafter" id='priceInputTrial' value="{{ product[0].annually  }}" name="totalPrice" >
+
+                                        for 2 days <span class="price-thereafter">${{ product[0].monthly  }}</span> thereafter
+                                        {% endif %}
+
+
+                                    </span>
+
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="promocode-wrap form-group">
+
+
+                        <a class="have-a-coupon" data-toggle="collapse" href="#promocodeInput" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Have a promocode?
+                        </a>
+
+                        <div class="collapse" id="promocodeInput">
+                            <label for="promocode">
+
+                                <input type="text" name="promocode" id="promocode" placeholder="Enter your coupon code" value="" class="form-control">
+                                <input type="text" name="discount" id="discount" placeholder="Enter your coupon code" value="1" class="hidden">
+                                <span class="tt-btn-blue check-promocode">Check Promocode</span>
+                            </label>
+                        </div>
+                        {#<label for="inputBillingcycle">Have a coupon?</label>#}
+
+
+                        <div class="promo-output">
+
+                        </div>
+
+                        {#<span class="check-promocode">Check promocode</span>#}
+
+                    </div>
+
+
+
+                    <button type="submit" class="tt-btn-red btnComplete" id="btnCompleteProductConfig">Order now</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}
+
+{% block page_scripts %}
+
+
+    <script>
+
+
+
+
+
+            $("#inputBillingcycle").on("change", function (e) {
+
+                if($('select[name="billingcycle"] option:selected').hasClass('Trial')){
+
+                    $('.trial-text').css('display', 'block');
+                    $('.non-trial-text').css('display', 'none');
+                } else{
+                    $('.trial-text').css('display', 'none');
+                    $('.non-trial-text').css('display', 'block');
+
+                }
+
+
+
+                let newValue = $('select[name="billingcycle"] option:selected').html();
+
+                $('.billing-price').html(newValue.split(' ')[0].slice(1));
+
+                let billingCycleValue = $('select[name="billingcycle"] option:selected').attr('class');
+
+                $('.total-billing-cycle-label').html(billingCycleValue);
+
+
+
+                refreshPrice();
+
+                e.preventDefault();
+            }).trigger("change");
+
+
+            function refreshPrice() {
+                var billing = $('select[name="billingcycle"] option:selected').html();
+
+                $('.price').html( ( +(+billing.split(' ')[0].slice(1) ) ).toFixed(2) );
+                $("#priceInput").val((billing.split(' ')[0].slice(1)));
+
+            }
+
+
+
+        </script>
+
+
+
+
+    <script>
+
+
+        var productID = {{ product[0].id }};
+
+
+        function refreshPriceWithDiscount(type , discount){
+
+
+
+            if(type == 'Percentage' ){
+                let total = $("#priceInput").val();
+
+                discount = 1- ( discount / 100);
+
+
+                $('.price').html( (total * discount).toFixed(2) );
+                $("#priceInput").val( (total * discount).toFixed(2));
+
+
+
+                if($('.price-thereafter').length != 0){
+
+                    let thereafter = +($('.priceTrialThereafter').val());
+
+                    thereafter = (thereafter * discount).toFixed(2)
+
+
+                    $('.price-thereafter').html("$"+thereafter)
+
+                    total.val(thereafter);
+
+
+                }
+
+            }
+
+
+            if(type == 'Fixed Amount' ){
+                let total = $("#priceInput").val();
+
+
+                total = (total - discount).toFixed(2)
+                if (total < 0){
+                    total = 0
+                }
+
+
+
+                $('.price').html( total );
+                $("#priceInput").val( total);
+
+
+
+                if($('.price-thereafter').length != 0){
+
+                    let thereafter = +($('.priceTrialThereafter').val());
+
+                    thereafter = (thereafter - discount).toFixed(2)
+                    if (thereafter < 0){
+                        thereafter = 0
+                    }
+
+
+                    $('.price-thereafter').html("$"+thereafter)
+
+                    total.val(thereafter);
+
+                }
+
+            }
+
+
+        }
+
+
+        $(".check-promocode").on('click', function () {
+
+            $.ajax({
+                url: "{{ url('getpromo') }}",
+                type: 'GET',
+                data: "promocode="+$('input[name=promocode]').val(),
+                success: function(data){
+                    refreshPrice();
+                    console.log(  data );
+
+                    if(data.result == "fail"  ){
+
+
+                        $('.promo-output').html(
+                            "<span style='color: red'>"+ data.reason + "</span>"
+                        ).fadeIn();
+
+                        $('.promo-output-success').fadeOut();
+
+                        refreshPrice()
+
+                        return
+                    }
+
+                    if(data.totalresults == 0 ){
+                        $('.promo-output').html(
+                            "<span style='color: red'>"+$('input[name=promocode]').val()+" Promocode doesn't exist</span>"
+                        ).fadeIn();
+
+
+                        $('.promo-output-success').fadeOut();
+
+                        refreshPrice()
+
+                        return
+
+                    }
+
+
+
+
+
+                    var appliesTo = (data.promotions.promotion[0].appliesto).split(",");
+                    var typeOfDiscount = data.promotions.promotion[0].type;
+                    var valueOfDiscount = data.promotions.promotion[0].value;
+
+                    var applied = false;
+
+                    appliesTo.forEach(function (item) {
+
+
+                        if (item == productID){
+
+                            applied = true;
+                        }
+                    });
+
+
+
+
+                    if(!applied) {
+
+                        $('.promo-output').html("<span style='color: red'>Promocode do not apply to this product</span>");
+
+                    } else {
+
+
+                        refreshPriceWithDiscount(typeOfDiscount, valueOfDiscount);
+
+
+                        if(typeOfDiscount == 'Percentage' ){
+                            typeOfDiscount = "%";
+
+                        }
+
+                        if(typeOfDiscount == 'Fixed Amount' ){
+                            typeOfDiscount = "$";
+
+                        }
+
+
+                        let lifetime = '';
+
+                        if(data.promotions.promotion[0].recurring == 1){
+
+                            if (data.promotions.promotion[0].recurfor == 0){
+                                lifetime = 'lifetime'
+                                $('#lifetime').val(lifetime);
+                            } else {
+                                lifetime = data.promotions.promotion[0].recurfor + ' billing cycles';
+                                $('#lifetime').val(lifetime);
+
+                            }
+
+                        } else{
+                            lifetime = 'one time'
+                            $('#lifetime').val(lifetime);
+
+                        }
+
+
+
+                        $('.promo-output-success').html('<span style="color: green">- '+ data.promotions.promotion[0].value +" " + typeOfDiscount +' off for '+  lifetime +'</span>').fadeIn();
+
+                    }
+
+
+
+                },
+                error: function () {
+
+                    alert('incorrect')
+                }
+            });
+
+        })
+
+
+
+    </script>
+
+
+
+
+{% endblock %}

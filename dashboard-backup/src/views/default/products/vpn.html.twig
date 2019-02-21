@@ -1,0 +1,221 @@
+
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    {{ title is defined ? title : "Products" }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="conteiner-fluid">
+        <div class="row" style="width: 100%;margin: 0;padding: 0;">
+            <div class="col-md-12">
+                {% include 'flash.html.twig' %}
+            </div>
+
+            {% if productNav %}
+
+                <div class="col-md-12">
+
+
+
+                    <div class="product-nav-wrap">
+                        <div class="product">
+
+                            <img src="{{ asset('vendor/servers/assets/img/servers/server2.png') }}" alt="vps1">
+
+                            <h5>Seo Tools Optimized VPS</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                                enim laborum minus molestiae non quidem quo recusandae similique?</p>
+
+
+                            <a href="{{ url("getseooptimizedvps") }}" class="tt-btn-red">Get Started!</a>
+                        </div>
+
+                        <div class="product">
+
+                            <img src="{{ asset('vendor/servers/assets/img/servers/server2.png') }}" alt="vps 2">
+
+                            <h5>Sneaker VPS</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                                enim laborum minus molestiae non quidem quo recusandae similique?</p>
+
+
+                            <a href="{{ url("getsneakervps") }}" class="tt-btn-red">Get Started!</a>
+                        </div>
+
+                        <div class="product">
+
+                            <img src="{{ asset('vendor/servers/assets/img/servers/server2.png') }}" alt="vps 3">
+
+                            <h5>Buffalo VPS</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                                enim laborum minus molestiae non quidem quo recusandae similique?</p>
+
+
+                            <a href="{{url('getbuffalovps')}}" class="tt-btn-red">Get Started!</a>
+                        </div>
+
+                        <div class="product">
+
+                            <img src="{{ asset('vendor/servers/assets/img/servers/server2.png') }}" alt="vps 4">
+
+                            <h5>Dallas VPS</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                                enim laborum minus molestiae non quidem quo recusandae similique?</p>
+
+
+                            <a href="{{url('getdallasvps')}}" class="tt-btn-red">Get Started!</a>
+                        </div>
+
+                        <div class="product">
+
+                            <img src="{{ asset('vendor/servers/assets/img/servers/server1.png') }}" alt="dedi server">
+                            <h5>Dedicated Servers</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci autem
+                                enim laborum minus molestiae non quidem quo recusandae similique?</p>
+
+
+                            <a href="{{url('getdedicatedservers')}}" class="tt-btn-red">Get Started!</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            {% else %}
+
+                <div class="product-list-flex">
+
+                    {% for product in products %}
+
+
+
+                        <div class="cart cart-vpn">
+                            <h4 class="cart-header">{{ product['name'] }}</h4>
+
+
+                            <div class="cart-body">
+
+                                <div class="description">
+                                    {{ product['description'] | raw  }}
+
+                                </div>
+
+                                <div class="price">
+
+                                    <div class="price-wrap">
+                                        Starting from <br>
+
+
+                                            <span>${{ product['annually'] }} USD</span>
+                                            <br>  Annually
+
+
+
+
+
+
+                                        <br>
+                                        {#{% if product['pricing']['USD'].msetupfee != 0 %}#}
+                                            {#+${{ product['pricing']['USD'].msetupfee }} Setup Fee#}
+                                        {#{% endif %}#}
+                                    </div>
+
+
+                                    <a class="tt-btn-red" href="https://billing.blazingseollc.com/hosting/cart.php?gid=20"> Order Now</a>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+                        {#<div class="col-md-12 col-lg-5 ">#}
+
+                        {#<div class="cart">#}
+                        {#<h4 class="cart-header">{{ product['name'] }}</h4>#}
+
+                        {#<div class="row">#}
+                        {#<div class="col-lg-6 col-md-6">#}
+                        {#<div class="description">#}
+                        {#{{ product['description'] | raw }}#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-lg-6 col-md-6 right text-center">#}
+
+                        {#<div class="price">#}
+                        {#Starting from <br>#}
+
+
+
+                        {#{% if product['module'] == 'EasyDCIM' and product['configoptions']['configoption'] | length >0 %}#}
+
+                        {#<span>${{ product['pricing']['USD']['monthly']#}
+                        {#+ product['configoptions']['configoption'][2]['options']['option'][0]['pricing']['USD'].monthly#}
+                        {#+ product['configoptions']['configoption'][3]['options']['option'][0]['pricing']['USD'].monthly#}
+                        {#}} USD</span>#}
+
+
+                        {#{% else %}#}
+
+                        {#<span>${{ product['pricing']['USD']['monthly'] }} USD</span>#}
+
+
+                        {#{% endif %}#}
+
+
+
+
+                        {#<br>Monthly <br>#}
+                        {#{% if product['pricing']['USD'].msetupfee != 0 %}#}
+                        {#${{ product['pricing']['USD'].msetupfee }} Setup Fee#}
+                        {#{% endif %}#}
+                        {#</div>#}
+
+                        {#<a class="tt-btn-red" href="/products/product/{{ product['pid'] }}"> Order Now</a>#}
+
+                        {#</div>#}
+                        {#</div>#}
+
+
+
+
+                        {#</div>#}
+                        {#</div>#}
+
+
+                    {% endfor %}
+                </div>
+
+
+
+            {% endif %}
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block page_scripts %}
+
+
+
+
+    <script>
+        {#var products = {{ products }}#}
+        {##}
+        {##}
+        //         console.log(products)
+
+    </script>
+{% endblock %}

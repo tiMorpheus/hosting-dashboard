@@ -1,0 +1,310 @@
+@import "variables";
+
+.product-wrap{
+
+
+  a{
+    display: block;
+    background-color: rgba(9, 79, 177, 0.05);
+    padding: 30px 30px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    min-height: 200px;
+
+    transition: all 0.6s;
+
+    position: relative;
+    
+
+    
+    span.link{
+
+      -webkit-transition: all 0.6s;
+      -moz-transition: all 0.6s;
+      -ms-transition: all 0.6s;
+      -o-transition: all 0.6s;
+      transition: all 0.6s;
+      opacity: 0;
+      transform: scale(0.5);
+      position: absolute;
+
+
+      color: #fff;
+      background: red;
+      padding: 6px 45px;
+      border-radius: 50px;
+      font-weight: bold;
+      right: 50px;
+      top: 92%;
+      font-size: 15px;
+
+
+    }
+    &:hover{
+      //box-shadow: 0 0 8px 0 $blazing-background-color;
+      
+      
+      span.link{
+        opacity: 1;
+        display: block;
+        transform: scale(1);
+      }
+    }
+  }
+
+  .product-title{
+
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: $blazing-background-color;
+    margin-bottom: 17px;
+  }
+
+  .product-description{
+
+    font-size: 14px;
+    color: #414141;
+
+    font-weight: 500;
+    line-height: 24px;
+  }
+}
+
+.info-block {
+  background-color: #fffafa;
+
+
+  padding: 22px 48px 20px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid red;
+  border-radius: 10px;
+
+  height: 50px;
+  margin-top: 27px;
+
+  i {
+    font-size: 18px;
+    color: red;
+
+  }
+
+  span{
+    font-size: 13px;
+    font-family: Roboto, sans-serif;
+    margin-left: 30px;
+    color: #525252;
+    line-height: 24px;
+    font-weight: 500;
+
+  }
+}
+
+.server-management-btn-wrap{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 123px;
+  margin-top: 132px;
+
+
+  .sign-in-modules-sign{
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn.btn-lg{
+    width: 205px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    height: 50px;
+    line-height: 27px;
+    margin: 0 30px;
+
+    font-size: 18px;
+    font-weight: bold;
+    border:none;
+
+    transition: all 0.6s;
+  }
+
+  .red {
+    background: red;
+    color: white;
+
+    &:hover{
+      background-color: #c00000;
+    }
+
+  }
+
+  .blue{
+    background-color: #e9eff7;
+    color: #094fb1;
+
+
+    &:hover{
+      background-color:red;
+      color: white;
+    }
+  }
+}
+
+.tt-home-title{
+  margin-left: 15px;
+  margin-bottom: 22px;
+  margin-top: 38px;
+  color: #252525;
+  font-size: 18px;
+}
+
+.annonce-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .checkbox{
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+}
+
+
+.modal-header{
+  color: black;
+}
+
+
+@media (min-width: 1200px) {
+
+
+  .modal-dialog{
+    margin-top: 150px;
+  }
+
+}
+
+
+
+
+
+
+.card-active-trial{
+  position: relative;
+
+  background: #26b999 !important;
+
+  .content{
+    color: #fff !important;
+  }
+
+
+}
+
+.card-pending-trial{
+  background: $bg-danger !important;
+  position: relative;
+  .content{
+    color: #fff !important;
+  }
+}
+
+.pending-trial-wrap2{
+
+
+
+  .pending-trial{
+
+    width: 100%;
+    display: flex;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f3f6fb;
+
+    justify-content: space-between;
+
+    &-id{
+      width: 10%;
+
+    }
+
+    &-name{
+      width: 40%;
+
+    }
+
+    &-duedate{
+
+      width: 22%;
+
+    }
+
+    &-amount{
+      width: 20%;
+      text-align: right;
+    }
+
+  }
+
+  .pending-trial:last-child{
+    border-bottom: 0;
+  }
+}
+
+.tt-modal{
+
+
+  .modal-content{
+
+    .close{
+      top: 10px;
+      position: absolute;
+      right: 10px;
+
+    }
+
+    .modal-header{
+      border-bottom: 0;
+    }
+
+    .modal-body{
+      padding: 25px;
+
+      .pending-trial:first-child{
+        font-weight: bold;
+      }
+    }
+
+    .modal-footer{
+
+      text-align: initial;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      p{
+        font-size: 11px;
+        //color: $blazing-background-color;
+        display: block;
+      }
+
+      a.tt-btn-blue{
+        padding: 5px 20px;
+        margin-left: 50px;
+      }
+
+      button{
+        margin-left: 50px;
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,27 @@
+{#<!-- =============== VENDOR STYLES ===============-->#}
+{#<!-- FONT AWESOME-->#}
+{#<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">#}
+{#<!-- SIMPLE LINE ICONS-->#}
+{#<link rel="stylesheet" href="{{ asset('vendor/simple-line-icons/css/simple-line-icons.css') }}">#}
+{#<!-- ANIMATE.CSS-->#}
+{#<link rel="stylesheet" href="{{ asset('vendor/animate.css/animate.min.css') }}">#}
+{#<!-- WHIRL (spinners)-->#}
+{#<link rel="stylesheet" href="{{ asset('vendor/whirl/dist/whirl.css') }}">#}
+
+{#<!-- =============== BOOTSTRAP STYLES ===============-->#}
+{#<link rel="stylesheet" href="{{ asset((LAYOUT_TYPE == 'default' ? 'theme' : 'theme_prefixed') ~ '/default/css' ~ '/bootstrap-customized.css') }}" id="bscss">#}
+{#{% if LAYOUT_TYPE == 'default' %}#}
+    {#<link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" id="bscss">#}
+{#{% else %}#}
+    {#<link rel="stylesheet" href="{{ asset('theme_prefixed/bootstrap.css') }}" id="bscss">#}
+{#{% endif %}#}
+{#<link rel="stylesheet" href="{{ asset('vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">#}
+
+{#<!-- =============== APP STYLES ===============-->#}
+{#<link rel="stylesheet" href="{{ asset('css' ~ (LAYOUT_TYPE != 'default' ? '/prefixed' : '') ~ '/app.css') }}" id="maincss">#}
+{#<link rel="stylesheet" href="{{ asset((LAYOUT_TYPE == 'default' ? 'theme' : 'theme_prefixed') ~ '/default/css' ~ '/app.css') }}" id="maincss">#}
+{#<link rel="stylesheet" href="{{ asset((LAYOUT_TYPE == 'default' ? 'theme' : 'theme_prefixed') ~ '/default/css' ~ '/proxy.css') }}">#}
+{#<link rel="stylesheet" href="{{ asset((LAYOUT_TYPE == 'default' ? 'theme' : 'theme_prefixed') ~ '/default/css' ~ '/redesign.css') }}">#}
+
+<!-- =============== OTHER ===============-->
+{{ page_styles | raw }}

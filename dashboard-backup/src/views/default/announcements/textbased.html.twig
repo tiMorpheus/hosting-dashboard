@@ -1,0 +1,64 @@
+<div tabindex="-1" role="dialog" id="announcement-modal" class="modal">
+    <div class="modal-dialog
+
+{{ size }}
+
+">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-announcement" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">
+                {#Announcements heading#}
+                    {{ heading }}
+
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                {#Announcemets content body, could be inject the raw HTML#}
+
+                {{ content | raw }}
+            </div>
+            <div class="modal-footer annonce-footer">
+                <div class="checkbox checkbox-primary checkbox-lg" >
+                    <input id="dismiss-chbox" name="dismiss-chbox" value="1" type="checkbox">
+                    <label for="dismiss-chbox">Don't show again</label>
+                </div>
+                <button type="button" class="tt-btn-blue close-announcement">
+
+                    {{ buttonText }}
+                </button>
+
+
+                {#<button class=" tt-btn-blue close-announcement">No, thanks</button>#}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    window.$ = jQuery;
+
+    $('#announcement-modal').modal({
+        'show': true,
+        'backdrop': 'static',
+        'keyboard': false
+    });
+
+    $('#announcement-modal .close-announcement').on('click', closeAnnouncement);
+
+    function closeAnnouncement()
+    {
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: $config.mainUrl + 'announcement/' + ($('#dismiss-chbox').prop('checked') ? 'dismiss' : 'close')
+        })
+            .done(function() {
+                $('#announcement-modal').modal('hide');
+            });
+    }
+</script>

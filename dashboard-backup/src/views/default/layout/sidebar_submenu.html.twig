@@ -1,0 +1,82 @@
+{% set menuActive = (item[CURRENT_ROUTE] is defined) %}
+{#<li>#}
+    {#<span id="{{ labelId }}" class="tt-main-menu-items list-group-item sub-item pnav-submenu {{ menuActive ? 'collapsed my-active' : '' }}" type="button" data-toggle="collapse" data-parent="#collapseGroup" data-target="#{{ menuId }}" aria-haspopup="true">#}
+        {#<!--<em class="fa fa-cart-plus" style="width: 1.8em;"></em>-->#}
+        {#<span>{{ title }}</span>#}
+        {#<span class="caret rotate-if-collapsed"></span>#}
+    {#</span>#}
+    {#<div class="tt-sidebar-submenu collapse list-group-submenu {{ menuActive ? 'in' : '' }}" id="{{ menuId }}" aria-labelledby="{{ labelId }}">#}
+        {#{% for route, item in items %}#}
+            {#{% if not (item.visible is defined) or item.visible %}#}
+            {#<a href="{{ (item.url is defined ? item.url : url(route)) }}" target="{{item.target is defined ? item.target : '' }}" class="submenu-item list-group-item pnav-submenu {{ (menuActive and route == CURRENT_ROUTE ? 'pactive-item' : '') }}">#}
+
+                    {#-#}
+
+                {#<div style="display: inline-block;">{{ item.label|raw }}</div>#}
+            {#</a>#}
+            {#{% endif %}#}
+       {#{% endfor %}#}
+    {#</div>#}
+{#</li>#}
+
+{#{{ CURRENT_ROUTE }}#}
+
+<li class="{% if (CURRENT_ROUTE == route1) %}active active-hover{% endif %}  {% if items is defined %}{% if (items[CURRENT_ROUTE] is defined) %}active active-hover{% endif %} has-submenu{% endif %}">
+    {% if not (visible is defined) or visible %}
+
+        <a href="{{ (url is defined ? url :  submenu) }}"
+                {% if items is defined %}
+            role="button"
+            aria-expanded="{% if (items[CURRENT_ROUTE] is defined) %}true{% endif %}"
+                {% endif %}>
+            <p class="submenu-link-caret">
+
+                {{ title }}
+
+                {% if items is defined %}
+                    {#{% if (CURRENT_ROUTE == route1) %}#}
+                        {#<span class="caret-down"></span>#}
+                    {#{% endif %}#}
+{##}
+                        {#{% if (items[CURRENT_ROUTE] is defined) %}#}
+                            {#<span class="caret-down"></span>#}
+                        {#{% endif %}#}
+
+
+                    <span class="caret{% if (CURRENT_ROUTE == route1) %}-down
+                    {% endif %}{% if (items[CURRENT_ROUTE] is defined) %}-down
+                     {% endif %}"></span>
+
+
+                    {#<span class="caret-down" style=""></span>#}
+
+                {% endif %}
+            </p>
+
+
+        </a>
+
+    {% endif %}
+
+
+    {% if items is defined %}
+        <div id="{{ menuId }}"
+             class="sidebar-submenu collapse {% if (items[CURRENT_ROUTE] is defined) %}in{% endif %}{% if (CURRENT_ROUTE == route1) %}in{% endif %}">
+
+            {% for  route, item in items %}
+                <a href="{{ (item.url is defined ? item.url : url(route)) }}"
+                   class="{{ ( CURRENT_ROUTE == route ? 'pactive-item' : '') }}"
+
+
+                   target="{{ (item.target is defined ? '_blank' : '' )}}"
+                    >
+                    <div> - {{ item['label'] }}</div>
+                </a>
+            {% endfor %}
+        </div>
+
+
+    {% endif %}
+
+
+</li>

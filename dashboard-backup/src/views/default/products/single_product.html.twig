@@ -1,0 +1,569 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Configure
+{% endblock %}
+
+{% block content %}
+
+    <form action="addorder" method="post" id="frmConfigureProduct">
+        <input type="text" name="pid" class="hidden" value="{{ product[0].pid }}">
+        <div class="container-fluid product-single" style="max-width: 1500px">
+            <div class="row">
+                <div class="col-xl-6 col-lg-7 col-md-12">
+                    <h3 style="color: black;font-weight: bold;">{{ product[0].name }}</h3>
+
+
+                    <div class="description">
+                        {{ product[0].description | raw }}
+                    </div>
+
+
+                    <div class="billing-cycle form-group">
+                        <label for="inputBillingcycle">Choose Billing Cycle</label>
+
+                        <select name="billingcycle" id="inputBillingcycle" class="form-control">
+
+
+                            {#{% if product %}#}
+                            {#<option value="monthly"></option>#}
+                            {#{% endif %}#}
+
+                            {% if product[0]['pricing']['USD'].msetupfee != 0 %}
+                                <option class="Monthly" value="monthly">${{  product[0]['pricing']['USD'].monthly }} USD Monthly + ${{ product[0]['pricing']['USD'].msetupfee }} USD Setup Fee</option>
+
+
+
+                            {% else %}
+                                <option class="Monthly" value="monthly">${{  product[0]['pricing']['USD'].monthly }} USD Monthly</option>
+                            {% endif %}
+
+                            {% if product[0]['pricing']['USD'].quarterly is defined and (product[0]['pricing']['USD'].quarterly != -1)%}
+                                <option class="Quarterly" value="quarterly">${{  product[0]['pricing']['USD'].quarterly }} USD Quarterly</option>
+                            {% endif %}
+
+                            {% if product[0]['pricing']['USD'].semiannually is defined and (product[0]['pricing']['USD'].semiannually != -1)%}
+                                <option class="Semiannually" value="semiannually">${{  product[0]['pricing']['USD'].semiannually }} USD Semiannually</option>
+                            {% endif %}
+
+                            {% if product[0]['pricing']['USD'].annually is defined and (product[0]['pricing']['USD'].annually != -1)%}
+                                <option class="Annually" value="annually">${{  product[0]['pricing']['USD'].annually }} USD Annually</option>
+                            {% endif %}
+
+                            {% if product[0]['pricing']['USD'].biennially is defined and (product[0]['pricing']['USD'].biennially != -1)%}
+                                <option class="Biennially" value="biennially" >${{  product[0]['pricing']['USD'].biennially }} USD Biennially</option>
+                            {% endif %}
+
+                            {% if product[0]['pricing']['USD'].triennially is defined and (product[0]['pricing']['USD'].triennially != -1)%}
+                                <option class="Triennially" value="triennially">${{  product[0]['pricing']['USD'].triennially }} USD Triennially</option>
+                            {% endif %}
+
+
+                        </select>
+
+
+
+
+
+
+                    </div>
+
+                    <div class="promocode-wrap form-group">
+
+
+                        <label for="inputBillingcycle">Enter promocode</label>
+
+                        <input type="text" name="promocode" id="promocode" placeholder="Enter promocode" value="" class="form-control">
+
+
+                        <span class="check-promocode">Check promocode</span>
+
+
+                    </div>
+
+
+
+                    <div class="configure-server" >
+
+                        <h6>Configure Server</h6>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputHostname">Hostname</label>
+                                    <input type="text" name="hostname" class="form-control" id="inputHostname" value="" placeholder="servername.yourdomain.com">
+                                    <small class="help-block" style="display: inline-block;">
+                                        <strong>Hostnames must have no spaces or special characters. Example: "Server1" is acceptable.</strong>
+                                    </small>
+                                    <div style="display:none; color: red;font-size: 13px;clear: both;" id="hosterr">
+                                        <b>Invalid hostname. Hostnames must contain only letters and numbers. No spaces or special characters.</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputRootpw">Root Password</label>
+                                    <input type="password" name="rootpw" class="form-control" id="inputRootpw" value="">
+
+                                    <small class="help-block" style="display: inline-block;">
+                                        <strong>Password must contain at least 3 of the following:</strong>
+                                        An uppercase letter, a lower case letter,a number or a special symbol
+                                    </small>
+                                    <div style="display:none; color: red;font-size: 13px;clear: both;" id="passerr">
+                                        <b>Password must contain at least 10 characters and 3 of the following:  An uppercase letter, a lower case letter, a number or a special symbol</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if product[0]['configoptions'].configoption |length >0 %}
+                        <div class="configure-options">
+                            <h6>Configure Options</h6>
+
+                            <div class="row">
+
+                                <div class="col-sm-6">
+
+
+                                    <div class="form-group">
+                                        <label for="inputConfigOption{{ product[0]['configoptions']['configoption'][0].id }}" class="">
+                                            {{product[0]['configoptions']['configoption'][0].name}}
+                                        </label>
+                                        <select name="location"
+                                                id="inputConfigOption{{ product[0]['configoptions']['configoption'][0].id  }}" class="form-control">
+
+
+                                            {% for location in product[0]['configoptions']['configoption'][0]['options']['option'] %}
+                                                <option value="{{ location.id }}">{{ location.name }}</option>
+
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+
+
+                                    <div class="form-group">
+                                        <label for="inputConfigOption{{ product[0]['configoptions']['configoption'][1].id }}" class="">
+                                            {{product[0]['configoptions']['configoption'][1].name}}
+                                        </label>
+                                        <select name="os" id="inputConfigOption{{ product[0]['configoptions']['configoption'][1].id  }}" class="form-control">
+
+
+                                            {% for os in product[0]['configoptions']['configoption'][1]['options']['option'] %}
+                                                <option value="{{ os.id }}">{{ os.name }}</option>
+
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+
+
+                                    <div class="form-group">
+                                        <label for="inputConfigOption{{ product[0]['configoptions']['configoption'][2].id }}" class="">
+                                            {{product[0]['configoptions']['configoption'][2].name}}
+                                        </label>
+                                        <select name='ssd' id="inputConfigOption{{ product[0]['configoptions']['configoption'][2].id  }}" class="form-control" style="word-spacing: 4px;">
+
+
+                                            {% for ssd in product[0]['configoptions']['configoption'][2]['options']['option'] %}
+
+                                                {% if ssd['pricing']['USD'].monthly != 0 %}
+                                                    <option value="{{ ssd.id }}"><span class="ssd-name">{{ ssd.name }}</span> ${{ ssd['pricing']['USD'].monthly }} USD</option>
+
+                                                {% endif %}
+
+
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-6">
+
+
+                                    <div class="form-group">
+                                        <label for="inputConfigOption{{ product[0]['configoptions']['configoption'][3].id }}" class="">
+                                            {{product[0]['configoptions']['configoption'][3].name}}
+                                        </label>
+                                        <select name="ram" style="word-spacing: 4px;"
+                                                id="inputConfigOption{{ product[0]['configoptions']['configoption'][3].id  }}" class="form-control">
+
+
+                                            {% for ram in product[0]['configoptions']['configoption'][3]['options']['option'] %}
+
+                                                {% if ram['pricing']['USD'].monthly != 0 %}
+                                                    <option value="{{ ram.id }}"><span class="ram-name">{{ ram.name }}</span> ${{ ram['pricing']['USD'].monthly }} USD</option>
+
+                                                {% endif %}
+
+
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    {% endif %}
+                </div>
+                <div class="col-xl-4  col-lg-5 col-md-12 sticky-50">
+
+                    <div class="summary" >
+
+                        <h4>
+                            Order Summary
+                        </h4>
+
+
+                        <div class="summary-body">
+                            {#<h5 class="product-name">{{ product[0].name }}</h5>#}
+                            {##}
+                            {#<p class="product-group">#}
+                            {#$mock of product group#}
+                            {#</p>#}
+
+
+                            <div class="price-list">
+
+                                <div class="price-row">
+                                    <span>{{ product[0].name }}</span>
+                                    <span>$<span class="billing-price">{{ product[0]['pricing']['USD'].monthly }}</span> USD</span>
+                                </div>
+
+                                {% if product[0]['configoptions'].configoption |length >0 %}
+
+                                    <div class="price-row">
+                                        <span>» Location: <span class="total-country" style="font-weight: bold;"></span></span>
+                                        <span>$0 USD</span>
+                                    </div>
+
+                                    <div class="price-row">
+                                        <span>» OS: <span class="total-os" style="font-weight: bold;"></span></span>
+                                        <span>$0 USD</span>
+                                    </div>
+
+                                    <div class="price-row">
+                                        <span>» SSD Size: <span class="total-ssd" style="font-weight: bold;"></span></span>
+                                        <span>$<span class="total-ssd-price"></span> USD</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span>» RAM Size: <span class="total-ram" style="font-weight: bold;"></span></span>
+                                        <span>$<span class="total-ram-price"></span> USD</span>
+                                    </div>
+                                {% endif %}
+
+                                <hr>
+                                <div class="price-row">
+                                    <span class="">Setup Fees</span>
+                                    <span>$<span class="">{{ product[0]['pricing']['USD'].msetupfee }}</span> USD</span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="total-billing-cycle-label">Monthly</span>
+                                    <span>$<span class="billing-price monthly-price">{{ product[0]['pricing']['USD'].monthly }}</span> USD</span>
+                                </div>
+
+                                <hr>
+
+                                <div class="price-column">
+                                    <input type="text" class="hidden priceInput" id='priceInput' value="" name="totalPrice" >
+
+                                    <span class="total-price-span">$<span class="price">100</span> USD</span>
+                                    <span>Total due today</span>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="tt-btn-red btnComplete" id="btnCompleteProductConfig">Order now</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}
+
+{% block page_scripts %}
+
+    <script type="text/javascript">
+        // One of those 3 should work (bulletproof)
+        // $('#btnCompleteProductConfig').bindUp('click', function(e) {
+        //     var result = checkForm($('#frmConfigureProduct')[0]);
+        //
+        //     if (!result) {
+        //         e.stopImmediatePropagation();
+        //     }
+        //
+        //     return result;
+        // });
+        // $('#btnCompleteProductConfig').bindUp('click', function(e) {
+        //     return checkForm($('#frmConfigureProduct')[0]);
+        // });
+        // $('#btnCompleteProductConfig')[0].onclick = function() {
+        //     return checkForm($('#frmConfigureProduct')[0]);
+        // };
+
+        $('.btnComplete').on('click', function() {
+            return checkForm($('#frmConfigureProduct')[0]);
+        });
+        function checkForm(form)
+        {
+            if (!$(form).find('input[name=hostname]').length) {
+                return true;
+            }
+
+            var hosterr="false";
+            var passerr="false";
+
+            if(!(form.hostname.value != "" && form.hostname.value)) {
+                hosterr="true";
+            }
+
+            var re = /^[a-zA-Z0-9\-_]+$/;
+            // validation fails if the input doesn't match our regular expression
+            if(!re.test(form.hostname.value)) {
+                hosterr="true";
+            }
+
+            if(hosterr=="true") {
+                document.getElementById('hosterr').style.display="block";
+                form.hostname.focus();
+                return false;
+            } else {
+                document.getElementById('hosterr').style.display="none";
+            }
+
+            if(form.rootpw.value != "" && form.rootpw.value) {
+                if(form.rootpw.value.length < 10) {
+                    passerr="true";
+                }
+                re = /[0-9]|[^a-zA-Z0-9\-\/]/;
+                if(!re.test(form.rootpw.value)) {
+                    passerr="true";
+                }
+                re = /[a-z]/;
+                if(!re.test(form.rootpw.value)) {
+                    passerr="true";
+                }
+                re = /[A-Z]/;
+                if(!re.test(form.rootpw.value)) {
+                    passerr="true";
+                }
+
+
+
+
+            } else {
+                passerr="true";
+            }
+
+            if(passerr=="true") {
+                document.getElementById('passerr').style.display="block";
+                form.rootpw.focus();
+                return false;
+            } else {
+                document.getElementById('passerr').style.display="none";
+            }
+
+            return true;
+        }
+
+    </script>
+
+
+
+
+    {% if product[0]['configoptions'].configoption |length >0 %}
+
+
+        <script>
+            var fees= {{ product[0]['pricing']['USD'].msetupfee }};
+
+
+            $("#inputBillingcycle").on("change", function (e) {
+
+                let newValue = $('select[name="billingcycle"] option:selected').html();
+
+                $('.billing-price').html(newValue.split(" ")[0].slice(1));
+
+                let billingCycleValue = $('select[name="billingcycle"] option:selected').attr('class');
+
+                $('.total-billing-cycle-label').html(billingCycleValue);
+
+
+                e.preventDefault();
+            }).trigger("change");
+
+
+
+            $("#inputConfigOption{{ product[0]['configoptions']['configoption'][0].id  }}" ).on('change', function (e) {
+
+                let val = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][0].id  }} option:selected" ).html();
+
+                $(".total-country").html(val);
+
+                e.preventDefault();
+
+            }).trigger("change");
+
+
+            $("#inputConfigOption{{ product[0]['configoptions']['configoption'][1].id  }}" ).on('change', function (e) {
+
+
+
+
+                let val = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][1].id  }} option:selected" ).html();
+
+                $(".total-os").html(val);
+
+                e.preventDefault();
+            }).trigger("change");
+
+
+
+            $("#inputConfigOption{{ product[0]['configoptions']['configoption'][2].id  }}" ).on('change', function (e) {
+
+
+
+
+                let val = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][2].id  }} option:selected " ).html();
+
+                $(".total-ssd").html(val.split(' ')[0]);
+                $(".total-ssd-price").html(val.split(' ')[1].slice(1));
+
+
+                refreshPrice();
+                e.preventDefault();
+            }).trigger("change");
+
+
+            $("#inputConfigOption{{ product[0]['configoptions']['configoption'][3].id  }}" ).on('change', function (e) {
+
+
+
+
+                let val = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][3].id  }} option:selected" ).html();
+
+                $(".total-ram").html(val.split(' ')[0]);
+                $(".total-ram-price").html(val.split(' ')[1].slice(1));
+
+
+                refreshPrice();
+                e.preventDefault();
+            }).trigger("change");
+
+
+
+
+
+            function refreshPrice() {
+
+
+
+
+                var billing = +($('select[name="billingcycle"] option:selected').html().split(" ")[0].slice(1));
+
+
+
+                let textSSD = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][2].id  }} option:selected " ).html();
+                let textRAM = $( "#inputConfigOption{{ product[0]['configoptions']['configoption'][3].id  }} option:selected " ).html();
+
+                let ssd = +textSSD.split(' ')[1].slice(1);
+                let ram = +textRAM.split(' ')[1].slice(1);
+
+                $(".price").html(fees + billing + ssd + ram);
+                $(".monthly-price").html(  billing + ssd + ram);
+                $("#priceInput").val(fees + billing + ssd + ram);
+
+
+
+
+
+            };
+
+        </script>
+
+    {% else %}
+
+
+        <script>
+            var fees= {{ product[0]['pricing']['USD'].msetupfee }};
+
+
+            $("#inputBillingcycle").on("change", function (e) {
+
+                let newValue = $('select[name="billingcycle"] option:selected').html();
+
+                $('.billing-price').html(newValue.split(' ')[0].slice(1));
+
+                let billingCycleValue = $('select[name="billingcycle"] option:selected').attr('class');
+
+                $('.total-billing-cycle-label').html(billingCycleValue);
+
+
+
+                refreshPrice();
+
+                e.preventDefault();
+            }).trigger("change");
+
+
+            function refreshPrice() {
+                var billing = $('select[name="billingcycle"] option:selected').html();
+
+                $('.price').html((+billing.split(' ')[0].slice(1) + +fees).toFixed(2));
+                $("#priceInput").val(billing.split(' ')[0].slice(1));
+
+            }
+
+        </script>
+
+
+    {% endif %}
+
+    <script>
+
+
+        $(".check-promocode").on('click', function () {
+            alert($('input[name=promocode]').val());
+
+            $.ajax({
+                url: "{{ url('getpromo') }}",
+                type: 'GET',
+                data: "promocode="+$('input[name=promocode]').val(),
+                success: function(data){
+                    console.log(  data );
+                }
+            });
+
+        })
+
+
+
+    </script>
+
+
+
+{% endblock %}

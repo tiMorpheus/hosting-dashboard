@@ -1,0 +1,323 @@
+{% extends "base.html.twig" %}
+
+{% block content_title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    {% include 'flash.html.twig' %}
+
+
+
+    <div class="container-fluid" style="margin-top: 10px;">
+        <div class="row content">
+            <div class="col-lg-3 col-sm-6">
+
+
+                <a href="/management" class="card">
+                    <span class="margin-auto content">
+                        <span class="number">{{ servicesCount }}</span>
+                        <span>Services</span>
+                    </span>
+
+
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <a href="/billing" class="card">
+                    <span class="margin-auto content">
+                        <span class="number">{{ invoiceCount }}</span>
+                        <span>Invoices</span>
+                    </span>
+
+
+                </a>
+            </div>
+
+
+            {% if activeTrials is not empty %}
+                <div class="col-lg-3 col-sm-6">
+
+
+                    <div class="card card-active-trial">
+                             <span class="margin-auto content">
+                                <span class="number">{{ activeTrials|length }}</span>
+                                <span>Active Trials</span>
+                             </span>
+
+
+                    </div>
+
+
+                </div>
+
+            {% endif %}
+
+            {% if pendingTrials is not empty %}
+                <div class="col-lg-3 col-sm-6">
+
+
+                    <div class="card c card-pending-trial">
+                             <span class="margin-auto content">
+                                <span class="number">{{ pendingTrials|length }}</span>
+                                <span>Pending Trials</span>
+                             </span>
+
+
+                    </div>
+
+
+                </div>
+
+            {% endif %}
+
+        </div>
+        <div class="row">
+            <h4 class="tt-home-title">
+                Additional Services:
+            </h4>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="product-wrap">
+                    <a href="https://blazingseollc.com/proxy/dashboard/" target="_blank">
+                        <span class="product-title">
+                            Proxy Dashboard
+                        </span>
+                        <span class="product-description">Already have proxies with us? Click here to visit our proxy dashboard and manage all of your Blazing SEO proxy products.
+</span>
+
+                        <span class="link">Next</span>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="product-wrap">
+                    <a href="https://blazingseollc.com/proxy/pricing/" target="_blank">
+                        <span class="product-title">
+                            Purchase Proxies
+                        </span>
+                        <span class="product-description">Looking to purchase some proxies to go with your server? We offer a large selection of proxy products to meet many different use-cases. Take a look at what we have to offer you today!</span>
+
+                        <span class="link">Next</span>
+
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="product-wrap">
+                    <a href="https://blazingseollc.com/vpn/" target="_blank">
+                        <span class="product-title">
+                            VPN
+                        </span>
+                        <span class="product-description">Want some extra privacy while using the internet? Get one of our VPN products that add an extra layer of security for any internet usage.
+                        </span>
+
+                        <span class="link">Next</span>
+
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="product-wrap">
+                    <a href="https://blazingseollc.com/hosting/bulk-ips/" target="_blank">
+                        <span class="product-title">
+                            Bulk IPs
+                        </span>
+                        <span class="product-description">Looking for a large number of IPs to use? We offer Bulk IP leasing in multiple options to best fit your needs.  Click here to check out what we have to offer and see if we can meet your Bulk IP needs.</span>
+
+                        <span class="link">Next</span>
+
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade tt-modal" id="Activetrials" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        You have {{ activeTrials|length }} active trials
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="pending-trial-wrap2">
+
+                        <div class="pending-trial">
+                            <div class="pending-trial-id">
+                                orderid:
+                            </div>
+                            <div class="pending-trial-name">
+                                productname:
+
+                            </div>
+                            <div class="pending-trial-duedate">
+                                nextduedate:
+                            </div>
+
+                            <div class="pending-trial-amount">
+                                amount:
+                            </div>
+                        </div>
+
+                        {% for trial in activeTrials %}
+
+
+
+                            <div class="pending-trial">
+
+
+                                <div class="pending-trial-id">
+                                    {{ trial['orderid'] }}
+                                </div>
+                                <div class="pending-trial-name">
+                                    {{ trial['productname'] }}
+                                </div>
+                                <div class="pending-trial-duedate">
+                                    {{ trial['nextduedate'] }}
+                                </div>
+
+                                <div class="pending-trial-amount">
+                                    {{ trial['amount'] }}
+                                </div>
+
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p>
+                        If you do not wish to continue using this service after your 48-hour trial, please be sure that
+                        you cancel your PayPal Billing Agreement by visiting this link
+                        <a href="{{ url_remote('whmcsPPBA', {'redirectToDashboard': 1}) }}" class="">
+                            <span>Cancel PPBA</span>
+                        </a>
+                    </p>
+
+                    <button type="button" data-dismiss="modal" class="tt-btn-blue">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade tt-modal" id="Pendingtrials" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        You currently have a pending trial{% if pendingTrials|length > 1 %}s{% endif %}
+                        for {{ pendingTrials|length }} product{% if pendingTrials|length > 1 %}s{% endif %}
+                    </h4>
+                    <p> Please setup a PayPal Billing Agreement to activate your free trial.</p>
+                </div>
+                <div class="modal-body">
+
+                    <div class="pending-trial-wrap2">
+
+                        <div class="pending-trial">
+                            <div class="pending-trial-id">
+                                orderid:
+                            </div>
+                            <div class="pending-trial-name">
+                                productname:
+
+                            </div>
+                            <div class="pending-trial-duedate">
+                                nextduedate:
+                            </div>
+
+                            <div class="pending-trial-amount">
+                                amount:
+                            </div>
+                        </div>
+
+                        {% for trial in pendingTrials %}
+
+
+
+                            <div class="pending-trial">
+
+
+                                <div class="pending-trial-id">
+                                    {{ trial['orderid'] }}
+                                </div>
+                                <div class="pending-trial-name">
+                                    {{ trial['productname'] }}
+                                </div>
+                                <div class="pending-trial-duedate">
+                                    {{ trial['nextduedate'] }}
+                                </div>
+
+                                <div class="pending-trial-amount">
+                                    {{ trial['amount'] }}
+                                </div>
+
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p>
+                        Processing your PayPal Billing Agreement may take a few minutes, <br>please reload this page if you
+                        have already setup the PayPal Billing Agreement.
+                    </p>
+
+                    <a href="{{ url_remote('whmcsPPBA', {'redirectToDashboard': 1}) }}" class="tt-btn-blue">
+                        <span>
+                            Activate PPBA
+                        </span>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_scripts %}
+
+    <script>
+        $('.card-active-trial').on('click', function () {
+            $('#Activetrials').modal('show');
+        })
+
+        $('.card-pending-trial').on('click', function () {
+            $('#Pendingtrials').modal('show');
+        })
+
+    </script>
+    {#{% include 'announcements/textbased.html.twig' %}#}
+
+{% endblock %}

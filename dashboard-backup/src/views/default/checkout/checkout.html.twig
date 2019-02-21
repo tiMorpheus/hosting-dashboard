@@ -1,0 +1,1571 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Choose a Plan to Upgrade
+{#{% if upgradableProducts is empty %}Choose Your Plan{% else %}Choose a Plan to Upgrade{% endif %}#}
+{% endblock %}
+
+{% block content %}
+
+    {#{% include 'flash.html.twig' %}#}
+
+    {% if pendingTrials is not empty %}
+        <div class="alert alert-info">
+            <div class="pending-trial-info-left">
+                {% include 'dashboard/snippet/pending_trials.html.twig' with pendingTrials %}
+            </div>
+            <div class="pending-trial-info-right">
+                <a href="{{ url_remote('whmcsPPBA', {'redirectToDashboard': 1}) }}" class="btn btn-success btn-lg">
+                    <h4>Activate PPBA&nbsp;&nbsp;<i class="fa fa-cc-paypal"></i></h4>
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    {% endif %}
+
+    {% if upgradableProducts is not empty %}
+
+
+
+        <div class="container">
+
+            <div class="row mt-xl" style="    justify-content: space-between;
+    /* align-self: center; */
+    display: flex;">
+                {% include 'flash.html.twig' %}
+
+
+                {% for upgradableProduct in upgradableProducts %}
+                    {% set notes = '' %}
+                    {% if upgradableProduct.status == 'Pending Trial' %}
+                        {% set notes = notes ~ 'Will be activated after PayPal Billing Agreement setup.<br>' %}
+                    {% endif %}
+
+
+                    <div class="col-sm-3 ">
+
+                        <form method="POST" action="{{ url('doCheckout') }}" data-toggle="validator" class="active-spinner">
+
+                            <input type="hidden" name="pid" value="{{ upgradableProduct.id }}"></input>
+                            <input type="hidden" name="serviceid" value="{{ upgradableProduct.extended.serviceId|default('') }}"></input>
+                            <input type="hidden" name="details[preservedips]"></input>
+                            <input type="hidden" name="details[promocode]"></input>
+                            {% if upgradableProduct.extended.billingCycle is defined %}
+                            <input type="hidden" name="plan[billingCycle]" value="{{ upgradableProduct.extended.billingCycle }}" checked>
+                            {% endif %}
+                            <div class="tt-upgrade-item">
+                                <h5 class="tt-upgrade-product-title" style="margin: 6px 0">
+                                    {{ upgradableProduct.amount }} x {{ upgradableProduct | humanizeProxyName }}
+                                    {% if upgradableProduct.source != 'whmcs' %}({{ upgradableProduct.source | upper }}){% endif %}
+                                    {% if upgradableProduct.status != 'active' %}
+                                        <p>
+                                            ({{ upgradableProduct.status | upper }})
+                                            {% if upgradableProduct.extended.statusReason is defined %}
+                                                <i class="fa fa-question-circle"
+                                                   data-toggle="tooltip" data-placement="right"
+                                                   title="Reason - &quot;{{ upgradableProduct.extended.statusReason }}&quot;"></i>
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
+                                </h5>
+
+                                <h5 style="margin-bottom: 30px">New Total Amount</h5>
+
+                                <div class="form-group form-amount" data-toggle="tooltip" data-placement="right"
+                                     title='The amount shown here is what your TOTAL proxy package will be when you upgrade/downgrade.
+                                 This does not "add" on top of your previous package.
+                                 All current proxies will remain intact when you upgrade.' data-trigger="hover">
+
+                                    <input type="hidden" name="plan[country][]" value="{{ upgradableProduct.country }}" class="country" />
+                                    <input type="hidden" name="plan[category][]" value="{{ upgradableProduct.category }}" class="category" />
+                                    {% if upgradableProduct.product is not empty and 'active' == upgradableProduct.status %}
+
+                                        <div class="tt-number-input-container">
+
+                                            <button class="tt-number-minus">-</button>
+                                            <input type="number" name="plan[amount][]"
+                                                   class="form-control field-amount tt-number-input tt-upgrade-input"
+                                                    {% if migrateAutomatically is not empty and
+                                                        data.quantity is not empty and
+                                                        upgradableProduct.country == data.country and
+                                                        upgradableProduct.category == data.category
+                                                    %}
+                                                        value="{{ data.quantity }}"
+                                                    {% else %}
+                                                        value="{{ min(
+                                                            max(
+                                                                (upgradableProduct.amount / upgradableProduct.product.amount.step)
+                                                            | round(0, 'ceil') * upgradableProduct.product.amount.step
+                                                            * 2,
+                                                            upgradableProduct.product.amount.min),
+                                                        upgradableProduct.product.amount.max
+                                                        )}}"
+                                                    {% endif %}
+                                                   min="{{ upgradableProduct.product.amount.min }}"
+                                                   max="{{ upgradableProduct.product.amount.max }}"
+                                                   step="{{ upgradableProduct.product.amount.step }}"
+                                                    {% if upgradableProduct.source != 'amember' %}data-not-equals="{{ upgradableProduct.amount }}"{% endif %}
+                                                   required
+                                                   data-country="{{ upgradableProduct.country }}"
+                                                   data-category="{{ upgradableProduct.category }}" {%
+                                                if upgradableProduct.source != 'whmcs' and
+                                                (upgradableProduct.source == 'amember'
+                                                and migrateFeature is defined and migrateFeature is not empty) is empty
+                                            %}disabled="disabled"{% endif %}/>
+                                            <button class="tt-number-plus">+
+                                            </button>
+                                        </div>
+
+                                        <span class="help-block with-errors"></span>
+                                    {% else %}
+                                        <input type="number" class="form-control field-amount " name="plan[amount][]" value="{{ upgradableProduct.amount }}" disabled="disabled">
+                                    {% endif %}
+                                </div>
+
+                                <div class="tt-upgrade-btn-container ">
+
+                                    <button type="submit" class="btn  btn-confirm upgrade-button btn-sm upgrade-btn tt-btn-upgrade" rel="tooltip" data-placement="bottom" title="" data-original-title="Type in the TOTAL amount of proxies you want in the box that you want to have TOTAL in your account."
+                                       data-title="Plan Upgrade" data-text-callback="window.callbackUpgradeContent" data-btn-ok-class="btn-primary" data-callback="window.callbackUpgradeSubmit">Upgrade</button>
+
+
+                                    <button type="submit" class="disabled btn  btn-confirm upgrade-button btn-sm downgrade-btn tt-btn-upgrade" rel="tooltip" data-placement="bottom" title="" data-original-title="Type in the TOTAL amount of proxies you want in the box that you want to have TOTAL in your account. You may paste the proxies you'd like to keep in the box after selecting the downgrade button">Downgrade</bu>
+
+                                    {#<div class="form-group">#}
+                                    {#{% if upgradableProduct.product is empty %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="This plan cannot be upgraded/cancelled. Contact please administrator by needs">#}
+                                    {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                    {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                    {#</div>#}
+                                    {#{% elseif upgradableProduct.source == 'whmcs' %}#}
+                                    {#<!--<button type="button" class="btn btn-success btn-save-settings btn-confirm"#}
+                                    {#data-title="Billing Cycle Change"#}
+                                    {#data-text-callback="window.callbackSave"#}
+                                    {#data-btn-ok-class="btn-success"#}
+                                    {#data-callback="window.callbackSaveSubmit"#}
+                                    {#data-btn-confirm-text="Save Changes"#}
+                                    {#disabled="disabled"#}
+                                    {#>Save</button>-->#}
+                                    {#{% if 'active' == upgradableProduct.status %}#}
+                                    {#{% if upgradableProduct.extended.upgradeEnabled %}#}
+                                    {#<button type="submit" class="btn btn-primary btn-confirm upgrade-button"#}
+                                    {#data-title="Plan Upgrade"#}
+                                    {#data-text-callback="window.callbackUpgradeContent"#}
+                                    {#data-btn-ok-class="btn-primary"#}
+                                    {#data-callback="window.callbackUpgradeSubmit"#}
+                                    {#>Upgrade</button>#}
+                                    {#{% else %}#}
+                                    {#{% if upgradableProduct.extended.invoiceUrl is defined %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="Unpaid invoice">#}
+                                    {#<a href="{{ upgradableProduct.extended.invoiceUrl }}" class="btn btn-success btn-confirm"#}
+                                    {#data-title="Plan Upgrade"#}
+                                    {#data-text-callback="window.callbackUpgradeDisabled"#}
+                                    {#data-reason="{{ upgradableProduct.extended.upgradeDisabledReason }}"#}
+                                    {#data-btn-ok-class="btn-primary"#}
+                                    {#data-callback="function(self) { window.location = self.attr('href'); }"#}
+                                    {#>Pay</a>#}
+                                    {#</div>#}
+
+                                    {#{% else %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="This plan cannot be upgraded">#}
+                                    {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                    {#</div>#}
+                                    {#{% endif %}#}
+                                    {#{% endif %}#}
+
+                                    {# Invoice url #}
+                                    {#{% elseif upgradableProduct.extended.invoiceUrl is defined %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="Unpaid invoice">#}
+                                    {#<a class="btn btn-success" href="{{ upgradableProduct.extended.invoiceUrl }}">Pay</a>#}
+                                    {#</div>#}
+                                    {# Upgrade is prohibited #}
+                                    {#{% else %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="This plan cannot be upgraded">#}
+                                    {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                    {#</div>#}
+                                    {#{% endif %}#}
+                                    {#<a class="btn btn-danger btn-confirm"#}
+                                    {#data-title="Plan Cancellation"#}
+                                    {#data-text="You are attempting to cancel your proxy plan.<br>#}
+                                    {#This will entirely remove your proxies! <br><br>#}
+                                    {#If you were trying to Upgrade, please click Cancel below and click the Upgrade button.#}
+                                    {#If you want to cancel your proxy plan, please press OK below."#}
+                                    {#data-callback="function(self) {#}
+                                    {#var form = self.closest('form');#}
+                                    {#form.find('.field-amount').prop('disabled', false).val(null);#}
+                                    {#form.validator('destroy');#}
+                                    {#form.submit();#}
+                                    {#}"#}
+                                    {#>Cancel</a>#}
+                                    {#{% if upgradableProduct.extended.hasCancelRequest is defined and upgradableProduct.extended.hasCancelRequest %}#}
+                                    {#{% set notes = notes ~ 'Package will be cancelled at the end of the billing period.<br>' %}#}
+                                    {#<button class="btn btn-primary continue-billing">#}
+                                    {#Continue billing#}
+                                    {#</button>#}
+                                    {#{% else %}#}
+                                    {# not supported yet #}
+                                    {#{% if upgradableProduct.status != 'Pending Trial' %}#}
+                                    {#<button data-toggle="modal"#}
+                                    {#data-target="#cancel-confirm-modal"#}
+                                    {#class="btn btn-danger"#}
+                                    {#type="button">#}
+                                    {#Cancel#}
+                                    {#</button>#}
+                                    {#{% endif %}#}
+                                    {#{% endif %}#}
+
+
+                                    {#{% else %}#}
+                                    {# Upgrade with migration #}
+                                    {#{% if upgradableProduct.source == 'amember'#}
+                                    {#and migrateFeature is defined and migrateFeature is not empty %}#}
+                                    {#<button type="submit" class="btn btn-primary btn-migrate"#}
+                                    {#data-url="{{ url('checkout_migrate_amember_whmcs', { packageId: upgradableProduct.id }) }}"#}
+                                    {#data-title="Plan Migration & Upgrade"#}
+                                    {#data-text-callback="window.callbackMigrateContent"#}
+                                    {#data-callback="window.callbackMigrateConfirmed"#}
+                                    {#data-btn-ok-class="btn-primary"#}
+                                    {#{% if migrateAutomatically is not empty and#}
+                                    {#data.quantity is not empty and#}
+                                    {#upgradableProduct.country == data.country and#}
+                                    {#upgradableProduct.category == data.category %}#}
+                                    {#data-autorun="1"#}
+                                    {#{% endif %}#}
+                                    {#>Upgrade</button>#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="{{ upgradableProduct.source | capitalize }} plans cannot be cancelled">#}
+                                    {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                    {#</div>#}
+                                    {#&nbsp;#}
+                                    {#<i class="fa fa-question-circle"#}
+                                    {#data-toggle="tooltip" data-placement="right"#}
+                                    {#title="{{ upgradableProduct.source | capitalize }} plans cannot be cancelled"></i>#}
+
+                                    {# No upgrade, no cancellation #}
+                                    {#{% else %}#}
+                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                    {#title="{{ upgradableProduct.source | capitalize }} plans cannot be upgraded/cancelled">#}
+                                    {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                    {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                    {#</div>#}
+                                    {#&nbsp;#}
+                                    {#<i class="fa fa-question-circle"#}
+                                    {#data-toggle="tooltip" data-placement="right"#}
+                                    {#title="{{ upgradableProduct.source | capitalize }} plans cannot be upgraded/cancelled"></i>#}
+                                    {#{% endif %}#}
+                                    {#{% endif %}#}
+                                    {#</div>#}
+
+                                </div>
+                                <div class="tt-next-due-date-container ">
+
+                                    <h5 class="tt-due-date">Next Due Date <span class="due-date">21.08.2018</span></h5>
+                                </div>
+
+
+                                <div class="tt-upgrade-total-price-container">
+                                    <h5>Your Total for this plan is:</h5>
+
+                                    <span class="upgrade-price">
+                                    $15.00
+                                     </span>
+                                </div>
+
+                                <div class="tt-cancel-btn-container mt-lg">
+                                    <button data-toggle="modal"
+                                            data-target="#cancel-confirm-modal"
+                                            class="btn tt-btn-cancel-billing"
+                                            type="button">
+                                        Cancel on the end of billing
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                    {#<div class="row proxy-upgrade">#}
+                        {#<form method="POST" action="{{ url('doCheckout') }}" data-toggle="validator" class="active-spinner">#}
+                            {#<input type="hidden" name="pid" value="{{ upgradableProduct.id }}"></input>#}
+                            {#<input type="hidden" name="serviceid" value="{{ upgradableProduct.extended.serviceId|default('') }}"></input>#}
+                            {#<input type="hidden" name="details[preservedips]"></input>#}
+                            {#<input type="hidden" name="details[promocode]"></input>#}
+                            {#{% if upgradableProduct.extended.billingCycle is defined %}#}
+                                {#<input type="hidden" name="plan[billingCycle]" value="{{ upgradableProduct.extended.billingCycle }}" checked>#}
+                            {#{% endif %}#}
+
+                            {#<!--<div class="col-md-2 col-checkout-billing-cycle">#}
+                        {#<div class="form-group">#}
+                            {#<select class="form-control billing-cycle-select" name="billingCycle"#}
+                                {#{% if upgradableProduct.extended.hasCancelRequest is defined and upgradableProduct.extended.hasCancelRequest%} disabled{% endif %}#}
+                            {#>#}
+                                {#{% if upgradableProduct.product.countBounds is not empty %}#}
+                                    {#{% for cycle, countBounds in upgradableProduct.product.countBounds %}#}
+                                        {#{% if#}
+                                {#(upgradableProduct.amount >= countBounds.min#}
+                                {#and upgradableProduct.amount <= countBounds.max)#}
+                                {#or cycle == upgradableProduct.extended.billingCycle %}#}
+                                            {#<option value="{{ cycle }}" {% if cycle == upgradableProduct.extended.billingCycle %}selected="selected"{% endif %}>#}
+                                                {#{{ cycle|capitalize }} {% if cycle == upgradableProduct.extended.billingCycle %}(current){% endif %}#}
+                                            {#</option>#}
+                                        {#{% else  %}#}
+                                            {#<option value="{{ cycle }}" disabled>#}
+                                                {#{{ cycle|capitalize }}#}
+                                                {#{% if upgradableProduct.amount < countBounds.min %}#}
+                                                    {#(allowed from {{ countBounds.min }} proxies)#}
+                                                {#{% else %}#}
+                                                    {#(allowed for less then {{ countBounds.max }} proxies)#}
+                                                {#{% endif %}#}
+                                            {#</option>#}
+                                        {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                {#{% else %}#}
+                                    {#<option value="default">#}
+                                        {#Monthly#}
+                                    {#</option>#}
+                                {#{% endif %}#}
+                            {#</select>#}
+                        {#</div>#}
+                    {#</div>-->#}
+                            {#<div class="col-md-2">#}
+                            {#</div>#}
+                            {#<div class="col-md-2 col-checkout-action-buttons">#}
+
+
+
+                                {#<div class="form-group">#}
+                                    {#{% if upgradableProduct.product is empty %}#}
+                                        {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                             {#title="This plan cannot be upgraded/cancelled. Contact please administrator by needs">#}
+                                            {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                            {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                        {#</div>#}
+                                    {#{% elseif upgradableProduct.source == 'whmcs' %}#}
+                                        {#{% if 'active' == upgradableProduct.status %}#}
+                                            {#{% if upgradableProduct.extended.upgradeEnabled %}#}
+                                                {#<button type="submit" class="btn btn-primary btn-confirm upgrade-button"#}
+                                                        {#data-title="Plan Upgrade"#}
+                                                        {#data-text-callback="window.callbackUpgradeContent"#}
+                                                        {#data-btn-ok-class="btn-primary"#}
+                                                        {#data-callback="window.callbackUpgradeSubmit"#}
+                                                {#>Upgrade</button>#}
+                                            {#{% else %}#}
+                                                {#{% if upgradableProduct.extended.invoiceUrl is defined %}#}
+                                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                         {#title="Unpaid invoice">#}
+                                                        {#<a href="{{ upgradableProduct.extended.invoiceUrl }}" class="btn btn-success btn-confirm"#}
+                                                           {#data-title="Plan Upgrade"#}
+                                                           {#data-text-callback="window.callbackUpgradeDisabled"#}
+                                                           {#data-reason="{{ upgradableProduct.extended.upgradeDisabledReason }}"#}
+                                                           {#data-btn-ok-class="btn-primary"#}
+                                                           {#data-callback="function(self) { window.location = self.attr('href'); }"#}
+                                                        {#>Pay</a>#}
+                                                    {#</div>#}
+
+                                                {#{% else %}#}
+                                                    {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                         {#title="This plan cannot be upgraded">#}
+                                                        {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                                    {#</div>#}
+                                                {#{% endif %}#}
+                                            {#{% endif %}#}
+
+                                            {# Invoice url #}
+                                        {#{% elseif upgradableProduct.extended.invoiceUrl is defined %}#}
+                                            {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                 {#title="Unpaid invoice">#}
+                                                {#<a class="btn btn-success" href="{{ upgradableProduct.extended.invoiceUrl }}">Pay</a>#}
+                                            {#</div>#}
+                                            {# Upgrade is prohibited #}
+                                        {#{% else %}#}
+                                            {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                 {#title="This plan cannot be upgraded">#}
+                                                {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                            {#</div>#}
+                                        {#{% endif %}#}
+                                        {#{% if upgradableProduct.extended.hasCancelRequest is defined and upgradableProduct.extended.hasCancelRequest %}#}
+                                            {#{% set notes = notes ~ 'Package will be cancelled at the end of the billing period.<br>' %}#}
+                                            {#<button class="btn btn-primary continue-billing">#}
+                                                {#Continue billing#}
+                                            {#</button>#}
+                                        {#{% else %}#}
+                                            {# not supported yet #}
+                                            {#{% if upgradableProduct.status != 'Pending Trial' %}#}
+                                                {#<button data-toggle="modal"#}
+                                                        {#data-target="#cancel-confirm-modal"#}
+                                                        {#class="btn btn-danger"#}
+                                                        {#type="button">#}
+                                                    {#Cancel#}
+                                                {#</button>#}
+                                            {#{% endif %}#}
+                                        {#{% endif %}#}
+                                        {#&nbsp;#}
+                                        {#<a data-toggle="collapse" href="#helpContent">#}
+                                            {#<i class="fa fa-question-circle upgrade-tips-tooltip"#}
+                                               {#data-toggle="tooltip" data-placement="right"#}
+                                               {#title="How does prorating work on upgrade/downgrade?"></i>#}
+                                        {#</a>#}
+                                    {#{% else %}#}
+                                        {# Upgrade with migration #}
+                                        {#{% if upgradableProduct.source == 'amember'#}
+                                            {#and migrateFeature is defined and migrateFeature is not empty %}#}
+                                            {#<button type="submit" class="btn btn-primary btn-migrate"#}
+                                                    {#data-url="{{ url('checkout_migrate_amember_whmcs', { packageId: upgradableProduct.id }) }}"#}
+                                                    {#data-title="Plan Migration & Upgrade"#}
+                                                    {#data-text-callback="window.callbackMigrateContent"#}
+                                                    {#data-callback="window.callbackMigrateConfirmed"#}
+                                                    {#data-btn-ok-class="btn-primary"#}
+                                                    {#{% if migrateAutomatically is not empty and#}
+                                                        {#data.quantity is not empty and#}
+                                                        {#upgradableProduct.country == data.country and#}
+                                                        {#upgradableProduct.category == data.category %}#}
+                                                        {#data-autorun="1"#}
+                                                    {#{% endif %}#}
+                                            {#>Upgrade</button>#}
+                                            {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                 {#title="{{ upgradableProduct.source | capitalize }} plans cannot be cancelled">#}
+                                                {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                            {#</div>#}
+                                            {#&nbsp;#}
+                                            {#<i class="fa fa-question-circle"#}
+                                               {#data-toggle="tooltip" data-placement="right"#}
+                                               {#title="{{ upgradableProduct.source | capitalize }} plans cannot be cancelled"></i>#}
+
+                                            {# No upgrade, no cancellation #}
+                                        {#{% else %}#}
+                                            {#<div data-toggle="tooltip" data-placement="bottom" style="display: inline-block;"#}
+                                                 {#title="{{ upgradableProduct.source | capitalize }} plans cannot be upgraded/cancelled">#}
+                                                {#<a class="btn btn-primary disabled">Upgrade</a>#}
+                                                {#<a class="btn btn-danger disabled">Cancel</a>#}
+                                            {#</div>#}
+                                            {#&nbsp;#}
+                                            {#<i class="fa fa-question-circle"#}
+                                               {#data-toggle="tooltip" data-placement="right"#}
+                                               {#title="{{ upgradableProduct.source | capitalize }} plans cannot be upgraded/cancelled"></i>#}
+                                        {#{% endif %}#}
+                                    {#{% endif %}#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<div class="col-md-2">{{ notes | raw }}</div>#}
+                        {#</form>#}
+                    {#</div>#}
+                {% endfor %}
+
+            </div>
+
+
+            <div class="row mt-xl">
+
+
+                <div class="col-sm-6">
+                    <button type="button" data-toggle="modal" class="upgrade-tips-link tt-color-blue" data-target="#help-process-explanation-modal">
+                        Upgrade/Downgrade process explanation
+                    </button>
+
+                </div>
+
+                <div class="col-md-6" style="text-align: right; color:#888888;">
+                    Package will be cancelled at the end of the billing period
+                </div>
+
+            </div>
+
+
+            <div class="row mt-xl">
+
+                <div class="col-sm-12">
+                    <div class="tt-info-card">
+                        <div class="tt-card-heading">
+                            <h4>To Upgrade:</h4>
+                        </div>
+                        <div>
+
+                                    Type in the TOTAL amount of proxies you want in the box that you want to have TOTAL in your account.
+
+                        </div>
+                        <div class="tt-card-heading">
+                            <h4>To Downgrade:</h4>
+                        </div>
+                        <div>
+
+                                    Type in the TOTAL amount of proxies you want in the box that you want to have TOTAL in your account. You may paste the proxies you'd like to keep in the box after selecting the downgrade button.
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    {% endif %}
+    {#---------------------------------------------#}
+    <div class="row" style="margin-top: 10px">
+        <div class="col-md-8">
+            <div class="collapse" id="helpContent">
+                <div class="panel panel-default upgrade-tips-panel">
+                    <div class="panel-heading">
+                        <h4>Upgrade/Downgrade process explanation</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="text-justify">
+                            <h1>To Upgrade:</h1><br>
+                            Type in the TOTAL amount of proxies you want in the box to the left that you want to have TOTAL
+                            in your account after upgrading. For example, if you have 10 proxies now and wish to have a TOTAL of 15,
+                            then you would type 15. <u> You will retain all of your previous 10 proxies, and all 15 of your proxies will be on the same billing period (see Prorating Explanation).</u>
+                        </div>
+                        <hr>
+                        <div class="text-justify">
+                            <h1>To Downgrade:</h1><br>
+                            Type in the TOTAL amount of proxies you want in the box to the left that you want to have TOTAL in your account after downgrading.
+                            For example, if you have 10 proxies now and wish to have a TOTAL of 7, then you would type 7.
+                            Upon typing ‘7’, another box will appear which will ask you which proxies you wish to retain out of your 10.
+                            Please paste your 7 proxies line-by-line in that box. We verify your input and will deny it if you incorrectly submit your request.
+                            <u> Do not worry! </u> If you do not see your desired proxies after downgrading, please submit a support ticket and we will help you resolve any issues.
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1>Prorating Explanation:</h1>
+
+                                <div class="text-justify" style="max-width: 560px">
+                                    <strong>On either an Upgrade, or Downgrade, the term ‘prorating’ means you will pay an amount
+                                     of money for the new proxies to the date of the end of your current billing cycle. As an example:</strong>
+                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 text-justify">
+                                        <h3>Upgrade</h3>
+                                        <ul class="pexpl-list">
+                                            <li>You purchase 11 proxies on August 1 for $13.20</li>
+                                            <li>On August 10 you decide to upgrade to a TOTAL of 15 proxies (total monthly cost is $18)</li>
+                                            <li>The math would then be:
+                                                <ul class="pexpl-sublist">
+                                                    <li>4 extra proxies * $1.2/mo  / 30 days = $0.16/day for your extra 4 proxies</li>
+                                                    <li>There are 20 days left on your current billing cycle which started on August 1st (today being August 10th)</li>
+                                                    <li>That means you will pay for these 4 proxies for only 20 days so that all 15 proxies will be on the same billing date on August 30th.</li>
+                                                    <li>Your Upgrade price today will be: $0.16 * 20 = $3.20</li>
+                                                </ul>
+                                            </li>
+                                            <li>Your renewal price on August 30th will be $18</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-md-6 text-justify">
+                                        <h3>Downgrade</h3>
+                                        <ul class="pexpl-list">
+                                            <li>You purchase 11 proxies on August 1 for $13.20</li>
+                                            <li>On August 10 you decide to downgrade to a TOTAL of 7 proxies (total monthly cost is $8.40)</li>
+                                            <li>The math would then be:
+                                                <ul class="pexpl-sublist">
+                                                    <li>4 less proxies * $1.20/mo / 30 days = $0.16/day for the 4 less proxies</li>
+                                                    <li>With a Downgrade you are saying that you do not wish to pay for these 4 proxies for the remaining 20 days of your billing cycle</li>
+                                                    <li>This means we will give you Account Credit back for the remaining days on those 4 proxies (all purchases are final - you may only receive account credit for downgrades).</li>
+                                                    <li>The Downgrade math would be:   $0.16/day * 20 days remaining = $3.20 account credit</li>
+                                                </ul>
+                                            </li>
+                                            <li>The account credit will be automatically applied to your next invoice on August 30th. Your proxy package will downgrade today to 7 proxies total in your account.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div id="apply-promocode-template" class="hidden">
+        <div class="action-row">
+            <div class="promocode">
+                <div class="form-inline">
+                    <input type="hidden" name="pid" />
+                    <input type="hidden" name="amount" />
+                    <div class="row promo-controls">
+                        <div class="col-xs-12">
+                            <input class="form-control tt-input-buy tt-modal-promo-input" name="promocode" value="" placeholder="Enter Your Code" type="text">
+                        </div>
+                        <div class="col-xs-12">
+                            <a href="" class="btn btn-success tt-btn tt-modal-promo-btn">Apply Promo Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="hidden">Current promo: <span class="promo-used"></span></h4>
+            <h4 class="hidden total-after-upgrade text-center tt-font-bold">Your recurring amount for this plan after upgrade will be: <span class="discount-total-new hide">$0.00</span> <span class="discount-total discount-total-old hide">$0.00</span> <span class="total-without-discount">$0.00</span></h4>
+            <div class="alert alert-danger disclaimer hide"></div>
+        </div>
+    </div>
+
+
+    <div id="help-process-explanation-modal" class="modal fade bs-example-modal-sm">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header tt-modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="mySmallModalLabel" class="modal-title"> <h4>Upgrade/Downgrade process explanation</h4></h4>
+                </div>
+                <div class="modal-body tt-modal-body">
+
+                    <h4 class="tt-model-body-header">To Upgrade</h4>
+                    <p>
+
+                        <br>
+                        Type in the TOTAL amount of proxies you want in the box to the left that you want to have TOTAL
+                        in your account after upgrading. For example, if you have 10 proxies now and wish to have a TOTAL
+                        of 15, then you would type 15. You will retain all of your previous 10 proxies, and all 15 of your
+                        proxies will be on the same billing period (see Prorating Explanation).
+                        <br>
+                        <br>
+                    </p>
+
+                    <h4 class="tt-model-body-header">To Downgrade:</h4>
+
+                    <p>
+                        <br>
+                        Type in the TOTAL amount of proxies you want in the box to the left that you want to have TOTAL in your account after downgrading.
+                        For example, if you have 10 proxies now and wish to have a TOTAL of 7, then you would type 7.
+                        Upon typing ‘7’, another box will appear which will ask you which proxies you wish to retain out of your 10.
+                        Please paste your 7 proxies line-by-line in that box. We verify your input and will deny it if you incorrectly submit your request.
+                         Do not worry!  If you do not see your desired proxies after downgrading, please submit a support ticket and we will help you resolve any issues
+
+                        <br>
+                        <br>
+                    </p>
+
+                    <h4 class="tt-model-body-header">Prorating Explanation:</h4>
+
+                   <p>
+                       <br>
+                       On either an Upgrade, or Downgrade, the term ‘prorating’ means you will pay an amount
+                       of money for the new proxies to the date of the end of your current billing cycle. As an example:
+
+
+                   </p>
+
+
+                    <div class="row">
+                        <div class="col-md-6 text-justify">
+                            <h5 style="color: #27bebd; font-weight: bold;">Upgrade</h5>
+                            <ul class="pexpl-list">
+                                <li>You purchase 11 proxies on August 1 for $13.20</li>
+                                <li>On August 10 you decide to upgrade to a TOTAL of 15 proxies (total monthly cost is $18)</li>
+                                <li>The math would then be:
+                                    <ul class="pexpl-sublist">
+                                        <li>4 extra proxies * $1.2/mo  / 30 days = $0.16/day for your extra 4 proxies</li>
+                                        <li>There are 20 days left on your current billing cycle which started on August 1st (today being August 10th)</li>
+                                        <li>That means you will pay for these 4 proxies for only 20 days so that all 15 proxies will be on the same billing date on August 30th.</li>
+                                        <li>Your Upgrade price today will be: $0.16 * 20 = $3.20</li>
+                                    </ul>
+                                </li>
+                                <li>Your renewal price on August 30th will be $18</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-md-6 text-justify">
+                            <h5 style="color: #27bebd; font-weight: bold;">Downgrade</h5>
+                            <ul class="pexpl-list">
+                                <li>You purchase 11 proxies on August 1 for $13.20</li>
+                                <li>On August 10 you decide to downgrade to a TOTAL of 7 proxies (total monthly cost is $8.40)</li>
+                                <li>The math would then be:
+                                    <ul class="pexpl-sublist">
+                                        <li>4 less proxies * $1.20/mo / 30 days = $0.16/day for the 4 less proxies</li>
+                                        <li>With a Downgrade you are saying that you do not wish to pay for these 4 proxies for the remaining 20 days of your billing cycle</li>
+                                        <li>This means we will give you Account Credit back for the remaining days on those 4 proxies (all purchases are final - you may only receive account credit for downgrades).</li>
+                                        <li>The Downgrade math would be:   $0.16/day * 20 days remaining = $3.20 account credit</li>
+                                    </ul>
+                                </li>
+                                <li>The account credit will be automatically applied to your next invoice on August 30th. Your proxy package will downgrade today to 7 proxies total in your account.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <div tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="cancel-confirm-modal" class="modal fade bs-example-modal-sm">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header tt-modal-header">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+            <h4 id="mySmallModalLabel" class="modal-title"> <h4>Upgrade/Downgrade process explanation</h4></h4>
+          </div>
+          <div class="modal-body tt-modal-body">
+
+              <h4 class="tt-model-body-header">Package cancel confirmation</h4>
+            <p>
+                <br>
+
+                Are you sure you wish to cancel?
+                <br>
+                <br>
+
+                By cancelling your service, all recurring payments and current invoices will be cancelled. You will not be billed again for this service. Furthermore, your proxies will remain active until the end of the billing period.
+                <br>
+                <br>
+                Bear in mind that we have many different proxy solutions (virgin IPs, IPv6 IPs, different subnet diversity, and more) that have helped previous customers stay with Blazing SEO. If you would kindly fill in the box below with as much information as possible, we will reach out to you to offer a trial of one of our other services if we believe it will help. If you wish to speak with us directly before cancelling, please email us at support@blazingseollc.com.
+                <br>
+                <br>
+                If you wish to continue, please click "Yes" below after filling in your reasoning for cancelling.
+                <br>
+                <br>
+                Thank you for your business.
+                <br>
+                <br>
+            </p>
+
+            <div class="form-group">
+                <textarea class="form-control cancellation-reason tt-text-area" placeholder="Requires at least 20 symbols" style="width: 100%" maxlength="800" rows="10" name="cancel-reason"></textarea>
+                <span class="help-block hidden">Requires at least 20 symbols.</span>
+            </div>
+
+              <div class="tt-modal-btn-container mt-xl">
+
+                  <button data-bb-handler="cancel" type="button" class="btn btn-default tt-btn-gray" data-dismiss="modal">No, I do not want to cancel</button>
+                  <button id="proxy-cancel" data-bb-handler="confirm" type="button" class="btn btn-danger tt-btn">Yes, please cancel my proxies</button></div>
+              </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div tabindex="-1" role="dialog" aria-labelledby="downgradeModalLabel" id="keep-on-downgrade-modal" class="modal fade bs-example-modal-sm">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="downgradeModalLabel" class="modal-title">Downgrade</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Enter the proxies below that you wish to KEEP after downgrading.
+                        <br>
+                        <strong>Any IPs <u>not</u> entered below may be removed from your account immediately in random order.</strong>
+                        <br>
+                        <br>
+                        IPs can be entered line by line. See the example to the right.
+                    </p>
+
+                    <div class="alert alert-warning hidden"></div>
+
+                    <div class="row">
+                        <div class="col-sm-5 col-sm-push-7 ip-list-example-container">
+                            Example of IPs you should enter <u>if you wanted to the keep these IPs</u>
+                            in your account after the downgrade. All formats accepted.
+                            <br>
+                            <div class="alert alert-info ip-list-example">
+                                {% if userIpsSample.list[0].ip | default %}{{ userIpsSample.list[0].ip }}{% else %}1.1.1.1{% endif %}:3128<br>
+                                {% if userIpsSample.list[1].ip | default is not empty %}{{ userIpsSample.list[1].ip }}{% else %}1.1.1.1{% endif %}:3128<br>
+                                {% if userIpsSample.list[3].ip | default is not empty %}{{ userIpsSample.list[3].ip }}{% else %}1.1.1.1{% endif %}:4444:user:pass<br>
+                                {% if userIpsSample.list[4].ip | default is not empty %}{{ userIpsSample.list[4].ip }}{% else %}1.1.1.1{% endif %}:4444:user:pass<br>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-sm-pull-5">
+                            <div class="form-group">
+                                <textarea class="form-control ipslist ppristine" style="width: 100%" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary downgrade">Downgrade</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+    var products = {{ upgradableProducts|json_encode()|raw }};
+    var products_map = {};
+
+    var len = products.length;
+    for(var i = 0; i < len; i++) {
+        products_map[products[i]['id']] = products[i];
+    }
+    window.products = products_map;
+</script>
+<!-- Notify user that cancellation request will be cancelled on upgrade or downgrade -->
+<script>
+    $('.proxy-upgrade').on('click', '.upgrade-button', function(e){
+        form = $(e.target).closest('form');
+
+        if(e.originalEvent === undefined)
+            return;
+
+        if(!('modalLevel' in e.originalEvent)) {
+            e.originalEvent.modalLevel = 0;
+        }
+
+        switch(e.originalEvent.modalLevel) {
+            case 0:
+                if(window.products[form.find('input[name="pid"]').val()].extended.hasCancelRequest ) {
+                    bootbox.confirm({
+                        title: 'Cancallation request removal',
+                        message: 'An cancellation request is exist for this package.<br> \
+                            Update or downgrade will lead to cancellation removal and reactivation of due invoice.<br> \
+                            Are you sure you wish to continue?',
+                        backdrop: true,
+                        size: 'small',
+                        buttons: {
+                            confirm: {
+                                className: 'btn-primary'
+                            }
+                        },
+                        callback: function(confirmed) {
+                            if (confirmed) {
+                                e.originalEvent.modalLevel++;
+                                e.target.dispatchEvent(e.originalEvent);
+                            }
+                        }
+                    });
+
+                    stopEvent(e);
+                    break;
+                } else
+                    e.originalEvent.modalLevel++;
+            /*case 1:
+                bootbox.alert({
+                    title: 'Downgrade',
+                    message: 'You will be able to choose the proxies you wish to keep after your downgrade. Click the button and you will be prompted again.',
+                    backdrop: true,
+                    size: 'small',
+                    callback: function(){ e.target.dispatchEvent(e.originalEvent) }
+                });
+                e.originalEvent.modalLevel++;
+                stopEvent(e);
+                break;*/
+        }
+    });
+
+    function stopEvent(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+    }
+</script>
+<script>
+(function(){
+    var form;
+    var modal = $('#cancel-confirm-modal');
+    var cancelReason = modal.find('.cancellation-reason');
+    modal.on('show.bs.modal', function(e) {
+        form = $(e.relatedTarget).closest('form');
+        form.find('textarea[name="cancel-reason"]').remove();
+        cancelReason.val('');
+        cancelReason.parent().toggleClass('has-error', false);
+        modal.find('.help-block').toggleClass('hidden', true);
+    });
+
+    $('#proxy-cancel').click(function() {
+        if(cancelReason.val().length < 20) {
+            cancelReason.parent().toggleClass('has-error', true);
+            modal.find('.help-block').toggleClass('hidden', false);
+            return;
+        }
+        form.find('.field-amount').prop('disabled', false).val(null);
+        var reason = cancelReason.clone();
+        reason[0].style = "display: none";
+        form.append(reason);
+        form.validator('destroy');
+        form.submit();
+    });
+})();
+</script>
+<!-- Continue billing -->
+<script>
+    $('.proxy-upgrade').on('click', '.continue-billing', function(e) {
+        e.preventDefault();
+        var form = $(e.target).closest('form');
+        var serviceid = window.products[form.find('input[name="pid"]').val()].extended.serviceId;
+        $.ajax({
+            method: "GET",
+            dataType: 'json',
+            url: '{{ url('continueBilling') }}',
+            data: {serviceid: serviceid}
+        })
+            .done(function(msg) {
+                if(msg.result == 'success')
+                    location.reload();
+                else {
+                    alert('Failed to remove cancellation request.');
+                }
+            });
+    });
+</script>
+<!-- Select proxies on downgrade -->
+<script>
+(function(){
+    var ips = {};
+    var modal = $('#keep-on-downgrade-modal');
+    var ipsExampleContainer = modal.find('.ip-list-example-container');
+    var textarea = modal.find('.ipslist');
+    var prompt;
+    var portsLoading = false;
+    var alert = modal.find('.alert-warning');
+    var nIps;
+
+    var xhr;
+
+    var product;
+    var form;
+
+    var newProductPromocode;
+    modal.on('hidden.bs.modal', function (e) {
+        if(xhr) xhr.abort();
+        portsLoading = false;
+    });
+
+    $('.proxy-upgrade').on('click', '.upgrade-button', function(e){
+        form = $(e.target).closest('form');
+
+        if($(e.target).hasClass('disabled'))
+            return;
+
+        // ipsExampleContainer.addClass('invisible');
+
+        var pid = form.find('input[name="pid"]').val();
+        product = window.products[pid];
+        if(!(product.category === 'semi-3' || product.category === 'dedicated' || product.category === 'sneaker'))
+            return;
+
+        var realAmount = (+ product.amount);
+        var newAmount = (+ form.find('input[name="plan[amount][]"]').val());
+        nIps = newAmount;
+        if(newAmount < realAmount) {
+            e.preventDefault();
+            e.stopPropagation();
+            initModal();
+			modal.find('.modal-body .action-row').remove();
+			modal.modal();
+			modal.find('.downgrade').hide(); // turn off the downgrade submit button
+            loadProductPorts(product, function() {
+				modal.find('.downgrade').show();
+            });
+        }
+    });
+
+    modal.find('.downgrade').click(function(e){
+    	var ips = parseIpsFromMultiString(textarea.val());
+    	if (ips.length) {
+    		if (validateIps(textarea.val())) {
+		        form.find('input[name="details[preservedips]"]').val(ips.join(';'));
+				form.submit();
+            }
+        }
+        else {
+			form.submit();
+        }
+
+		return;
+    });
+
+    function parseIpsFromMultiString (ipsString) {
+		ipsString = ipsString.replace(/[;,]/g, '\n');
+		ipsString = ipsString.replace(/:[0-9a-zA-Z]*/g, '');
+		ipsString = ipsString.split(/\n/);
+
+		var ip, ips = [];
+		for (var i = 0; i < ipsString.length; i++) {
+			ip = ipsString[i];
+
+			if(ip === undefined) {
+				continue;
+            }
+			ip = ip.trim();
+
+			if(!ip.length) {
+				continue;
+			}
+
+			ips.push(ip);
+		}
+
+		return ips;
+    }
+
+    function validateIps(ipsString) {
+        hideErrorBlock();
+
+        var ipsToValidate = parseIpsFromMultiString(ipsString);
+
+        var failedToValidate = [];
+        var formatedIps = {};
+        var count = 0;
+        var totalCount = 0;
+        for(ip of ipsToValidate) {
+            if(!(ip in ips[(product.country + product.category)])) {
+                failedToValidate.push(ip);
+            } else {
+                count++;
+                formatedIps[ip] = 1;
+            }
+            totalCount++;
+        }
+
+        var hasErrors = false;
+
+        if(failedToValidate.length) {
+            hasErrors = true;
+            displayError('Failed to validate one or more of your IPs: <strong><br>' + failedToValidate.join('<br>') + '</strong>'
+                + '<br>Please paste in your list again following our format guidelines, or contact support@blazingseollc.com for help.');
+        }
+
+        if(totalCount > nIps) {
+            hasErrors = true;
+            displayError('You can only choose ' + nIps + ' IPs to keep after downgrade (minimum 5 proxies per package)');
+        }
+
+        if(!hasErrors)
+            return Object.keys(formatedIps).join(';');
+
+        return false;
+    }
+
+    function loadProductPorts(product, cb, appendExample) {
+        if(portsLoading) return;
+        portsLoading = true;
+
+        var key = product.country + product.category;
+        if(!((key) in ips)) {
+            textarea.val('Loading...');
+            xhr = $.ajax({
+                method: "GET",
+                dataType: 'json',
+                url: '{{ url('getPorts') }}',
+                data: {country: product.country, category: product.category}
+            })
+                .done(function(msg) {
+                    var ips_map = {};
+                    for(var ip of msg.list) {
+                        if(typeof ip.ip === "string")
+                            ips_map[ip.ip] = ip;
+                    }
+                    ips[key] = ips_map;
+
+                    if (appendExample) {
+                        generateAndAppendIpsListExampleFromUserPorts(Object.keys(ips[key]));
+                    }
+
+					cb(true);
+                })
+                .fail(function(msg) {
+                    displayError('Error on getting your proxy package. Please reload your browser and/or clear your cache.');
+					cb(false);
+                })
+                .always(function() {
+					textarea.val('');
+                    portsLoading = false;
+                });
+        } else {
+        	if (appendExample) {
+                generateAndAppendIpsListExampleFromUserPorts(Object.keys(ips[key]));
+            }
+			cb(true);
+        }
+
+    }
+
+    function generateAndAppendIpsListExampleFromUserPorts(ips) {
+        var i = 0, limit = ips.length < 3 ? ips.length : 3;
+        var content = '';
+
+        var examplePostfix = [
+            ':3128',
+            ':1026',
+            ':4444:user:pass'
+        ];
+
+        while(i < limit) {
+            content += ips[i] + examplePostfix[i] + '\n';
+            i++;
+        }
+
+        if(content !== '' && (textarea.val() == 'Loading example...' || textarea.val() == '')) {
+            content = 'Example:\n' + content;
+            textarea.val(content);
+            prompt = content;
+            // ipsExampleContainer.find('.ip-list-example').html(content);
+            // ipsExampleContainer.removeClass('invisible');
+        } else {
+            textarea.removeClass('pristine');
+        }
+    }
+
+    function displayError(err) {
+        var html = alert.html();
+        alert.html((html !== '' ? (html + '<br>') : '') + err);
+        alert.removeClass('hidden');
+    }
+
+    function hideErrorBlock() {
+        alert.html('');
+        alert.addClass('hidden');
+    }
+
+    function initModal() {
+        hideErrorBlock();
+
+        prompt = '';
+        textarea.addClass('ppristine');
+        textarea.val('');
+    }
+
+    // close modal ... xhr
+})();
+</script>
+<script>
+(function() {
+    var setPromo = function(promocode) {
+        if(this.callback && typeof this.callback === 'function')
+            this.callback(promocode);
+    };
+
+    function PromoController(pid, billingCycle, promocode, amount, callbackFunc) {
+        var self = this;
+        this.elem = $('#apply-promocode-template > div').clone();
+        this.promoInput = this.elem.find('input[name="promocode"]');
+        this.product = window.products[pid];
+        this.billingCycle = billingCycle;
+        this.callback = callbackFunc;
+        this.amount = amount;
+        this.hasOldPromo = false;
+
+        if(promocode) {
+            var promoUsed = this.elem.find('.promo-used');
+            promoUsed.html(promocode);
+            promoUsed.parent().removeClass('hidden');
+        }
+
+        this.checkTotal(promocode, function(total, discount) {
+            if(discount) {
+                this.hasOldPromo = true;
+                this.elem.find('.total-without-discount').addClass('hidden');
+                this.elem.find('.discount-total').removeClass('discount-total');
+                this.elem.find('.discount-total-new').addClass('discount-total').removeClass('hidden');
+            }
+
+            this.elem.find('.total-after-upgrade').removeClass('hidden');
+        }.bind(this));
+
+        var onPromoUpdate = (promocode ? function(total, discount, newPromocode) {
+            if(promocode === newPromocode) {
+                this.elem.find('.discount-total-old').removeClass('line-through');
+                this.elem.find('.discount-total').addClass('hidden').addClass('total-hidden');
+                this.promoInput.removeClass('bg-success');
+                return;
+            } else
+                this.elem.find('.discount-total').removeClass('hidden');
+
+            if(discount) {
+                this.elem.find('.discount-total-old').addClass('line-through');
+
+                setPromo.call(this, newPromocode);
+            } else {
+                this.elem.find('.discount-total-old').removeClass('line-through');
+            }
+        } : function(total, discount, promocode) {
+            if(discount)
+                setPromo.call(this, promocode);
+        }).bind(this);
+
+        this.elem.find('.btn').click(function() {
+            var promocode = self.promoInput.val();
+
+            self.checkTotal(promocode, function(total, discount) {
+                onPromoUpdate(total, discount, promocode);
+            }, true);
+
+            return false;
+        });
+
+        this.promoInput.on('change, input', function() {
+            // TODO: update on promo change
+        });
+    }
+
+    PromoController.prototype = {
+        checkTotal: function(productPromocode, callbackFunc, validate) {
+            var self = this;
+
+            if(validate === undefined)
+                validate = false;
+
+            this.elem.checkTotal({
+                plan: {
+                    country: [this.product.country],
+                    category: [this.product.category],
+                    amount: [this.amount],
+                    billingCycle: this.billingCycle
+                },
+                details: {
+                    promocode: productPromocode
+                }
+            }, {
+                afterValidate: callbackFunc,
+                beforeValidate: (validate ? function(data, code) {
+                    if(!(('promoData' in data) && data.promoData))
+                        return;
+
+                    if(!data.promoData.isUpgradePromo) {
+                        this.setValid(false);
+                        this.setUpdate(true);
+
+                        setPromo.call(self, code);
+
+                        self.elem.find('.discount-total-old').removeClass('line-through');
+
+                    } else if(!data.promoData.isPromoRecurring) {
+                        this.setValid(true);
+                        this.setUpdate(false);
+
+                        setPromo.call(self, code);
+
+                        if(self.hasOldPromo) {
+                            self.elem.find('.total-without-discount').removeClass('hidden').removeClass('line-through');
+                            self.elem.find('.discount-total-old').addClass('hidden');
+                            self.elem.find('.discount-total-new').addClass('hidden');
+                        } else {
+                            self.elem.find('.total-without-discount ').removeClass('line-through');
+                            self.elem.find('.discount-total-old').addClass('hidden');
+                        }
+                    } else {
+                        if(self.hasOldPromo) {
+                            self.elem.find('.total-without-discount').addClass('hidden').addClass('line-through');
+                            self.elem.find('.discount-total-old').removeClass('hidden');
+                            self.elem.find('.discount-total-new').removeClass('hidden');
+                        } else {
+                            self.elem.find('.discount-total-old').removeClass('hidden');
+                        }
+                    }
+                } : false)
+            });
+        },
+        getTemplate: function() {
+            return this.elem[0];
+        }
+    };
+
+    $.fn.applyPromocodeTemplate = function(pid, billingCycle, promocode, amount, callbackFunc) {
+        return new PromoController(pid, billingCycle, promocode, amount, callbackFunc);
+    }
+})();
+</script>
+<!-- upgrade modal -->
+<script>
+(function(){
+    var newProductPromocode;
+    var form;
+
+    window.callbackUpgradeContent = function() {
+        form = $(this).closest('form');
+        form.find('input[name="details[promocode]"]').val('');
+
+        var pid = form.find('input[name="pid"]').val();
+        var product = window.products[pid];
+        productPromocode = false;
+        newProductPromocode = false;
+
+        if(('extended' in product) && ('promo' in product.extended)) {
+            productPromocode = product.extended.promo.promocode;
+        }
+
+        var newAmount = form.find('.field-amount').val();
+
+        var content = document.createElement('div');
+        content.className = "upgrade-package-content";
+        content.innerHTML = 'Your plan will be upgraded from ' + product.amount
+        + ' total proxies to '
+        + newAmount
+        + ' total proxies.';
+
+        if(product.amount < newAmount) {
+            content.appendChild($(this).applyPromocodeTemplate(pid, form.find('input[name="plan[billingCycle]"]').val(), productPromocode, newAmount, function(promocode) {
+                newProductPromocode = promocode;
+            }.bind(this)).getTemplate());
+        }
+        return content;
+    };
+
+    window.callbackUpgradeSubmit = function() {
+        if(newProductPromocode)
+            form.find('input[name="details[promocode]"]').val(newProductPromocode);
+        this.attr('data-confirmed', 1);
+        this.click();
+    };
+})();
+</script>
+
+<script>
+
+
+var initialized = false;
+
+// $('.page-checkout input[name="plan[amount][]"]').each(updateButtonText);
+
+initialized = true;
+
+var last_tooltip;
+
+// function updateButtonText() {
+//     var elem = $(this);
+//     var form = elem.closest('form');
+//
+//     var pid = form.find('input[name="pid"]').val();
+//     var product = window.products[pid];
+//     var button = form.find('.upgrade-button, .btn-migrate');
+//     if(product.amount > elem.val()) {
+//         if(button.html() !== 'Downgrade') {
+//             button.html('Downgrade');
+//
+//             if(!(product.category === 'semi-3' || product.category === 'dedicated' || product.category === 'sneaker'))
+//                 return;
+//
+//             last_tooltip = button;
+//             button.tooltip({
+//                 placement: 'right',
+//                 title: 'You will be able to choose the proxies you wish to keep after your downgrade. Click the button and you will be prompted again.',
+//             });
+//
+//             if(initialized) {
+//                 $('[data-toggle="tooltip"]').tooltip('hide');
+//
+//                 button.tooltip('show');
+//             }
+//         }
+//     } else if(product.amount < elem.val()) {
+//         if(button.html() !== 'Upgrade') {
+//             button.html('Upgrade');
+//
+//             button.tooltip('destroy');
+//         }
+//     } else if(button.hasClass('btn-migrate')) {
+//         if(product.source == 'amember') {
+//             button.html('Migrate');
+//         }
+//     }
+// }
+
+$('.page-checkout').on('show.bs.tooltip', function (e) {
+    if(last_tooltip && last_tooltip[0] !== e.target)
+        last_tooltip.tooltip('hide');
+})
+</script>
+<!-- migrate modal -->
+<script>
+    window.callbackMigrateContent = function() {
+        var elem = $(this);
+        var form = elem.closest('form');
+        var pid = form.find('input[name="pid"]').val();
+        var product = window.products[pid];
+        var newAmount = form.find('.field-amount').val();
+
+        if(product.amount < newAmount) {
+            return 'In order to complete your upgrade, \
+                we must migrate your account from our old billing system (aMember), \
+                to our new, robust billing system (WHMCS). You are upgrading from ' + product.amount + ' proxies to ' + newAmount + ' proxies. \
+                You will have ' + (newAmount - product.amount) + ' new proxies in your account after the migration and upgrade are complete. \
+                Thank you!';
+        } else if((product.amount > newAmount)) {
+            return 'In order to complete your downgrade, \
+                we must migrate your account from our old billing system(aMember), \
+                to our new, robust billing system(WHMCS). You are downgrading from ' + product.amount + ' proxies to ' + newAmount + ' proxies. \
+                You will have ' + (product.amount - newAmount) + ' less proxies in your account after the migration and downgrade are complete. Thank you! '
+        } else {
+            elem.attr('data-stop-upgrade', '1');
+
+            return 'We will migrate your account from our old billing system(aMember), \
+                to our new, robust billing system(WHMCS). Your proxy package will not change, \
+                you will keep all your same proxies, during the migration and your billing will remain the same. \
+                Thank you!';
+        }
+    };
+
+    window.callbackMigrateConfirmed = function() {
+        var elem = $(this);
+
+        if(elem.attr('data-stop-upgrade')) {
+            location.reload();
+        } else {
+            elem.closest('form').submit();
+        }
+    };
+</script>
+<!-- upgrade disabled -->
+<script>
+    window.callbackUpgradeDisabled = function() {
+        var reason = $(this).attr('data-reason');
+        if(reason === 'Unpaid invoice on due date') {
+            return 'Recurring invoice must be paid before you may upgrade/downgrade.'
+            + '<br><br>Once the invoice is paid, your upgrade price will be prorated. This will take into account the payment that will have been paid on the invoice.'
+            + '<br><br>Please press OK to be redirected to the invoice page.';
+        } else if(reason === 'Second trial product invoice not paid') {
+            return 'If you wish to upgrade/downgrade your package, please pay the invoice '
+                + 'for the first month of service. This will cause your free trial to end.'
+                + '<br><br>Please press OK to be redirected to the invoice page.';
+        }
+
+        return 'You must pay the invoice before you may upgrade/downgrade. '
+            + '<br><br>Please press OK to be redirected to the invoice page.';
+    }
+</script>
+<!-- change billing cycle -->
+<script>
+    $(document).on('change', '.billing-cycle-select', function() {
+        var elem = $(this);
+        var form = elem.closest('form');
+
+        var pid = form.find('input[name="pid"]').val();
+        var product = window.products[pid];
+
+        if (product.extended.billingCycle !== elem.val()) {
+            form.find('.btn-save-settings').removeAttr('disabled');
+        } else {
+            form.find('.btn-save-settings').attr('disabled', 'disabled');
+        }
+    });
+
+    // firefox save selected value and ignore "selected"
+    // trigger change to set "disabled" for buttons
+    $('.billing-cycle-select').trigger('change');
+
+    var billingCycleInput;
+    var form;
+    var product;
+    window.callbackSave = function() {
+        var elem = $(this);
+        form = $(this).closest('form');
+        var pid = form.find('input[name="pid"]').val();
+        product = window.products[pid];
+        var newBillingCycle = form.find('select[name="billingCycle"]').val();
+        billingCycleInput = form.find('input[name="plan[billingCycle]"]');
+        var amountInput = form.find('input[name="plan[amount][]"]');
+
+        var oldBillingCycle = billingCycleInput.val();
+        var oldAmount = amountInput.val();
+
+        billingCycleInput.val(newBillingCycle);
+        amountInput.val(product.amount);
+
+        $.ajax($config.routing.checkTotal, {
+            method: "POST",
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(data) {
+                var total = data.total + 0;
+                $('.bootbox.modal .bootbox-body').append(
+                    '<h4>Your recurring amount for this plan<br> will be $' + (total - data.discount).toFixed(2) + '</h4>'
+                );
+            }
+        });
+
+        elem.prop('data', {
+            'serviceId': product.extended.serviceId,
+            'billingCycle': newBillingCycle
+        });
+
+        billingCycleInput.val(oldBillingCycle);
+        amountInput.val(oldAmount);
+
+        newBillingCycle = capitalizeFirstLetter(newBillingCycle);
+
+        return "Your billing cycle will be changed to \""
+            + newBillingCycle
+            + "\" at the end of your current billing cycle if you click<br> \"Save Changes\"";
+    };
+
+    window.callbackSaveSubmit = function() {
+        var data = $(this).prop('data');
+        $.ajax($config.routing.changeBillingCycle, {
+            method: "POST",
+            data: data,
+            dataType: 'json',
+            success: function(rData) {
+                if (rData.result !== 'success') {
+                    bootbox.alert({
+                        title: 'Error',
+                        message: 'Failed to change billing cycle. Please try again or contact customer support.',
+                        backdrop: true,
+                        size: 'small'
+                    });
+                } else {
+                    var select = form.find('.billing-cycle-select');
+                    select[0].options[select[0].selectedIndex].innerHTML = select[0].options[select[0].selectedIndex].innerHTML + '(current)';
+
+                    var oldOption = form.find('.billing-cycle-select option[value="' + product.extended.billingCycle + '"]')[0];
+                    oldOption.innerHTML = capitalizeFirstLetter(product.extended.billingCycle);
+
+                    product.extended.billingCycle = data.billingCycle;
+
+                    select.trigger('change');
+
+                    bootbox.alert({
+                        title: 'Billing Cycle Change\n',
+                        message: "Your billing cycle change request has been submitted. "
+                            + "Your billing cycle will be changed and you will be billed at the end of your current billing cycle.",
+                        backdrop: true,
+                        size: 'small'
+                    });
+                }
+            }
+        });
+    };
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+
+
+    jQuery('.tt-number-input-container').each(function() {
+        var spinner = jQuery(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = $('.tt-number-plus'),
+            btnDown = $('.tt-number-minus'),
+            min = input.attr('min'),
+            max = input.attr('max');
+
+        btnUp.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue >= max) {
+                var newVal = oldValue;
+            } else {
+                var newVal = oldValue + 1;
+            }
+            spinner.find("input").val(newVal);
+            spinner.find("input").trigger("change");
+        });
+
+        btnDown.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue <= min) {
+                var newVal = oldValue;
+            } else {
+                var newVal = oldValue - 1;
+            }
+            spinner.find("input").val(newVal);
+            spinner.find("input").trigger("change");
+        });
+
+    });
+
+</script>
+{% endblock %}

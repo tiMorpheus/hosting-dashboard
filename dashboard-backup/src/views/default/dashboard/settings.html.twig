@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block content_title %}
+    Settings
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="row mt-xl tt-padding-box-settings">
+            <div class="tt-alert-box">
+                Rotation Options are only valid for Semi-Dedicated or Dedicated Plans.<br />
+            </div>
+            <div id="settings-message" class="alert hide">Test</div>
+
+            <div class='col-md-12 mt-sm'>
+
+
+                        <div class="checkbox">
+                            <input {% if USER.rotate_ever %}checked{% endif %} name="rotate_ever" id="rotate_ever" type="checkbox" class="rotate_option">
+                            <label for="rotate_ever" class="tt-font-regular">
+                                Sometimes proxies may go down for a few seconds when we are making server optimizations (to make your proxies faster) and because we automatically replace any proxies that go down you would receive new proxies assigned to your ports. If you DO NOT want new proxies assigned if we detect any of them to go down, check this box. This option is suited for users that use our proxies for social media and do not want a new IP.
+                            </label>
+                        </div>
+
+
+
+            </div>
+            <div class="col-md-12 mt-sm">
+                <div class="checkbox">
+                    <input {% if USER.rotate_30 %}checked{% endif %} name="rotate_30" id="rotate_30" type="checkbox" class="rotate_option">
+                    <label for="rotate_30" class="tt-font-regular">
+                        Check this box if you want your static proxies rotated every 30 days. This option is not suited for people that use our proxies for social media and wish to keep their IPs for as long as possible.
+                    </label>
+                </div>
+            </div>
+            <div class='col-md-12 mt-sm' style="padding: 0">
+                <div class="tt-info-card ">
+                    <div class="tt-card-heading">
+                        <h4 >API Settings</h4>
+
+                    </div>
+                    <div class="tt-card-body">
+                        API Key: <strong>{{ USER.api_key }}</strong><br /><br />
+                        <div>
+                            Below you will find your API link to your proxies. You must first have your IP authorized in order for your proxies to work. Every time you call the API URL you will be given the newest list of proxies in your account.
+                        </div>
+                        <br />
+                        <span class="tt-link">
+                            {{ url('api_export_ipv4', { email: USER.email, key: USER.api_key }) }}
+                        </span>
+
+                        <br>
+                        <br>To setup GSA SER to automatically grab your proxies at a certain interval, follow the instructions below.</b> This is useful for semi-dedicated and dedicated users who request proxies to be changed every 30 days, or if a proxy dies by chance — GSA will automatically grab the new proxies for you :)<br><br>
+                        1. Open up Proxy Settings tab<br>
+                        2. Click on Add/Edit Proxy<br>
+                        3. Right click the list on the left and select ‘Check None’<br>
+                        4. Click the Add button<br>
+                        5. Add your API URL (above) and select the option to ‘Add as private proxy type’<br>
+                        6. Go back to the main Proxy settings page and click on the Options tab<br>
+                        7. Set ‘Automatically search for new proxies every’ — to 120 minutesv
+                        8. Done!<br>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class='col-md-12 mt-sm' style="padding: 0">
+
+
+                {% if displayExportButtons %}
+                    <div class="tt-info-card">
+                        <div class="tt-card-heading">
+                            <h4 >Export Account Data</h4>
+
+                        </div>
+                        <div class="tt-card-body">
+                            <p>
+                                This links below allows you to generate a JSON export of data relating to your account.
+                            </p>
+
+                            <div class="text-center mt-xl">
+                                <a href="{{ url('exportUserRelatedData') }}" class="tt-btn" style="color: #ffffff;">Export Account Data</a>
+                                <a href="{{ url_remote('whmcsIndex') ~ '?m=reports_for_clients' }}" class="tt-btn" style="color: #FFF">Export Billing Data</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

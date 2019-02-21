@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        {% include 'layout/meta.html.twig' %}
+        <base href="{{ MAIN_URL }}">
+        {#{% include 'layout/stylesheets.html.twig' with { page_styles: block('page_styles') } %}#}
+
+
+
+        {% if CONFIG_VIEW.layout.append_head %}{{ CONFIG_VIEW.layout.append_head | raw }}{% endif %}
+
+
+
+
+
+        <!-- Bootstrap core CSS     -->
+        <link href="{{ asset('vendor/servers/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+
+        <!--  Paper Dashboard core CSS    -->
+        <link href="{{ asset('vendor/servers/assets/css/paper-dashboard.css') }}" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+
+        <!--  Fonts and icons     -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+        {#<link href="./assets/css/themify-icons.css" rel="stylesheet">#}
+
+
+    </head>
+
+    <body class="perfect-scrollbar-off">
+
+
+
+
+    {% if CONFIG_VIEW.layout.prepend_content %}{{ CONFIG_VIEW.layout.prepend_content | raw }}{% endif %}
+
+
+        <div class="wrapper">
+
+            <!-- sidebar start -->
+            <div class="sidebar" data-background-color="white" data-active-color="primary">
+                {% include 'layout/sidebar.html.twig' %}
+            </div>
+
+
+
+
+            {#<header class="topnavbar-wrapper">#}
+                {#<!-- START Top Navbar-->#}
+                {#<nav role="navigation" class="navbar topnavbar">#}
+                    {#<!-- START navbar header-->#}
+                    {#<div class="navbar-header">#}
+                        {#<h3>{{ CONFIG_VIEW.text.company_title }}</h3>#}
+
+                        {#<span class="beta-label">Beta</span>#}
+                    {#</div>#}
+                    {#<!-- END navbar header-->#}
+
+                    {#<!-- START Nav wrapper-->#}
+                    {#<div class="nav-wrapper">#}
+                        {#<!-- START Right Navbar-->#}
+                        {#<ul class="nav navbar-nav navbar-right navbar-left-menu">#}
+
+                            {#<!-- Fullscreen (only desktops)-->#}
+                            {#<li class="visible-lg">#}
+                                {#<a href="#" data-toggle-fullscreen="">#}
+                                    {#<em class="fa fa-expand"></em>#}
+                                {#</a>#}
+                            {#</li>#}
+
+                            {#<!-- START Contacts button-->#}
+                            {#{% if USER is not empty %}#}
+                                {#<li><a  href="https://blazingseollc.com/jobs/" target="_blank">Careers</a></li>#}
+                                {#<li><a href="http://support.blazingseollc.com/support/solutions" target="_blank"> FAQ/Tutorials</a></li>#}
+                                {#<li><a href="https://blazingseollc.com/proxy/dashboard/contact/">Contact US</a></li>#}
+                            {#<li class="navbar-left-menu-userpanel">#}
+                                {#<a href="" class="navbar-username">Tymur Tolochko</a>#}
+                                {#<a href="{{ url('logout') }}" data-toggle-state="offsidebar-open" data-no-persist="true" class="navbar-logout">#}
+                                    {#<em class="icon-logout"></em>#}
+                                {#</a>#}
+                            {#</li>#}
+                            {#{% endif %}#}
+                            {#<!-- END Contacts menu-->#}
+                        {#</ul>#}
+                        {#<!-- END Right Navbar-->#}
+                    {#</div>#}
+                    {#<!-- END Nav wrapper-->#}
+
+                {#</nav>#}
+                {#<!-- END Top Navbar-->#}
+            {#</header>#}
+
+
+            <!-- Main section-->
+                {% include 'layout/content.html.twig' with {
+                    content: block('content'), content_title: block('content_title')
+                } %}
+
+        </div>
+    {% include 'layout/modals.html.twig' with { modals: block('modals') } %}
+    {% include 'layout/scripts.html.twig' %}
+    {% include 'layout/scripts_app.html.twig' with { page_scripts: block('page_scripts') } %}
+{##}
+
+
+    {% set announcement_tmpldata = announcement_tmpldata() %}
+        {#{{ dump(announcement_tmpldata) }}#}
+    {% if announcement_tmpldata is not empty %}
+        {% include  ('announcements/' ~ announcement_tmpldata.template) ignore missing with announcement_tmpldata %}
+    {% endif %}
+{##}
+    {#{% if CONFIG_VIEW.layout.append_content %}{{ CONFIG_VIEW.layout.append_content | raw }}{% endif %}#}
+
+
+
+    </body>
+</html>
